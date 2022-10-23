@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="ProductName">NextLabs Rights Management eXtension For CATIA</String>
+  <String Id="ProductNameShort">Rights Management eXtension For CATIA</String>
+  <String Id="ProductNameSkyDRM">SkyDRM Rights Management eXtension For CATIA</String>
+
+  <!-- Customize String value -->
+  <String Id="VerifyReadyDlgInstallTitle">{\WixUI_Font_Title}Ready to install Rights Management eXtension For CATIA</String>
+  <!-- End of Customize String value -->
+  <String Id="CompanyFolderName">Nextlabs</String>
+  <String Id="ProductFolderName">CatiaRMX</String>
+
+  <String Id="Language">1033</String>
+
+  <String Id="Company">NextLabs, Inc.</String>
+
+  <String Id="Description">Rights Management eXtension for CATIA</String>
+  <String Id="Keywords">nextlabs, rmx, edrm, catia</String>
+  <String Id="Comments">Allow user work with persistent NextLabs rights-protection file in CATIA and during save, save as operations</String>
+
+  <String Id="DowngradeErrorMessage">A newer version of RMX For CATIA is already installed.</String>
+
+  <String Id="CatiaInstallDirDlgDescription">Please enter location where CATIA is installed and click Next.</String>
+  <String Id="CatiaInstallDirDlgTitle">{\WixUI_Font_Title}CATIA Installation Folder</String>
+
+  <String Id="CatiaInstallDirDlgFolderLabel">Location Where CATIA is installed
+Example: C:\Program Files\Dassault Systems\B28\win_b64
+  </String>
+  <String Id="CatiaInstallDirDlgChange">Browse</String>
+
+  <String Id="CatiaIntegrationDirDlgDescription">Please enter location where CATIA Integration is installed and click Next.</String>
+  <String Id="CatiaIntegrationDirDlgTitle">{\WixUI_Font_Title}CATIA Integration Installation Folder</String>
+  <String Id="CatiaIntegrationDirDlgFolderLabel">
+    Teamcenter CATIA Integration installation folder
+    This information only require for managed mode. Example: C:\Ipem
+  </String>
+  <String Id="CatiaIntegrationDirDlgChange">Browse</String>
+
+</WixLocalization>

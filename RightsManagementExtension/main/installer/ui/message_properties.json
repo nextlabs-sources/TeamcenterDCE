@@ -1,0 +1,294 @@
+{
+    "title": "Teamcenter Rights Management eXtension - Setup",
+    "cancel_confirm": "Are you sure you want to cancel Teamcenter RMX Setup?",
+    "browse_folder_btn": "Browse",
+    "start_service_error": "The service cannot be started, either because it is disabled or because it has no enabled devices associated with it.",
+    "common": {
+        "company_name": "Nextlabs",
+        "product_name": "Rights Management eXtension",
+        "for": "for"
+    },
+    "welcome_page": {
+        "welcome_para": "Welcome to the installation wizard of",
+        "product_name": "Teamcenter Rights Management eXtension",
+        "copyright_message": "WARNING: This product is protected by copyright law and international treaties.",
+        "help_note": "Before you proceed make sure following information is with you.",
+        "server": "- Teamcenter Server root administrator infodba password",
+        "dispatcher": "- Teamcenter Dispatcher root directory",
+        "tcsoa": "- TCSOA host and login credentials",
+        "jpc": "- NextLabs Policy Controller host and port",
+        "skydrm": "- NextLabs SkyDRM Router URL, AppId and AppKey",
+        "nextlabs_template":"If you have an older version of RMX (below v3.5) installed, please deploy \nthe nextlabs transition template via TEM before proceeding with this installation. \n\nThis step is important to address template changes between the old and new versions.\nPlease click the acknowledge button to continue with your current installation, \notherwise cancel this installation and deploy the transition template via TEM first. \n\nIf you are unsure, contact NextLabs Support."
+    },
+    "agreement_page": {
+
+    },
+    "install_dir_page": {
+        "heading": "Installation Directory",
+        "install_dir": "RMX Installation Folder",
+        "install_dir_help_note": "Enter a folder path where this application is to be installed.",
+        "tc_root" : "TC_ROOT",
+        "tc_root_help_note": "Enter the TC_ROOT folder of the Teamcenter.",
+        "tc_root_empty": "TC_ROOT can be empty if Teamcenter is not installed.",
+        "tc_data": "TC_DATA",
+        "tc_data_help_note": "Enter the TC_DATA folder of the Teamcenter server.",
+        "tc_data_empty": "TC_DATA can be empty if Teamcenter server is not installed."
+    },
+    "disp_root_page": {
+        "heading": "Teamcenter Dispatcher Installation Directory ",
+        "disp_root_dir": "Dispatcher Root",
+        "help_note": "Dispatcher Root can be empty if Teamcenter Dispatcher feature is not installed."
+    },
+    "creo_dir_page": {
+        "heading": "Creo Parametric Installation Directory",
+        "creo_dir": "Creo Parametric Directory",
+        "ipem_dir": "Teamcenter Creo Integration Directory (IPEM)",
+        "help_note": "Creo Parametric Directory can be empty if Creo Parametric is not installed.",
+        "help_note_ipem": "IPEM directory can be empty if Creo Parametric is not run on managed mode."
+    },
+    "solidworks_dir_page": {
+        "heading": "SolidWorks Installation Directory",
+        "solidworks_dir": "SolidWorks Directory",
+        "swim_dir": "Teamcenter SolidWorks Integration Directory (SWIM)",
+        "help_note": "SolidWorks Directory can be empty if SolidWorks is not installed.",
+        "help_note_swim": "SWIM directory can be empty if SolidWorks is not run on managed mode."
+    },
+    "autocad_dir_page": {
+        "heading": "AutoCAD Installation Directory",
+        "autocad_dir": "AutoCAD Directory",
+        "help_note": "AutoCAD Directory can be empty if AutoCAD Software is not installed."
+    },
+    "catia_dir_page": {
+        "heading": "CATIA Installation Directory",
+        "catia_dir": "CATIA Directory",
+        "help_note": "CATIA Directory can be empty if CATIA Software is not installed."
+    },
+    "bb_dir_page": {
+        "heading": "Briefcase Browser Installation Directory ",
+        "bb_dir": "Briefcase Browser Root",
+        "help_note": "Briefcase Browser Root can be empty if Briefcase Browser is not installed."
+    },
+    "feature_select_page": {
+        "install":{
+            "heading": "Components to be Install",
+            "module_selection": "The selected components and features are being installed."
+        },
+        "remove":{
+            "heading": "Components to be Uninstall",
+            "module_selection": "The selected components and features are being uninstalled."
+        },
+        "upgrade": {
+            "heading": "Components to be Upgrade",
+            "module_selection": "The selected components and features are being upgraded."
+        }
+    },
+    "infodba_psd_page": {
+        "heading": "Teamcenter Server infodba Password",
+        "help_note": "Enter the infodba password",
+        "help_note_2": "This is a mandatory step."
+    },
+    "skydrm_info_page":{
+        "heading": "NextLabs SkyDRM Configuration Information",
+        "help_note": "Enter SkyDRM configuration information"
+    },
+    "cc_info_page":{
+        "heading": "NextLabs Control Center Information",
+        "help_note": "Enter Control Center configuration"
+    },
+    "jpc_remote_setting_page": {
+        "heading": "NextLabs Policy Controller",
+        "remote_ip": "Policy Controller IP Address/Hostname",
+        "jpc_eva_port": "Policy Controller Port for Policy Evaluation"
+    },
+    "tcsoa_page": {
+        "heading": "TCSOA Information",
+        "tcsoa_hostname": "TCSOA Hostname",
+        "help_note": "You can skip this info and configure later via Teamcenter rich client."
+    },
+    "installation_confirmation_page": {
+        "install": {
+            "heading": "Installation Confirmation"
+        },
+        "remove": {
+            "heading": "Uninstallation Confirmation"
+        },
+        "upgrade": {
+            "heading": "Upgrade Confirmation"
+        }
+    },
+    "install_page": {
+        "progress_save_config": "Saving Collected Information",
+        "progress_start_install_chef": "Starting installation...",
+        "progress_start_uninstall_chef": "Starting uninstallation...",
+        "progress_start_upgrade_chef": "Starting upgrade...",
+        "progress_finish": "Installation completed",
+        "progress_remove_finish": "Uninstallation completed",
+        "progress_upgrade_finish": "Upgrade completed",
+        "progress_canceled": "Installation canceled",
+        "progress_rollback": "Rollbacking files...",
+        "progress_rollback_done": "Rollback completed",
+        "progress_failed": {
+            "install": "Installation Failed",
+            "remove": "Uninstallation Failed",
+            "upgrade": "Upgrade Failed"
+        }
+    },
+    "installation_summary_page": {
+        "install":{
+            "success": {
+                "heading": "Installation Summary",
+                "help_note": "The following components and features have been installed successfully."
+            },
+            "fail": {
+                "heading": "Installation Failed",
+                "help_note": "Some error occurs, please check the log file in currect folder."
+            }
+        },
+        "remove":{
+            "success": {
+                "heading": "Uninstallation Summary",
+                "help_note": "The following components and features have been uninstalled successfully."
+            },
+            "fail": {
+                "heading": "Uninstallation Failed",
+                "help_note": "Some error occurs, please check the log file in currect folder."
+            }
+        },
+        "upgrade": {
+            "success": {
+                "heading": "Upgrade Summary",
+                "help_note": "The following components and features have been upgraded successfully."
+            },
+            "fail": {
+                "heading": "Upgrade Failed",
+                "help_note": "Some error occurs, please check the log file in current folder."
+            }
+        },
+        "rollback":{
+            "heading": "Rollback Summary",
+            "help_note": "The system has been rolled back to its original state."
+        },
+        "delete_warn": "WARN: Some files being used by Teamcenter are not deleted, please refer to warning message in installer.log."
+    },
+    "inputs": {
+        "server_component": "Teamcenter Server Plugin",
+        "dispatcher": "Teamcenter Dispatcher Plugin",
+        "rac_extension": "Client Plugin",
+        "install_dir": "Installation Path",
+        "tc_root": "TC_ROOT",
+        "disp_root": "DISP_ROOT",
+        "tc_data": "TC_DATA",
+        "bb_dir": "Briefcase Browser Root",
+        "tc_user": "Teamcenter Username",
+        "tc_user_psd": "Teamcenter User Password",
+        "infodba_psd": "Infodba Password",
+        "win_admin_user": "Windows Administrator User",
+        "win_admin_user_psd": "Administrator Password",
+        "rms_hostname": "RMS Hostname/IP",
+        "kms_port": "RMS KMS Port",
+        "jpc_eva_port": "JPC Port for Policy Evaluation",
+        "jpc_remote_ip": "Policy Controller IP Address/Hostname",
+        "batch_protection": "Batch Protection",
+        "user_initial_protection": "Manual Protection UI",
+        "rac_rmx": "RMX for Teamcenter RAC",
+        "workflow_initial_protection": "Workflow-driven Protection",
+        "secure_viewer": "NextLabs Secure Viewer UI",
+        "dispatcher_client_extension": "Dispatcher Client Extension",
+        "dispatcher_module": "Dispatcher Module",
+        "translator_rights_checker": "Translator Rights Checker",
+        "dlp_hook_application": "DLP Hook Application",
+        "proxy_runner": "Proxy Runner",
+        "foundation_customization": "Foundation Template Customization",
+        "nxl_template": "NextLabs EDRM Template (NXL)",
+        "active_workspace_support": "Active Workspace Support",
+        "nx_integration": "RMX for NX",
+        "bb_integration": "Briefcase Browser Integration",
+        "partialdownload": "PartialDownload",
+        "scf_integration": "Supplier Collaboration Integration",
+        "nxl_ipem_template": "NextLabs Integration For Creo",
+        "nxl_swim_template": "NextLabs Integration For SolidWorks",
+        "creo_integration": "RMX for Creo",
+        "solidworks_integration": "RMX for SolidWorks",
+        "autocad_integration": "RMX for AutoCAD",
+        "catia_integration": "RMX for CATIA",
+        "rights_management_desktop": "Rights Management Desktop",
+        "skydrm_router_url": "SkyDRM Router URL",
+        "skydrm_tenant_name": "SkyDRM System Bucket",
+        "skydrm_app_id": "SkyDRM App ID",
+        "skydrm_app_key": "SkyDRM App Key",
+        "cc_host": "Control Center host",
+        "cc_port": "Control Center port",
+        "cc_oauth2_https": "Using OAUTH2 HTTPS",
+        "cc_ignore_https_cert": "Ignore CC HTTPS Certificate",
+        "cc_apiuser": "Control Center API User",
+        "cc_apisecret": "Control Center API Secret",
+        "null":""
+    },
+    "ErrorMsgTemplate": "The %s you specified is not valid: %s",
+    "validator_errors": {
+        "dir": "the directory is not exist or valid",
+        "dir_contain_space": "the directory specified contains space, which is not supported",
+        "file": "the file you specified is not exist",
+        "non_empty": "should not be empty",
+        "invalid": "lacking necessary files"
+    },
+    "progress_log_messages": {
+        "bootstrap": "[Progress] Bootstrapping...",
+        "nxl_template": "NXL Template Feature...",
+        "foundation_customization": "Foundation Template Customization Feature...",
+        "batch_protection": "Batch Protection Feature...",
+        "workflow_initial_protection": "Workflow-driven Protection Feature...",
+        "active_workspace_support": "Active Workspace Support Feature...",
+        "scf_integration": "Supplier Collaboration Integration Feature...",
+        "nxl_ipem_template": "NXL Ipem Template Feature...",
+        "nxl_swim_template": "NXL Swim Template Feature...",
+        "dispatcher_module": "Dispatcher Module Feature...",
+        "dispatcher_client_extension": "Dispatcher Client Extension Feature...",
+        "translator_rights_checker": "Translator Rights Checker for Dispatcher Feature...",
+        "user_initial_protection": "Manual Protection UI Feature...",
+        "rac_rmx": "RAC RMX Feature...",
+        "proxy_runner": "Proxy Runner Feature...",
+        "secure_viewer": "Secure Viewer Feature...",
+        "partialdownload": "Partialdownload Feature...",
+        "nx_integration": "RMX for NX Feature...",
+        "bb_integration": "Briefcase Browser Integration Feature...",
+        "creo_integration": "RMX for Creo Feature...",
+        "solidworks_integration": "RMX for SolidWorks Feature...",
+        "autocad_integration": "RMX for AutoCAD Feature...",
+        "catia_integration": "RMX for CATIA Feature...",
+        "rights_management_desktop": "RMD Feature...",
+        "install_finished": "[Progress] Install finished",
+        "uninstall_finished": "[Progress] Uninstall finished",
+        "upgrade_finished": "[Progress] Upgrade finished"
+    },
+    "warning_message": {
+        "jce_not_found": "JCEPolicySDK files is not found in shared_libs",
+        "jce_not_found_warning": "WARNING: JCEPolicySDK files is not found in shared_libs. Please manually replace JCEPolicySDK by following our document."
+    },
+    "hover_msg": {
+        "server_component": "",
+        "dispatcher": "",
+        "rac_extension": "",
+        "nxl_template": "Require Teamcenter Foundation and Translation Service installed.",
+        "foundation_customization": "Require Teamcenter Foundation installed",
+        "batch_protection": "Require Teamcenter Foundation installed",
+        "workflow_initial_protection": "Require Teamcenter Foundation or 2-tier RAC installed",
+        "active_workspace_support": "Require Teamcenter Active WorkSpace Client installed.",
+        "scf_integration": "Require Teamcenter Supplier Collaboration installed.",
+        "nxl_ipem_template": "Require Teamcenter Creo Integration installed.",
+        "nxl_swim_template": "Require Teamcenter SolidWorks Integration installed.",
+        "dispatcher_module": "Require Teamcenter Dispatcher Server installed.",
+        "dispatcher_client_extension": "Require Teamcenter Dispatcher Client installed.",
+        "translator_rights_checker": "Require Teamcenter Dispatcher Server installed.",
+        "user_initial_protection": "Require Teamcenter RAC installed.",
+        "rac_rmx": "Require Teamcenter RAC installed.",
+        "proxy_runner": "Require Teamcenter RAC installed.",
+        "partialdownload": "Require Teamcenter RAC installed.",
+        "nx_integration":"Require Siemens NX installed.",
+        "bb_integration": "Require Siemens Briefcase Browser installed.",
+        "creo_integration": "Require PTC Creo Parametric installed.",
+        "solidworks_integration": "Require SolidWorks installed.",
+        "autocad_integration": "Require AutoCAD installed.",
+        "catia_integration": "Require CATIA installed."
+    }
+}

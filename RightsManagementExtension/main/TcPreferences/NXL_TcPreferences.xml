@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<preferences version="10.0">
+  <category name="NextLabs">
+    <category_description></category_description>
+	<preference name="NXL_Installed_Features" type="String" array="true" disabled="false" protectionScope="System" envEnabled="true">
+      <preference_description>NextLabs&apos; installed features.</preference_description>
+      <context name="Teamcenter">
+        <value>supplier_collaboration_foundation</value>
+        <value>briefcase_browser</value>
+      </context>
+    </preference>
+    <preference name="NXL_Item_Checkin_Propagation_enabled" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Indicate whether the Checkin event of an Item will be propagated to all of children Datasets.</preference_description>
+      <context name="Teamcenter">
+        <value>false</value>
+      </context>
+    </preference>
+    <preference name="NXL_ItemRevision_Checkin_Propagation_enabled" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Indicate whether the Checkin event of an ItemRevision will be propagated to all of children Datasets.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+	
+    <!--<preference name="NXL_Remote_IP" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>IP address of NextLabs Policy Controller for policy evaluation.</preference_description>
+      <context name="Teamcenter">
+        <value>127.0.0.1</value>
+      </context>
+    </preference>-->
+	
+    <preference name="NXL_Remove_Sourcefile" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Indicate whether the source file (unprotected) will be removed from the system after the protected is applied. This includes the file(s) in previous version dataset.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+    <preference name="NXL_TCSOA_Hostname" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs Teamcenter SOA Hostname.</preference_description>
+      <context name="Teamcenter">
+        <value>https://nxt-tc01:8443/tc</value>
+      </context>
+    </preference>
+    <preference name="NXL_Transferred_Attributes" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Metadatas to be transferred from TC business object to the NextLabs Protected file. Default value can be specified and will be used when the value of the business object's metadata is blank. For example, ip_classification:top-secret.</preference_description>
+      <context name="Teamcenter">
+        <value>ip_classification</value>
+        <value>license_list</value>
+      </context>
+    </preference>
+    <preference name="NXL_AUTOPROTECT_ENABLED" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Indicates whether reprotect is automatically triggered after checkin for Nextlabs Protected Dataset(case insensitive)</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+    <preference name="NXL_AUTOPROTECT_DATASET_TYPES" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Dataset Types which will be auto reprotect after checkin(case insensitive)</preference_description>
+      <context name="Teamcenter">
+		<value>ProASM</value>
+		<value>ProDrw</value>
+		<value>ProPrt</value>
+      </context>
+    </preference>
+    <preference name="NXL_DLP_File_Extension_White_List" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Only the volume files which have following extensions will be evaluated for whether the file should be protected on download
+	  For Protect in Motion only(case insensitive), restart is required if the value is changed</preference_description>
+      <context name="Teamcenter">
+        <value>.prt</value>
+        <value>.jt</value>
+        <value>.pdf</value>
+        <value>.doc</value>
+        <value>.docx</value>
+        <value>.xls</value>
+        <value>.xlsx</value>
+        <value>.ppt</value>
+        <value>.pptx</value>
+		<value>.jpg</value>
+      </context>
+    </preference>
+	<!--by default: disabled preferences
+    <preference name="NXL_DLP_Dataset_Type_White_List" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Only these dataset types will be evaluated for whether the file should be protected on download
+	  For Protect in Motion only(case insensitive), restart is required if the value is changed</preference_description>
+      <context name="Teamcenter">
+        <value>UGMASTER</value>
+        <value>UGPART</value>
+        <value>DirectModel</value>
+        <value>MSWORD</value>
+        <value>MSWORDX</value>
+      </context>
+    </preference>
+    <preference name="NXL_DLP_Evaluation_Disabled" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>When the value is true, all files which matches the NXL_DLP_File_Extension_White_List and NXL_DLP_Dataset_Type_White_List will be protected WITHOUT evaluation</preference_description>
+      <context name="Teamcenter">
+        <value>false</value>
+      </context>
+    </preference>
+	-->
+    <preference name="NXL_Property_Black_List" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>The name of the properties which will not be sent for evaluation(Case insensitive, restart required)</preference_description>
+      <context name="Teamcenter">
+        <value>timestamp</value>
+        <value>fnd0GeneralAuditLogs</value>
+      </context>
+    </preference>
+	<preference name="NXL_RMX_Solution" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>The solution type of Nextlabs RMX for Teamcenter, the value must be either AtRest or InMotion (case insensitive).</preference_description>
+      <context name="Teamcenter">
+        <value>##AtRest or InMotion##</value>
+      </context>
+    </preference>
+	<preference name="NXL_Relation_Filter" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Filter the relations that will be protected inside a revision.</preference_description>
+      <context name="Teamcenter">
+        <value></value>
+      </context>
+    </preference>
+	<preference name="NXL_DS_Chkout_RetryCount" type="Integer" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Dataset checkout retry count. This specifies number of retry for NextLabs dispatcher client on checkout dataset during uploading the protected file back to the dataset.</preference_description>
+      <context name="Teamcenter">
+        <value>3</value>
+      </context>
+    </preference>
+    <preference name="NXL_DS_Chkout_WaitTime" type="Integer" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Dataset checkout wait time. This specifies the waiting time (in milliseconds) for NextLabs Dispatcher Client on checkout dataset during uploading the protected file back to the dataset.</preference_description>
+      <context name="Teamcenter">
+        <value>1000</value>
+      </context>
+    </preference>
+	<preference name="NXL_Evaluation_Attributes" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Dataset&apos;s attributes to be sent to Policy Decision Point for policy evalaution.</preference_description>
+      <context name="Teamcenter">
+        <value>ip_classification</value>
+      </context>
+    </preference>
+	<preference name="NXL_NR_Blacklist" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Named reference exclusion list. List to exclude named reference to be protected by NextLabs EDRM.</preference_description>
+      <context name="Teamcenter">
+		<!-- Foundation -->
+        <value>UGPART-ATTR</value>
+        <value>UGPART-BBOX</value>
+        <value>UGPART-ATTRIBUTES</value>
+        <value>UG-QuickAccess-Text</value>
+        <value>UG-QuickAccess-Binary</value>
+		<!-- IPEM -->
+		<value>MetaData</value>
+		<value>Pro2_DuplicateInstruction</value>
+      </context>
+    </preference>
+	<preference name="NXL_PDPHOST_SERVERAPP" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs PDP host for server applications.</preference_description>
+      <context name="Teamcenter">
+        <value>jpc01</value>
+      </context>
+    </preference>
+	<preference name="NXL_PDPPORT_SERVERAPP" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs PDP port for server applications.</preference_description>
+      <context name="Teamcenter">
+        <value>58080</value>
+      </context>
+    </preference>
+	<preference name="NXL_PDP_HTTPS_SERVERAPP" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Whether the NextLabs PDP service is over HTTPS.</preference_description>
+      <context name="Teamcenter">
+        <value>false</value>
+      </context>
+    </preference>
+	<preference name="NXL_PDP_IGNOREHTTPS_SERVERAPP" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Ignore HTTPS self-signed certificates error, if using self-signed certificates. This is for service communication with Control Center.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+    <preference name="NXL_PDP_DEFAULT_ACTION" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Default action for PDP.</preference_description>
+      <context name="Teamcenter">
+        <value>deny</value>
+      </context>
+    </preference>
+    <preference name="NXL_PDP_DEFAULT_MESSAGE" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Default PDP message.</preference_description>
+      <context name="Teamcenter">
+        <value>PDP connection timeout</value>
+      </context>
+    </preference>
+	<preference name="NXL_OAUTH2HOST" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs OAuth2 host.</preference_description>
+      <context name="Teamcenter">
+        <value>cc01</value>
+      </context>
+    </preference>
+	<preference name="NXL_OAUTH2PORT" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs OAuth2 port.</preference_description>
+      <context name="Teamcenter">
+        <value>443</value>
+      </context>
+    </preference>
+	<preference name="NXL_OAUTH2_HTTPS" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Whether the NextLabs OAuth2 service is over HTTPS.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+	<preference name="NXL_OAUTH2_CLIENTID" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs OAuth2 Client ID.</preference_description>
+      <context name="Teamcenter">
+        <value>apiclient</value>
+      </context>
+    </preference>
+	<preference name="NXL_OAUTH2_CLIENTSECRET" type="String" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>NextLabs OAuth2 Client Secret.</preference_description>
+      <context name="Teamcenter">
+        <value>password</value>
+      </context>
+    </preference>
+	
+	<preference name="NXL_PURGE_REV_SEQ" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="true">
+      <preference_description>Indicate whether the Item Revision sequences will be purged from the system after the protection is applied. This includes the file(s) in previous version dataset.</preference_description>
+      <context name="Teamcenter">
+        <value>false</value>
+      </context>
+    </preference>
+	
+	<preference name="NXL_protect_cmd_enable" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Enable or disable NextLabs Protect command button in client interfaces.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+    <preference name="NXL_unprotect_cmd_enable" type="Logical" array="false" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Enable or disable NextLabs Remove Protection command button in client interfaces.</preference_description>
+      <context name="Teamcenter">
+        <value>true</value>
+      </context>
+    </preference>
+  </category>
+</preferences>

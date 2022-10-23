@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.7.0//EN" "http://gwtproject.org/doctype/2.7.0/gwt-module.dtd">
+<!-- 
+@<COPYRIGHT>@
+================================================================================
+Copyright 2016.
+Siemens Product Lifecycle Management Software Inc.
+All Rights Reserved.
+================================================================================
+@<COPYRIGHT>@
+-->
+<module>
+    <inherits name="com.siemens.splm.clientfx.tcui.TcUI" />
+    <inherits name="com.siemens.splm.clientfx.base.fxBase" />
+    <source path="internal" />
+    <source path="resources" />
+</module>

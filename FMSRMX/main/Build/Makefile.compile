@@ -1,0 +1,101 @@
+# Makefile to compile code and build installers.
+
+
+#
+# Check for errors
+#
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error NLEXTERNALDIR undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error NLEXTERNALDIR2 undefined.)
+endif
+
+ifeq ($(BUILDTYPE),)
+  $(error  BUILDTYPE undefined.)
+endif
+
+ifeq ($(LOCAL_XLIB_DIR),)
+  $(error  LOCAL_XLIB_DIR undefined.)
+endif
+#
+# Variables
+#
+REG_MSBuildToolsPath=$(shell reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\14.0" /v MSBuildToolsPath)
+MSBUILD_DIR=$(subst \,/,$(wordlist 4,$(words $(REG_MSBuildToolsPath)), $(REG_MSBuildToolsPath)))
+MSBUILD_EXE="$(MSBUILD_DIR)msbuild.exe"
+
+JAVA_SDK_ROOT=$(NLEXTERNALDIR2)/j2sdk/jdk1.8.0_191
+#SKYDRM_SDK_ROOT=$(LOCAL_XLIB_DIR)/skydrmsdk
+SKYDRM_DESKTOP_DIR=${LOCAL_XLIB_DIR}/skydrmsdk/bin/view_wateramrk
+SKYDRM_REDIST_DIR=$(SKYDRM_SDK_ROOT)/redist/SDKLib_redist_x64
+MSBUILD_FLAGS=/t:build /v:q /fl /flp:Verbosity=minimal /p:VER_MAJOR=$(VERSION_MAJOR) /p:VER_MINOR=$(VERSION_MINOR) /p:VER_MAINT=$(VERSION_MAINTENANCE) /p:VER_PATCH=$(VERSION_PATCH) /p:VER_BUILD=$(BUILD_NUMBER) /p:CONFIG_TYPE=$(CONFIG_TYPE) /p:SKYDRM_SDK_ROOT=$(SKYDRM_SDK_ROOT) /p:SKYDRM_DESKTOP_ROOT=$(SKYDRM_DESKTOP_ROOT) /p:JAVA_SDK_ROOT=$(JAVA_SDK_ROOT)
+BUILD_LOGFILE=msbuild.log
+BUILD_OUTPUT_DIR_x64=$(NLPROJECTROOT)/x64/Release
+
+
+$(info --------------------------------------------------------------------------)
+$(info NLPROJECTROOT=$(NLPROJECTROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info REG_MSBuildToolsPath=$(REG_MSBuildToolsPath))
+$(info MSBUILD_DIR=$(MSBUILD_DIR))
+$(info MSBUILD_EXE=$(MSBUILD_EXE))
+$(info MSBUILD_FLAGS=$(MSBUILD_FLAGS))
+$(info SKYDRM_SDK_ROOT=$(SKYDRM_SDK_ROOT))
+$(info SKYDRM_DESKTOP_ROOT=$(SKYDRM_DESKTOP_ROOT))
+$(info JAVA_SDK_ROOT=$(JAVA_SDK_ROOT))
+$(info ---------------------------------------------------------------------------)
+
+#define a multiple line variable as a function
+define compile_solution = 
+	@echo "================================================================================"
+	$(MSBUILD_EXE) /p:Configuration=$(2) /p:platform=$(3) $(MSBUILD_FLAGS) $(1) ;	\
+	COMPILE_STATUS=$$? ;									\
+	if [ -f $(BUILD_LOGFILE) ] ; then						\
+		echo "[[DUMP BEGIN - $(BUILD_LOGFILE)]]" ;			\
+		cat $(BUILD_LOGFILE) ;								\
+		echo "[[DUMP END - $(BUILD_LOGFILE)]]" ;			\
+		rm -rf $(BUILD_LOGFILE);							\
+	else													\
+		echo "WARNING: Cannot find $(BUILD_LOGFILE)" ;		\
+	fi
+endef
+
+#
+# Targets
+#
+
+.PHONY: all
+all:compile
+
+.PHONY: compile
+compile:clean64 compile_fmsrmx copy_libeay32 copy_viewwatermark
+	@echo "================================================================================"
+	ls -lR x64/$(BUILDTYPE)
+
+.PHONY: compile_fmsrmx
+compile_fmsrmx:
+	$(call compile_solution,$(NLPROJECTROOT)/FMSRMX.sln,$(BUILDTYPE),x64);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: copy_libeay32
+copy_libeay32:
+	echo "Copying libeay32.dll from SkyDRM redist packages...." ;	\
+	cp -pf $(SKYDRM_REDIST_DIR)/libeay32.dll $(BUILD_OUTPUT_DIR_x64)
+	
+.PHONY: copy_viewwatermark
+copy_viewwatermark:
+	echo "Copying viewwatermark64.dll from SkyDRM Desktop...." ;	\
+	cp -pf $(SKYDRM_DESKTOP_DIR)/viewwatermark64.dll $(BUILD_OUTPUT_DIR_x64)
+
+.PHONY: clean64
+clean:
+	-rm -rf $(BUILD_OUTPUT_DIR_x64)
+

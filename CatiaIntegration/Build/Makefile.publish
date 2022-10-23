@@ -1,0 +1,137 @@
+# Make file to publish output.
+#
+# The following variables must be defined in commandline:
+#	VERSION_BUILD_SHORT
+#
+# Example:
+#	make -f Makefile.publish repo
+#	make -f Makefile.publish sync
+
+
+#
+# Check for errors
+#
+
+OS=$(shell uname)
+
+ifeq ($(PROJECT_NAME),)
+  $(error PROJECT_NAME undefined.)
+endif
+
+ifeq ($(VERSION_STR),)
+  $(error VERSION_STR undefined.)
+endif
+
+ifeq ($(VERSION_BUILD_SHORT),)
+  $(error VERSION_BUILD_SHORT undefined.)
+endif
+
+ifeq ($(BUILD_DATE),)
+  $(error BUILD_DATE undefined.)
+endif
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(REPOSITORY_ROOT),)
+  $(error REPOSITORY_ROOT undefined.)
+endif
+
+ifeq ($(RELEASE_ARTIFACTS_ROOT),)
+  $(error RELEASE_ARTIFACTS_ROOT undefined.)
+endif
+
+ifeq ($(CADRMX_COMMON_DIR),)
+  $(error CADRMX_COMMON_DIR undefined.)
+endif
+#
+# Constants
+#
+
+LOCAL_OUTPUT_DIR=$(NLPROJECTROOT)/tmp_output
+LOCAL_WORK_DIR=$(NLPROJECTROOT)/tmp_work
+LOCAL_XLIB_DIR=$(NLPROJECTROOT)/tmp_xlibs
+RMX_OUTPUT_DIR=$(LOCAL_OUTPUT_DIR)/CatiaIntegration
+ifeq ($(CADRMX_REPOSITORY),)
+	REPOSITORY_FOLDER_NAME=RightsManagementExtension
+else
+	REPOSITORY_FOLDER_NAME=$(CADRMX_REPOSITORY)
+endif
+BASE_DIR=Teamcenter/$(REPOSITORY_FOLDER_NAME)/$(PROJECT_NAME)/$(VERSION_STR)/$(VERSION_BUILD_SHORT)
+ZIP_FILE_NAME_BIN=$(PROJECT_NAME)-$(VERSION_STR)-$(VERSION_BUILD_SHORT)-$(BUILD_DATE)-bin.zip
+BUILD_OUTPUT_DIR_x64=$(NLPROJECTROOT)/x64/Release
+REPOSITORY_BUILD_DIR=$(REPOSITORY_ROOT)/$(BASE_DIR)
+RELEASE_ARTIFACTS_DIR=$(RELEASE_ARTIFACTS_ROOT)/$(BASE_DIR)/x64
+SIGNING_BATCH="$(CADRMX_COMMON_DIR)/Build/signModulesByServer256Only.bat"
+BUILD_MANIFEST_FILE_NAME=build.manifest
+
+#
+# Info
+#
+
+$(info --------------------------------------------------------------)
+$(info PROJECT_NAME                   = $(PROJECT_NAME)) 
+$(info VERSION_STR                    = $(VERSION_STR)) 
+$(info VERSION_BUILD_SHORT            = $(VERSION_BUILD_SHORT)) 
+$(info ZIP_FILE_NAME_BIN              = $(ZIP_FILE_NAME_BIN)) 
+$(info REPOSITORY_BUILD_DIR           = $(REPOSITORY_BUILD_DIR)) 
+$(info RELEASE_ARTIFACTS_DIR          = $(RELEASE_ARTIFACTS_DIR)) 
+$(info LOCAL_WORK_DIR                 = $(LOCAL_WORK_DIR)) 
+$(info LOCAL_OUTPUT_DIR               = $(LOCAL_OUTPUT_DIR)) 
+$(info --------------------------------------------------------------)
+$(info )
+
+
+#
+# Targets
+#
+
+.PHONY: all
+all: archive 
+
+.PHONY: archive
+archive: sign_dlls archive_catia
+	@echo "Zipping distribution package..."
+	cd $(LOCAL_OUTPUT_DIR);	zip -r "$(LOCAL_WORK_DIR)/$(ZIP_FILE_NAME_BIN)" .
+	@echo "Copying distribution zip file to repository..."
+	@if [ ! -d $(REPOSITORY_BUILD_DIR) ]; then	\
+		mkdir -p $(REPOSITORY_BUILD_DIR) ;		\
+	fi
+	cp -rf $(LOCAL_WORK_DIR)/$(ZIP_FILE_NAME_BIN) $(REPOSITORY_BUILD_DIR)
+	ls -lR $(REPOSITORY_BUILD_DIR)
+	@echo "Copying build artifacts to repository..."
+	@if [ ! -d $(RELEASE_ARTIFACTS_DIR) ]; then	\
+		mkdir -p $(RELEASE_ARTIFACTS_DIR) ;		\
+	fi
+	rm -rf $(BUILD_OUTPUT_DIR_x64)/obj
+	cp -pf $(BUILD_OUTPUT_DIR_x64)/* $(RELEASE_ARTIFACTS_DIR)
+	ls -lR $(RELEASE_ARTIFACTS_DIR)
+
+.PHONY: archive_catia
+archive_catia:make_dir
+	@echo "Archiving libraries for CatiaRMX"
+	mkdir -p $(RMX_OUTPUT_DIR)
+	cp -pf $(BUILD_OUTPUT_DIR_x64)/CatiaRMX_x64.dll $(RMX_OUTPUT_DIR)
+	cp -pf $(BUILD_OUTPUT_DIR_x64)/LibRMX_x64.dll $(RMX_OUTPUT_DIR)
+	cp -pf $(NLPROJECTROOT)/common/log4cplus.properties $(RMX_OUTPUT_DIR)
+	mkdir -p $(RMX_OUTPUT_DIR)/tools
+	cp -pf $(BUILD_OUTPUT_DIR_x64)/rmxutility.exe $(RMX_OUTPUT_DIR)/tools
+	cp -pf $(BUILD_OUTPUT_DIR_x64)/libeay32.dll $(RMX_OUTPUT_DIR)/tools
+	ls -lR $(CREORMX4_DIR)
+
+.PHONY: sign_dlls
+sign_dlls:
+	cd $(BUILD_OUTPUT_DIR_x64) && $(SIGNING_BATCH)
+	  
+.PHONY:make_dir
+make_dir:
+	@if [ ! -d $(LOCAL_OUTPUT_DIR) ]; then	\
+		mkdir -p $(LOCAL_OUTPUT_DIR) ;		\
+	fi
+	@rm -rf $(LOCAL_OUTPUT_DIR)/*
+	@if [ ! -d $(LOCAL_WORK_DIR) ]; then	\
+		mkdir -p $(LOCAL_WORK_DIR) ;		\
+	fi
+	rm -rf $(LOCAL_WORK_DIR)/*
+

@@ -1,0 +1,214 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide
+	them from commandline (using -D option). For example:
+
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dexternal.dir=c:/depot/external -f scripts/build_xlib.xml
+
+	or
+
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dexternal.dir=%NLEXTERNALDIR%
+		ant -f scripts/build_xlib.xml -v
+-->
+
+<project name="build_xlib" default="all" basedir="..">
+
+	<!-- Debug
+	<echoproperties />
+	<fail message="INFO: Debug" />
+	-->
+
+	<!-- Properties -->
+	<property name="nlbuildroot" location="${basedir}"/>
+
+	<property file="${nlbuildroot}/build/build.properties" />
+	<property file="${nlbuildroot}/build/build_common.properties" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Targets-->
+	<target name="all" depends="clean, prepare_xlib_jar" />
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+	</target>
+
+	<target name="prepare_xlib_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+
+		<!-- Extract files -->
+		<mkdir dir="${xlib_jar_dir}/OneStepCommands" />
+		<unzip src="${xlib_AWCOneStepCommands_build_artifacts_zip_file}" dest="${xlib_jar_dir}/OneStepCommands" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/Customized Menu Item" />
+		<unzip src="${xlib_CustomizedMenuItem_build_artifacts_zip_file}" dest="${xlib_jar_dir}/Customized Menu Item" overwrite="yes">
+			<patternset>
+				<include name="**/com.nextlabs.menuitem/com.nextlabs.menuitem.jar" />
+			</patternset>
+			<mapper type="flatten" />
+		</unzip>
+
+
+		<unzip src="${xlib_BatchProtect_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+		<mkdir dir="${xlib_jar_dir}/fmsrmx" />
+		<unzip src="${xlib_FMS_RMX_build_artifacts_zip_file}" dest="${xlib_jar_dir}/fmsrmx" overwrite="yes"/>
+
+		<mkdir dir="${xlib_jar_dir}/racrmx" />
+		<unzip src="${xlib_RACRMX_build_artifacts_zip_file}" dest="${xlib_jar_dir}/racrmx" overwrite="yes"/>
+		<unzip src="${xlib_PartialDownload_client_build_artifacts_zip_file}" dest="${xlib_jar_dir}/PartialDownload_client" overwrite="yes"/>
+		<unzip src="${xlib_PartialDownload_server_build_artifacts_zip_file}" dest="${xlib_jar_dir}/PartialDownload_server" overwrite="yes"/>
+
+		<unzip src="${xlib_Dispatcher_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<unzip src="${xlib_NXLOverlay_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+		<unzip src="${xlib_TemplateModifier_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/Translator" />
+		<unzip src="${xlib_Translator_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/TranslatorRightsChecker" />
+		<unzip src="${xlib_TranslatorRightsChecker_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<unzip src="${xlib_NxlAutoProtect_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<unzip src="${xlib_NxlAutoProtect_linux_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<!-- <unzip src="${xlib_CreoRMXInstaller_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" /> -->
+
+		<!-- <unzip src="${xlib_NXRMXInstaller_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" /> -->
+
+		<!-- <unzip src="${xlib_SldWorksRMXInstaller_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" /> -->
+
+		<!-- <unzip src="${xlib_AutoCADRMXInstaller_build_artifcats_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" /> -->
+
+		<mkdir dir="${xlib_jar_dir}/FIPSJavaSDK" />
+		<unzip src="${xlib_FIPSJavaSDK_build_artifacts_zip_file}" dest="${xlib_jar_dir}/FIPSJavaSDK" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/RMDRPM" />
+		<unzip src="${xlib_RMDRPM_build_artifacts_zip_file}" dest="${xlib_jar_dir}/RMDRPM" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/SCFIntegration" />
+		<unzip src="${xlib_SCFIntegration_build_artifacts_zip_file}" dest="${xlib_jar_dir}/SCFIntegration" overwrite="yes" />
+
+		<mkdir dir="${xlib_jar_dir}/BBIntegration" />
+		<unzip src="${xlib_BBIntegration_build_artifacts_zip_file}" dest="${xlib_jar_dir}" overwrite="yes" />
+
+		<mkdir dir="{xlib_jar_dir}/BBPlugin" />
+		<unzip src="${xlib_BBPlugin_build_artifacts_zip_file}" dest="${xlib_jar_dir}/BBPlugin" overwrite="yes" />
+		
+		<mkdir dir="${xlib_jar_dir}/jaxb-ri" />
+		<copy todir="${xlib_jar_dir}/jaxb-ri" >  
+			<fileset dir="${nlexternaldir2}/jaxb/jaxb-3.0.0" includes="**"/>  
+		</copy>
+
+		<copy file="${xlib_ldifgenerator_build_artifacts_zip_file}" tofile="${xlib_jar_dir}/TCLdifGenerator.zip" preservelastmodified="true" overwrite="false" />
+
+		<!-- Check if file exists
+		Notes: Currently, Unzip task or ZipFileSet does not have a way to report error if a file
+		cannot be found in a zip file. In addition, there is no simple way to check if a file
+		exists in Ant. We can call out to Bash to check if a file exists, but that creates an
+		unnecessary dependency on Bash. In the following, we try to check if a file exist using
+		a fake move. Doing this, an error will be generated if a file does not exist.
+		-->
+		<!-- <move file="${xlib_jar_dir}/OneStepCommands" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Customized Menu Item/com.nextlabs.menuitem.jar" todir="${xlib_jar_dir}/Customized Menu Item" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/BatchProtect" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/jakarta.activation.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/jakarta.xml.bind-api.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/commons-configuration-1.8.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/commons-lang-2.6.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/tonxlfile.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/tonxlfile.bin" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/Dispatcher/openaz" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TranslatorRightsChecker/transrightschecker.jar" todir="${xlib_jar_dir}/TranslatorRightsChecker" preservelastmodified="true" overwrite="false" /> -->
+
+		<!-- Translator -->
+		<!-- <move file="${xlib_jar_dir}/bcpkix-jdk15on-1.64.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/bcprov-jdk15on-1.64.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/common-framework.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/commons-cli-1.2.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/commons-codec-1.11.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/commons-lang3-3.5.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/commons-logging-1.2.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/config.properties" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/encryptConfigPassword.bat" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/encryptConfigPassword.sh" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/encryptSecret.bat" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/encryptSecret.sh" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/gson-2.3.1.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/guava-18.0.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/httpclient-4.5.12.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/httpcore-4.4.13.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/httpmime-4.5.12.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/javax.servlet-api-3.1.0.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/log4j.properties" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/log4j-1.2.17.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/log4j-api-2.10.0.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/log4j-core-2.10.0.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/rmjavasdk-ng.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/secret.properties" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/shared.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/slf4j-api-1.7.21.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/slf4j-log4j12-1.7.21.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/translator.bat" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/translator.sh" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/translator.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" /> -->
+
+		<!--NxlAutoProtect binaries-->
+		<move file="${xlib_jar_dir}/TC_BIN11/NxlAutoProtect.dll" todir="${xlib_jar_dir}/TC_BIN11" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_BIN11/NxlUtils64.dll" todir="${xlib_jar_dir}/TC_BIN11" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_BIN12/NxlAutoProtect.dll" todir="${xlib_jar_dir}/TC_BIN12" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_BIN12/NxlUtils64.dll" todir="${xlib_jar_dir}/TC_BIN12" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_BIN13/NxlAutoProtect.dll" todir="${xlib_jar_dir}/TC_BIN13" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_BIN13/NxlUtils64.dll" todir="${xlib_jar_dir}/TC_BIN13" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/RMX_ROOT/bin32/nxlrunner.exe" todir="${xlib_jar_dir}/RMX_ROOT/bin32" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/RMX_ROOT/bin32/libeay32.dll" todir="${xlib_jar_dir}/RMX_ROOT/bin32" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/TC_RUNNER/ProxyRunner.exe" todir="${xlib_jar_dir}/TC_RUNNER" preservelastmodified="true" overwrite="false" />
+
+		<!-- SCFIntegration binaries
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN10/bczModifier.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN10" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN10/nx_edit_references.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN10" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN10/NxlHook.dll" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN10" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN10/XmlModifier.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN10" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN11/bczModifier.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN11" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN11/nx_edit_references.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN11" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN11/NxlHook.dll" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN11" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/SCFIntegration/TC_BIN11/XmlModifier.exe" todir="${xlib_jar_dir}/SCFIntegration/TC_BIN11" preservelastmodified="true" overwrite="false" /> -->
+
+		<!--PartialDownload binaries-->
+		<!-- <move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/bcpkix-jdk15on-1.64.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/bcprov-jdk15on-1.64.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/com.nextlabs.teamcenter.fms.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/common-framework.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-cli-1.2.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-codec-1.11.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-io-2.5.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-lang3-3.5.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-logging-1.2.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-pool2-2.5.0.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/crypt.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/gson-2.3.1.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/guava-18.0.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpclient-4.5.12.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpcore-4.4.13.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpmime-4.5.12.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/javax.servlet-api-3.1.0.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/log4j-api-2.10.0.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/log4j-core-2.10.0.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/rmjavasdk-ng.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/shared.jar" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/log4j2.properties" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload" preservelastmodified="true" overwrite="false" />
+		<move file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/sdk.properties" todir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload" preservelastmodified="true" overwrite="false" /> -->
+
+
+		<!-- Template Modifier -->
+		<!-- <move file="${xlib_jar_dir}/TemplateModifier" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" /> -->
+	</target>
+</project>

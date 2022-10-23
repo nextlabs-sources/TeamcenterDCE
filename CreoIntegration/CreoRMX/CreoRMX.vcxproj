@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{98B3B17C-2CEF-4A77-9EA0-F94591F28BD8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CreoIntegration</RootNamespace>
+    <ProjectName>CreoRMX</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="rmx_env.props" />
+    <Import Project="..\versionInfo_env.props" />
+    <Import Project="..\log4cplus_vc11_env.props" />
+    <Import Project="otk3_env.props" />
+    <Import Project="madcHook_vc11_env.props" />
+    <Import Project="..\CADCommonShared.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="rmx_env.props" />
+    <Import Project="..\versionInfo_env.props" />
+    <Import Project="..\log4cplus_vc11_env.props" />
+    <Import Project="otk3_env.props" />
+    <Import Project="madcHook_vc11_env.props" />
+    <Import Project="..\CADCommonShared.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_x64</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_x64</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalOptions>/ignore:4049 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent />
+    <PreBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CADRMXCommon\PathEx.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RegKeyEntry.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXLogger.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXUtils.h" />
+    <ClInclude Include="..\..\CADRMXCommon\SysErrorMessage.h" />
+    <ClInclude Include="..\common\CommonTypes.h" />
+    <ClInclude Include="..\common\CreoRMXLogger.h" />
+    <ClInclude Include="..\common\DelayLoadDllHlp.h" />
+    <ClInclude Include="CommonInc.h" />
+    <ClInclude Include="CustomizeUsageControl.h" />
+    <ClInclude Include="OtkXHooks.h" />
+    <ClInclude Include="OtkXModel.h" />
+    <ClInclude Include="OtkXSessionCache.h" />
+    <ClInclude Include="OtkXTypes.h" />
+    <ClInclude Include="ProtectController.h" />
+    <ClInclude Include="OtkXUtils.h" />
+    <ClInclude Include="ProtectJob.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="RPMDirectoryMgr.h" />
+    <ClInclude Include="UsageController.h" />
+    <ClInclude Include="WatermarkController.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CADRMXCommon\PathEx.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RegKeyEntry.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RMXUtils.cpp" />
+    <ClCompile Include="..\common\DelayLoadDllHlp.cpp" />
+    <ClCompile Include="CustomizeUsageControl.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="OtkXHooks.cpp" />
+    <ClCompile Include="OtkXModel.cpp" />
+    <ClCompile Include="OtkXSessionCache.cpp" />
+    <ClCompile Include="OtkXUtils.cpp" />
+    <ClCompile Include="ProtectController.cpp" />
+    <ClCompile Include="ProtectJob.cpp" />
+    <ClCompile Include="RPMDirectoryMgr.cpp" />
+    <ClCompile Include="UsageController.cpp" />
+    <ClCompile Include="WatermarkController.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VersionInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="creotk_3.0.dat" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

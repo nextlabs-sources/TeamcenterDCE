@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <JNISDK>$(NLEXTERNALDIR2)\j2sdk\jdk1.7.0_75</JNISDK>
+    <IS_64BITS>64</IS_64BITS>
+    <VER_MAJOR>5</VER_MAJOR>
+    <VER_MINOR>0</VER_MINOR>
+    <VER_MAINT>0</VER_MAINT>
+    <VER_PATCH>0</VER_PATCH>
+    <VER_BUILD>902</VER_BUILD>
+    <BuildType>Release</BuildType>
+    <CONFIG_TYPE>$(COMPUTERNAME)</CONFIG_TYPE>
+    <TCDCE_SRC_ROOT>$(SolutionDir)\..\..\</TCDCE_SRC_ROOT>
+    <VER_COPYRIGHT_YEAR>2022</VER_COPYRIGHT_YEAR>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(ProjectDir);$(SolutionDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN$(PlatformArchitecture);WNT;TARGETFILENAME="$(TargetFileName)";FILE_VER="$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH) $(CONFIG_TYPE) $(VER_BUILD)";PROJECT_NAME="$(ProjectName)";_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>VER_FILE=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_FILE_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";VER_PRODUCT=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_PRODUCT_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";STR_EN_COMPANY_NAME=\"Nextlabs, Inc.\";STR_EN_COPYRIGHT=\"Copyright (C) $(VER_COPYRIGHT_YEAR)\";STR_EN_ORIGINAL_NAME=\"$(TargetFileName)\";STR_EN_PRODUCT_NAME=\"Nextlabs Rights Management eXtension for Siemens Teamcenter $(TC_VER)\";STR_EN_FILE_DESCRIPTION=\"$(ProjectName) $(PlatformToolset) $(CONFIG_TYPE) build $(VER_BUILD) \";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="JNISDK">
+      <Value>$(JNISDK)</Value>
+    </BuildMacro>
+    <BuildMacro Include="IS_64BITS">
+      <Value>$(IS_64BITS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MAJOR">
+      <Value>$(VER_MAJOR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MINOR">
+      <Value>$(VER_MINOR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MAINT">
+      <Value>$(VER_MAINT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_PATCH">
+      <Value>$(VER_PATCH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_BUILD">
+      <Value>$(VER_BUILD)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BuildType">
+      <Value>$(BuildType)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CONFIG_TYPE">
+      <Value>$(CONFIG_TYPE)</Value>
+    </BuildMacro>
+    <BuildMacro Include="TCDCE_SRC_ROOT">
+      <Value>$(TCDCE_SRC_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_COPYRIGHT_YEAR">
+      <Value>$(VER_COPYRIGHT_YEAR)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

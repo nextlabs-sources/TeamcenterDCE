@@ -1,0 +1,9 @@
+name RMX Test for Creo 7.0
+startup dll
+toolkit object
+exec_file $CREO_RMX_ROOT\XTest\CreoRMXTestFwk7_x64.dll
+text_dir $CREO_RMX_ROOT\XTest
+allow_stop true
+delay_start false
+fail_tol true
+end

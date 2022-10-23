@@ -1,0 +1,11 @@
+cookbook_path       "#{ENV['START_DIR']}/cookbooks"
+listen              false
+local_mode          true
+chef_zero.enabled   true
+json_attribs        "#{ENV['START_DIR']}/silence/rmx_properties_ui.json"
+log_location        "#{ENV['START_DIR']}/installer.log"
+log_level           :info
+verbose_logging     true
+nodename            "localhost"
+node_path           Dir.tmpdir
+cache_path          "#{ENV['START_DIR']}/debug"

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="SolutionShared.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <JNISDK>$(NLEXTERNALDIR2)\j2sdk\jdk1.7.0_75_x86</JNISDK>
+    <IS_64BITS />
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="JNISDK">
+      <Value>$(JNISDK)</Value>
+    </BuildMacro>
+    <BuildMacro Include="IS_64BITS">
+      <Value>$(IS_64BITS)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

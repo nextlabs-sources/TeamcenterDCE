@@ -1,0 +1,143 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_swimrmx" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+
+	<!-- Global properties -->
+	<property name="swim_dir" location="${swim_dir}" />
+	<property name="build_dir" location="${nlprojectroot}/SldWorksRMX/x64" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+	<property name="jars_dir" value="${classes_dir}/swimrmx" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="nlprojectroot is not set" unless="nlprojectroot" />
+	<fail message="nlprojectroot is empty">
+		<condition>
+			<equals arg1="${nlprojectroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlprojectroot}" type="dir" property="local.nlprojectroot_exists" />
+	<fail message="nlprojectroot directory does not exist - ${nlprojectroot}" unless="local.nlprojectroot_exists" />
+
+	<fail message="swim_dir is not set" unless="swim_dir" />
+	<fail message="swim_dir is empty">
+		<condition>
+			<equals arg1="${swim_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+	<fail message="xlib_dir is not set" unless="xlib_dir" />
+	<fail message="xlib_dir is empty">
+		<condition>
+			<equals arg1="${xlib_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<path id="compile.classpath">
+		<fileset dir="${swim_dir}">
+			<include name="swim.jar" />
+		</fileset>
+		<fileset dir="${swim_dir}/soa_client12">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${swim_dir}/soa_client12/external">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="compile.classpath2">
+		<fileset dir="${jars_dir}">
+			<include name="swimrmx.jar" />
+		</fileset>
+	</path>
+
+	<path id="compile.classpath3">
+		<fileset dir="${nlexternaldir}/apache-ant/apache-ant-1.7.0/lib">
+			<exclude name="ant-apache-log4j.jar" />
+		</fileset>
+		<fileset dir="${swim_dir}/soa_client12/external">
+			<exclude name="log4j-api-2.8.2.jar" />
+		</fileset>
+		<fileset dir="${jars_dir}">
+			<include name="log4j-1.2.17.jar" />
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile" />
+
+	<target name="compile" description="Compile the project" depends="">
+
+		<mkdir dir="${classes_dir}" />
+		<mkdir dir="${jars_dir}" />
+
+		<copy todir="${jars_dir}" overwrite="true">
+			<fileset file="${nlprojectroot}/nxlswim/src/com/nextlabs/swrmx/logger/*.properties" />
+		</copy>
+
+		<copy todir="${jars_dir}" overwrite="true">
+			<fileset file="${xlib_dir}/jar/log4j-1.2.17.jar" />
+		</copy>
+
+		<javac srcdir="${nlprojectroot}/nxlswim/src/com/nextlabs/swrmx" destdir="${classes_dir}" debug="true" debuglevel="lines,vars,source" verbose="true">
+			<classpath refid="compile.classpath" />
+			<classpath refid="compile.classpath3" />
+			<include name="**/*.java" />
+
+		</javac>
+
+		<jar destfile="${jars_dir}/swimrmx.jar">
+			<fileset dir="${classes_dir}">
+				<include name="com/nextlabs/swrmx/logger/*.class" />
+				<include name="com/nextlabs/swrmx/nxlutils/*.class" />
+				<include name="com/nextlabs/swrmx/socket/*.class" />
+			</fileset>
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+
+		<javac srcdir="${nlprojectroot}/nxlswim/src/com/transcendata/userexits" destdir="${classes_dir}" debug="true" debuglevel="lines,vars,source" verbose="true">
+			<classpath refid="compile.classpath" />
+			<classpath refid="compile.classpath2" />
+			<include name="**/*.java" />
+		</javac>
+	</target>
+</project>
+

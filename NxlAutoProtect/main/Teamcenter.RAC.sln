@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxlAutoProtect", "NxlAutoProtect\NxlAutoProtect_vs2010.vcxproj", "{9356C27E-2C0E-479E-AC97-BCA4ECE3C010}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NxlSCFIntegration", "NxlSCFIntegration\NxlSCFIntegration.vcxproj", "{313B3612-C98F-4B08-ABFD-3C1FDD673D98}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9356C27E-2C0E-479E-AC97-BCA4ECE3C010} = {9356C27E-2C0E-479E-AC97-BCA4ECE3C010}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9356C27E-2C0E-479E-AC97-BCA4ECE3C010}.Debug|x64.ActiveCfg = Debug|x64
+		{9356C27E-2C0E-479E-AC97-BCA4ECE3C010}.Debug|x64.Build.0 = Debug|x64
+		{9356C27E-2C0E-479E-AC97-BCA4ECE3C010}.Release|x64.ActiveCfg = Release|x64
+		{9356C27E-2C0E-479E-AC97-BCA4ECE3C010}.Release|x64.Build.0 = Release|x64
+		{313B3612-C98F-4B08-ABFD-3C1FDD673D98}.Debug|x64.ActiveCfg = Debug|x64
+		{313B3612-C98F-4B08-ABFD-3C1FDD673D98}.Debug|x64.Build.0 = Debug|x64
+		{313B3612-C98F-4B08-ABFD-3C1FDD673D98}.Release|x64.ActiveCfg = Release|x64
+		{313B3612-C98F-4B08-ABFD-3C1FDD673D98}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

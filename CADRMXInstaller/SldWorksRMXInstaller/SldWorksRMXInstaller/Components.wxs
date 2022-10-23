@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+
+      <ComponentRef Id="RegistryValue"/>
+
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="../../xlib/sldworks_rmx/SldWorksIntegration">
+        <Component Id="RegistryValue" Guid="{4B8BF4DE-B129-43AD-AE8B-400C8A4F09FB}">
+          <RegistryValue Id="StoreInstallDir" Root="HKLM" Key="SOFTWARE\NextLabs\SldWorksRMX" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string"/>
+          <RegistryValue Id="StoreSldWorksDir" Root="HKLM" Key="SOFTWARE\NextLabs\SldWorksRMX" Name="SldWorksDir" Value="[SLDWORKS_DIR]" Type="string" />
+          <RegistryValue Id="StoreSwimDir" Root="HKLM" Key="SOFTWARE\NextLabs\SldWorksRMX" Name="SwimDir" Value="[SWIM]" Type="string" />
+        </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

@@ -1,0 +1,120 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+
+  <!-- Property files -->
+  <property file="${basedir}/build.properties" />
+
+  <!-- Global properties -->
+  <property name="skydrmsdk_dir" location="${xlib_dir}/skydrmsdk" />
+  <property name="skydrmsdk_unzip_dir" location="${xlib_dir}/skydrmsdk/tmp" />
+  <property name="skydrmsdk_zip_file_local_dir" location="${nlprojectroot}/xlibs_download/skydrmsdk" />
+  <basename property="skydrmsdk_zip_filename" file="${skydrm_sdk_zip_file}"/>
+  <property name="skydrmsdk_zip_file_local" location="${skydrmsdk_zip_file_local_dir}/${skydrmsdk_zip_filename}" />
+
+  <!-- Dump properties -->
+  <echoproperties />
+
+  <echo message="INFO: Dump properties completed" />
+
+  <!-- Sanity checks -->
+  <fail message="nlprojectroot is not set" unless="nlprojectroot" />
+  <fail message="nlprojectroot is empty">
+    <condition>
+      <equals arg1="${nlprojectroot}" arg2="" trim="true" />
+    </condition>
+  </fail>
+  <available file="${nlprojectroot}" type="dir" property="local.nlprojectroot_exists" />
+  <fail message="nlprojectroot directory does not exist - ${nlprojectroot}" unless="local.nlprojectroot_exists" />
+
+  <fail message="xlib_dir is not set" unless="xlib_dir" />
+  <fail message="xlib_dir is empty">
+    <condition>
+      <equals arg1="${xlib_dir}" arg2="" trim="true" />
+    </condition>
+  </fail>
+
+  <fail message="skydrm_sdk_zip_file is not set" unless="skydrm_sdk_zip_file" />
+  <fail message="skydrm_sdk_zip_file is empty">
+    <condition>
+      <equals arg1="${skydrm_sdk_zip_file}" arg2="" trim="true" />
+    </condition>
+  </fail>
+  <available file="${skydrm_sdk_zip_file}" type="file" property="local.skydrm_sdk_zip_file_exists" />
+  <fail message="skydrm_sdk_zip_file directory does not exist - ${skydrm_sdk_zip_file}" unless="local.skydrm_sdk_zip_file_exists" />
+
+  <fail message="nlexternaldir is not set" unless="nlexternaldir" />
+  <fail message="nlexternaldir is empty">
+    <condition>
+      <equals arg1="${nlexternaldir}" arg2="" trim="true" />
+    </condition>
+  </fail>
+  <available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+  <fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+  <available file="${skydrmsdk_zip_file_local}" type="file" property="local.skydrm_sdk_zip_file_local_exists" />
+  <echo message="INFO: Sanity check completed (no error)" />
+
+  <!-- Targets -->
+  <target name="all" depends="clean, prepare_skydrm_sdk" />
+
+  <target name="prepare_skydrm_sdk" depends="clean_skydrm_sdk_local">
+    <mkdir dir="${xlib_dir}" />
+    <mkdir dir="${skydrmsdk_dir}" />
+    <mkdir dir="${skydrmsdk_unzip_dir}" />
+	<mkdir dir="${skydrmsdk_zip_file_local_dir}" />
+	
+	<copy todir="${skydrmsdk_zip_file_local_dir}" overwrite="false">
+		<fileset file="${skydrm_sdk_zip_file}"/>
+	</copy>
+	
+    <!--SkyDRM SDK-->
+    <unzip src="${skydrmsdk_zip_file_local}" dest="${skydrmsdk_unzip_dir}" overwrite="yes">
+      <patternset>
+        <include name="install/build/data/bin/"/>
+        <include name="install/build/data/include/"/>
+        <include name="install/build/data/redist/"/>
+      </patternset>
+    </unzip>
+
+    <copy todir="${skydrmsdk_dir}/bin">
+      <fileset dir="${skydrmsdk_unzip_dir}/install/build/data/bin"/>
+    </copy>
+    <copy todir="${skydrmsdk_dir}/include">
+      <fileset dir="${skydrmsdk_unzip_dir}/install/build/data/include"/>
+    </copy>
+    <unzip src="${skydrmsdk_unzip_dir}/install/build/data/redist/SDKLib_redist_x64.zip" dest="${skydrmsdk_unzip_dir}/redist_x64" overwrite="yes" />
+    <move file="${skydrmsdk_unzip_dir}/redist_x64/libeay32.dll" todir="${skydrmsdk_dir}/redist/SDKLib_redist_x64" preservelastmodified="true" overwrite="false" />
+	<unzip src="${skydrmsdk_unzip_dir}/install/build/data/redist/SDKLib_redist_x86.zip" dest="${skydrmsdk_unzip_dir}/redist_x86" overwrite="yes" />
+    <move file="${skydrmsdk_unzip_dir}/redist_x86/libeay32.dll" todir="${skydrmsdk_dir}/redist/SDKLib_redist_x86" preservelastmodified="true" overwrite="false" />
+    <delete dir="${skydrmsdk_unzip_dir}" />
+  </target>
+  
+  <target name="clean_skydrm_sdk_local" unless="local.skydrm_sdk_zip_file_local_exists">
+	<delete failonerror="false" verbose="true">
+		<fileset dir="${skydrmsdk_zip_file_local_dir}">
+		   <include name="*.zip" />
+		</fileset>
+	</delete>
+  </target>
+  
+  <target name="clean">
+    <delete dir="${xlib_dir}" />
+  </target>
+</project>

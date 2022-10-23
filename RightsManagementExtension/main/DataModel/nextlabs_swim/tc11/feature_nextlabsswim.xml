@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+    Document   : feature_nextlabsswim.xml
+    Description: This XML is used by TEM to install or upgrade the "nextlabsswim" solution.
+--><feature>
+    <name value="nextlabs_swim"/>
+    <property name="feature_name" value="nextlabsswim"/>
+    <group value="package"/>
+    <guid value="40CEB8CADB392EEFB653F2952D80E776"/>
+    <bundle value="${feature_name}Bundle.xml"/>
+    <description value="${feature_name}.description"/>
+    <include file="dataModelDependency.xml"/>
+    <relation>
+        <depends name="swim" value="F25FD8C1B9DB7DF40C588AD06A702659"/>
+        <depends name="translationservice" value="301F12B06B3EAAB18DC0C2B9444F3B20"/>
+        <depends name="nextlabs" value="57189D019CB5FE13497A15A700F07B24"/>
+    </relation>
+    <feature>
+        <!--  Feature: Data Model -->
+        <name value="Data Model"/>
+        <property name="feature_id" value="datamodel"/>
+        <property name="bmide_optional" value="false"/>
+        <property name="template_name" value="${feature_name}"/>
+        <property name="template_file" value="${template_name}_template.xml"/>
+        <root value="true"/>
+        <bundle value="${template_name}Bundle.xml"/>
+        <description value="${template_name}.description"/>
+        <guid value="1CDA731B6D746B536CA3C388888317C0"/>
+        <include file="coreDataModel2.xml"/>
+        <include file="generatePlmxmlSchema.xml"/>
+    </feature>
+    <dependencyReferences>
+        <reference name="foundation" value="8C061DD51E13E0CB9DC4687B1A3348BE"/>
+    </dependencyReferences>
+</feature>

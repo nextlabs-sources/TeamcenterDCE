@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+
+      <ComponentRef Id="RegistryValue"/>
+
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="../../xlib/acad_rmx/AutoCADIntegration">
+        <Component Id="RegistryValue" Guid="{EB569BE6-877B-42D5-A8D5-3E934D7CB97D}">
+          <RegistryValue Id="StoreInstallDir" Root="HKLM" Key="SOFTWARE\NextLabs\AutoCADRMX" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string"/>
+          <RegistryValue Id="StoreACADDir" Root="HKLM" Key="SOFTWARE\NextLabs\AutoCADRMX" Name="AutoCADDir" Value="[ACAD_DIR]" Type="string" />
+          <RegistryValue Id="StoreACADIntegrationDir" Root="HKLM" Key="SOFTWARE\NextLabs\AutoCADRMX" Name="AutoCADIntegrationDir" Value="[ACAD_INTEGRATION]" Type="string" />
+          <Environment Id="ACADRMXRoot" Action="set" Name="AUTOCAD_RMX_ROOT" Permanent="no" System="yes" Value="[INSTALLFOLDER]" />
+          <!--
+          <RegistryValue Id="StoreCreoCommonDir" Root="HKLM" Key="SOFTWARE\NextLabs\ACADRMX" Name="CreoCommonDir" Value="[CREO_COMMON_DIR]" Type="string" />
+          <RegistryValue Id="StoreIpemDir" Root="HKLM" Key="SOFTWARE\NextLabs\ACADRMX" Name="IpemDir" Value="[IPEM]" Type="string" />
+          -->
+        </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

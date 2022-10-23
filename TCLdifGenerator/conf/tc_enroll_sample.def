@@ -1,0 +1,55 @@
+# This is the definition file for a default LDIF enrollment. It assumes
+# a default Active Directory schema.
+
+enroll.users                        true
+enroll.contacts                     false
+enroll.computers                    false
+enroll.applications                 false
+
+# missing values will be written as blank or the equivalent rather than skipped
+store.missing.attributes            true
+
+#
+# Required attributes
+#
+entry.attributefor.staticid         objectGUID
+
+computer.requirements               (dnsHostName=*)
+user.requirements                   (objectClass=person)
+computer.requirements               (dnsHostName=*)
+contact.requirements                (objectClass=contact)
+group.requirements                  (objectClass=group)
+group.attributefor.enumeration      member
+
+#
+# Attribute mappings for user type
+#
+user.string.principalName            userPrincipalName
+user.string.displayName                 name
+user.string.firstName                   givenName
+user.string.lastName                    sn
+user.string.nationality              nationality
+user.multi-string.mail  	        proxyAddresses
+user.cs-string.windowsSid            objectGUID
+
+#
+# Attribute mappings for contact type
+#
+contact.string.principalName           	mail
+contact.string.displayName            	name
+contact.string.firstName              	firstName
+contact.string.lastName                	sn
+contact.multi-string.mail  	        proxyAddresses
+
+#
+# Attribute mappings for host type
+#
+computer.string.dnsName                 dnsHostName
+computer.cs-string.windowsSid           objectSid
+
+#
+# Note: Use full path to refer LDIF file name
+#       Use '/' instead of '\' for file path separator!
+#
+ldif.filename   C:/Program Files/NextLabs/Policy Server/tools/enrollment/tc.ldif
+

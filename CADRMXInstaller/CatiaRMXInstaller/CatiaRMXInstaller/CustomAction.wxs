@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--This is to set custom action data for deferred custom action ActionInstall can pickup related variable.-->
+    <CustomAction Id="SetDirInstall" Property="ActionInstall" Value="CATIA_DIR=[CATIA_DIR];INSTALLFOLDER=[INSTALLFOLDER];CATIA_INTEGRATION_DIR=[CATIA_INTEGRATION_DIR]" />
+    
+    <CustomAction Id='ActionInstall' 
+                  BinaryKey='BINInstall'
+                  DllEntry='InstallCatiaRMX'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINInstall' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionRepair' 
+                  BinaryKey='BINRepair' 
+                  DllEntry='RepairCatiaRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINRepair' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionUninstall' 
+                  BinaryKey='BINUninstall' 
+                  DllEntry='UninstallCatiaRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINUninstall' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateCatiaDir' 
+                  BinaryKey='BINValidateCatiaDir' 
+                  DllEntry='ValidateCatiaDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINValidateCatiaDir' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='FindCatiaDir' 
+                  BinaryKey='BINFindCatiaDir' 
+                  DllEntry='FindCatiaDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINFindCatiaDir' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateCatiaIntegrationDir'
+          BinaryKey='BINValidateCatiaIntegrationDir'
+          DllEntry='ValidateCatiaIntegrationDir'
+          Execute='immediate'
+          Return='check' />
+
+    <Binary Id='BINValidateCatiaIntegrationDir' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <CustomAction Id='FindCatiaIntegrationDir'
+              BinaryKey='BINFindCatiaIntegrationDir'
+              DllEntry='FindCatiaIntegrationDir'
+              Execute='immediate'
+              Return='check' />
+
+    <Binary Id='BINFindCatiaIntegrationDir' SourceFile='..\CatiaRMXCA\bin\$(var.Configuration)\CatiaRMXCA.CA.dll' />
+
+    <!-- Edit creotk.dat file after installation. Change $CREO_RMX_ROOT to full path to CreoRMX folder 
+    <CustomAction Id="SetDirEditACADrx" Property="EditACADrx" Value="ACAC_DIR=[ACAD_DIR];INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomAction Id='EditACADrx'
+                  BinaryKey='BINEditACADrx'
+                  DllEntry='EditACADrx'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINEditACADrx' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+    -->
+
+    <!--Enable verbose logging and define custom action to save and view installation log-->
+    <!--Full command to save and open: "cmd /c copy [MsiLogFileLocation] C:\temp\log.txt &#38;&#38; notepad.exe [MsiLogFileLocation]"-->
+    <!--Only open for now-->
+    <Property Id="MsiLogging" Value="v!" />
+    <CustomAction Id="SaveAndViewLog" Execute="immediate"
+                  ExeCommand="notepad.exe [MsiLogFileLocation]"
+                  Directory="TARGETDIR"
+                  Return="asyncNoWait" />
+  </Fragment>
+</Wix>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\..\log4cpp.v140.props" />
+    <Import Project="..\..\MadCHook.vs2015.props" />
+    <Import Project="..\nxrmx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <NX_MAJOR_VER>12</NX_MAJOR_VER>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>NXL_HOOK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="NX_MAJOR_VER">
+      <Value>$(NX_MAJOR_VER)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

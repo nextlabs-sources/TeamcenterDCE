@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/TcSoaCommon_12000.1.0.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaCommon_12000.1.0.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/TcSoaClient_12000.1.0.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaClient_12000.1.0.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/TcSoaCoreLoose_12000.1.0.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaCoreLoose_12000.1.0.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/TcSoaQueryLoose_12000.1.0.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaQueryLoose_12000.1.0.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/httpclient-4.5.2.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/httpclient-4.5.2.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/httpcore-4.4.4.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/httpcore-4.4.4.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/commons-httpclient-contrib-3.1.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/commons-httpclient-contrib-3.1.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/commons-codec.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/commons-codec.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/resolver.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/resolver.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/xercesImpl.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/xercesImpl.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/xml-apis.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/xml-apis.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/fscclient.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/fscclient.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/fccclient.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/fccclient.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/tcserverjavabinding.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/tcserverjavabinding.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/tcmemjavabinding.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/tcmemjavabinding.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/activation.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/activation.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/jaxb-api.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/jaxb-api.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/jaxb-impl.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/jaxb-impl.jar" />
+    <varelement var="file://$TEAMCENTER_SERVICES_HOME$/java/libs/TcSoaAdministrationLoose_12000.1.0.jar" value="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaAdministrationLoose_12000.1.0.jar" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/testsrc" isTestSource="true" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/xlib/jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/xlib/jar" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/xlib/test_jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/xlib/test_jar" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/xlib/jar/tc12" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/xlib/jar/tc12" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>

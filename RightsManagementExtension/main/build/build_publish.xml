@@ -1,0 +1,80 @@
+<!-- build_publish.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to s:/build.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide
+	them from commandline (using -D option). For example:
+
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dexternal.dir=c:/depot/external -Dbuild_number=10001 -f scripts/build_publish.xml
+
+	or
+
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dexternal.dir=%NLEXTERNALDIR2% -Dbuild_number=10001
+		ant -f scripts/build_publish.xml -v
+-->
+
+<project name="build_publish" default="all" basedir="..">
+
+	<!-- Debug
+	<echoproperties />
+	<fail message="INFO: Debug" />
+	-->
+
+	<!-- Initialization tasks -->
+	<tstamp />
+
+	<!-- Property files -->
+	<property file="${basedir}/build/build.properties" />
+	<property environment="env" />
+
+	<!-- Global properties -->
+	<property name="package_dir" value="${repository_root}/Teamcenter/RightsManagementExtension/${package_name}/${version_str}/${build_number}" />
+	<property name="publish_artifact_dir" location="${repository_root}/artifacts/Teamcenter/RightsManagementExtension/${package_name}/${version_str}/${build_number}" />
+
+	<property name="build_manifest_file" value="${env.WORKSPACE}/build.manifest" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="version_str is not set" unless="version_str" />
+	<fail message="version_str is empty">
+		<condition>
+			<equals arg1="${version_str}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<fail message="build_number is not set" unless="build_number" />
+	<fail message="build_number is empty">
+		<condition>
+			<equals arg1="${build_number}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<fail message="repository_root is not set" unless="repository_root" />
+	<fail message="repository_root is empty">
+		<condition>
+			<equals arg1="${repository_root}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${repository_root}" type="dir" property="local.repository_root_exists" />
+	<fail message="repository_root directory does not exist - ${repository_root}" unless="local.repository_root_exists" />
+
+	<!-- Targets -->
+	<target name="all" depends="manifest" />
+
+	<target name="manifest">
+		<!-- Check for errors -->
+		<available file="${build_manifest_file}" type="file" property="local.manifest_exists" />
+		<fail message="Missing manifest file - ${build_manifest_file}" unless="local.manifest_exists" />
+
+		<!-- Copy file -->
+		<mkdir dir="${publish_artifact_dir}" />
+		<copy file="${build_manifest_file}" todir="${publish_artifact_dir}" preservelastmodified="true" overwrite="true" verbose="true" />
+	</target>
+</project>

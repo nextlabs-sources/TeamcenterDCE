@@ -1,0 +1,27 @@
+HKCR
+{
+	SldWorksRMX.DocView.1 = s 'DocView Class'
+	{
+		CLSID = s '{8CA696D7-C72B-44D2-9437-B39C3CF00214}'
+	}
+	SldWorksRMX.DocView = s 'DocView Class'
+	{
+		CLSID = s '{8CA696D7-C72B-44D2-9437-B39C3CF00214}'
+		CurVer = s 'SldWorksRMX.DocView.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8CA696D7-C72B-44D2-9437-B39C3CF00214} = s 'DocView Class'
+		{
+			ProgID = s 'SldWorksRMX.DocView.1'
+			VersionIndependentProgID = s 'SldWorksRMX.DocView'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FB5E55C3-E5AB-4BE6-BCEB-A50BD9B8B555}'
+		}
+	}
+}

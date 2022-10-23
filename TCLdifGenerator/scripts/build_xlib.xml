@@ -1,0 +1,138 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_soa12_jar, prepare_soa13_jar, prepare_log4j_jar" />
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+		<mkdir dir="${xlib_jar_dir}" />
+	</target>
+
+	<target name="prepare_soa12_jar">
+		<mkdir dir="${xlib_jar_dir}/tc12" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaClient_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaCommon_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaCoreLoose_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaCoreStrong_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaQueryLoose_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaQueryStrong_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaStrongModel_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaAdministrationLoose_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/TcSoaAdministrationStrong_12000.1.0.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/avalon-framework-4.1.5.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/commons-codec.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/commons-httpclient-contrib-3.1.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/commons-logging.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/fccclient.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/fscclient.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/httpclient-4.5.2.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/httpcore-4.4.4.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/jacorb.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/jaxb-api.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/jaxb-impl.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/log4j.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/logkit-1.2.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/resolver.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/tcgatewaystubs.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/tcmemjavabinding.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/tcserverjavabinding.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/teamcenter_sso_applib.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/teamcenter_sso_common.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/teamcenter_sso_webtoolkit.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/xercesImpl.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/java/xml-apis.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+
+	<target name="prepare_soa13_jar">
+		<mkdir dir="${xlib_jar_dir}/tc13" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaClient_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaCommon_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaCoreLoose_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaCoreStrong_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaQueryLoose_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaQueryStrong_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaStrongModel_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaAdministrationLoose_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/TcSoaAdministrationStrong_13000.2.0.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/avalon-framework-4.1.5.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/commons-codec.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/commons-httpclient-contrib-3.1.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/commons-logging.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/fccclient.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/fscclient.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/httpclient-4.5.13.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/httpcore-4.4.13.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/jacorb.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/jaxb-api.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/jaxb-impl.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/log4j.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/logkit-1.2.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/resolver.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/tcgatewaystubs.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/tcmemjavabinding.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/tcserverjavabinding.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/teamcenter_sso_applib.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/teamcenter_sso_common.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/teamcenter_sso_webtoolkit.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/xercesImpl.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/soa/tc13/xml-apis.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+
+	<target name="prepare_log4j_jar">
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-api-2.17.1.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-core-2.17.1.jar" todir="${xlib_jar_dir}/tc12" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-api-2.17.1.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-core-2.17.1.jar" todir="${xlib_jar_dir}/tc13" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+</project>

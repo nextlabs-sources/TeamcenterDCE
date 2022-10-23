@@ -1,0 +1,31 @@
+<config>
+	<jars>
+		<jar in="./../build/transrightschecker.jar" out="./../build/transrightschecker.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="./../xlib/jar/*.jar" />
+		<jar name="./../xlib/jar/openaz/*.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/*.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.drm.transrightschecker.TransRightsCheckerApp">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.drm.rmx.configuration.SimpleCrypto" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.drm.rmx.configuration.SimpleCrypto" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

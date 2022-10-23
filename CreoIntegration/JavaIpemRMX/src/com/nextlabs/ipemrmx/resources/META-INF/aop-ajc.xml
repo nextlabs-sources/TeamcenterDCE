@@ -1,0 +1,22 @@
+<aspectj>
+	<aspects>
+		<aspect name="com.nextlabs.ipemrmx.SOAItemIDHelperAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.CADFileAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.UserExitValidatorAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.CheckinDialogAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.SOAFileExporterAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.CurrentWorkspaceExportCommandAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.CurrentWorkspaceImportCommandAspect"/>
+		<aspect name="com.nextlabs.ipemrmx.FileUtilAspect"/>
+	</aspects>
+	<weaver options="-showWeaveInfo" >
+		<include within="com.transcendata.cadpdm.soa.gui.SOAItemIDHelper"/>
+		<include within="com.transcendata.cadpdm.soa.UserExitValidator"/>
+		<include within="com.transcendata.cadpdm.CADFile" />
+		<include within="com.transcendata.ipemsoa.gui.CheckInDialog" />
+		<include within="com.transcendata.cadpdm.soa.SOAFileExporter" />
+		<include within="com.transcendata.cadpdm.soa.CurrentWorkspaceExportCommand" />
+		<include within="com.transcendata.cadpdm.soa.CurrentWorkspaceImportCommand" />
+		<include within="com.transcendata.util.FileUtil" />
+	</weaver>
+</aspectj>

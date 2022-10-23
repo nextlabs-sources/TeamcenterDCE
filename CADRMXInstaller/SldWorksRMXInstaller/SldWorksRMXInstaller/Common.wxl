@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  
+  <String Id="ProductName">NextLabs Rights Management eXtension For SolidWorks</String>
+  <String Id="ProductNameShort">Rights Management eXtension For SolidWorks</String>
+  <String Id="ProductNameSkyDRM">SkyDRM Rights Management eXtension For SolidWorks</String>
+
+  <!-- Customize String value -->
+  <String Id="VerifyReadyDlgInstallTitle">{\WixUI_Font_Title}Ready to install Rights Management eXtension For SolidWorks</String>
+  <!-- End of Customize String value -->
+  <String Id="CompanyFolderName">Nextlabs</String>
+  <String Id="ProductFolderName">SldWorksRMX</String>
+
+  <String Id="Language">1033</String>
+
+  <String Id="Company">NextLabs, Inc.</String>
+
+  <String Id="Description">Rights Management eXtension for SolidWorks</String>
+  <String Id="Keywords">nextlabs, rmx, edrm, solidworks</String>
+  <String Id="Comments">Allow user work with persistent NextLabs rights-protection file in SolidWorks and during save, save as operations</String>
+
+  <String Id="DowngradeErrorMessage">A newer version of RMX For SolidWorks is already installed.</String>
+
+  <String Id="SldWorksInstallDirDlgDescription">Please enter location where SolidWorks is installed and click Next.</String>
+  <String Id="SldWorksInstallDirDlgTitle">{\WixUI_Font_Title}SolidWorks Installation Folder</String>
+  <String Id="SldWorksInstallDirDlgFolderLabel">Location Where SolidWorks is installed
+Example: C:\Program Files\SolidWorks 2019
+  </String>
+  <String Id="SldWorksInstallDirDlgChange">Browse</String>
+
+  <String Id="SldWorksSwimDirDlgDescription">Please enter location where SolidWorks Integration is installed and click Next.</String>
+  <String Id="SldWorksSwimDirDlgTitle">{\WixUI_Font_Title}SolidWorks Integration Installation Folder</String>
+  <String Id="SldWorksSwimDirDlgFolderLabel">Teamcenter SolidWorks Integration installation folder
+This information only require for managed mode. Example: C:\Swim
+  </String>
+  <String Id="SldWorksSwimDirDlgChange">Browse</String>
+  
+</WixLocalization>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{85E2B48A-701B-4B47-93BD-EB70F1F87C3D}</ProjectGuid>
+    <RootNamespace>NXRMX12</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>NXRMX12</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\SolutionShared.props" />
+    <Import Project="..\..\SolutionShared.Debug.props" />
+    <Import Project="NXRMX12.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\SolutionShared.props" />
+    <Import Project="NXRMX12.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+    </ClCompile>
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\NXRMX\menus\nx_rmx_app.men" />
+    <None Include="..\NXRMX\menus\nx_rmx_app_button.men" />
+    <None Include="..\NXRMX\menus\nx_rmx_usage_control.men" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\DllInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\NxlUtils\Windows\handle.cpp" />
+    <ClCompile Include="..\..\NxlUtils\Windows\ntdll.c" />
+    <ClCompile Include="..\hook\hook_file_closed.c" />
+    <ClCompile Include="..\hook\hook_injector.c" />
+    <ClCompile Include="..\hook\rpm_fix_deletefile.cpp" />
+    <ClCompile Include="..\NXRMX\hook\hook_fcc_proxy.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libjadex.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libjafreeformsurfaces.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_liblwks.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libpart.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libpartdisp.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libpartutils.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libsyss.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libugmr.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libugui.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_libugutilsint.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_save_bookmark.c" />
+    <ClCompile Include="..\NXRMX\hook\hook_save_jt_data.c" />
+    <ClCompile Include="..\NXRMX\hook\install_nx_hook.c" />
+    <ClCompile Include="..\NXRMX\NXIntegration_Register.c" />
+    <ClCompile Include="..\NXRMX\nxl_app_actions.c" />
+    <ClCompile Include="..\NXRMX\NXOverlay.cpp" />
+    <ClCompile Include="..\NXRMX\NXSigningResource.cpp" />
+    <ClCompile Include="..\NXRMX\NXUsageControl.cpp" />
+    <ClCompile Include="..\NXRMX\nx_contexts.c" />
+    <ClCompile Include="..\NXRMX\nx_utils.c" />
+    <ClCompile Include="..\NXRMX\RMXUI.cpp" />
+    <ClCompile Include="..\NXRMX\SpawnContext.cpp" />
+    <ClCompile Include="hook\libjadex.c" />
+    <ClCompile Include="hook\libjafreeformsurfaces.c" />
+    <ClCompile Include="hook\libpart.c" />
+    <ClCompile Include="hook\libpartdisp.c" />
+    <ClCompile Include="hook\libsyss.c" />
+    <ClCompile Include="hook\libugmr.c" />
+    <ClCompile Include="hook\libugui.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\NXRMX\nxl_app.h" />
+    <ClInclude Include="..\NXRMX\NXUsageControl.h" />
+    <ClInclude Include="..\NXRMX\nx_contexts.h" />
+    <ClInclude Include="..\NXRMX\nx_hook.h" />
+    <ClInclude Include="..\NXRMX\nx_integration_exports.h" />
+    <ClInclude Include="..\NXRMX\nx_utils.h" />
+    <ClInclude Include="..\NXRMX\PartContext.h" />
+    <ClInclude Include="..\NXRMX\SpawnContext.h" />
+    <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="hook\libassy.h" />
+    <ClInclude Include="hook\libhidl.h" />
+    <ClInclude Include="hook\libjadex.h" />
+    <ClInclude Include="hook\libjafreeformsurfaces.h" />
+    <ClInclude Include="hook\liblwks.h" />
+    <ClInclude Include="hook\libpart.h" />
+    <ClInclude Include="hook\libpartdisp.h" />
+    <ClInclude Include="hook\libpartutils.h" />
+    <ClInclude Include="hook\libpdmservices.h" />
+    <ClInclude Include="hook\libsyss.h" />
+    <ClInclude Include="hook\libugmr.h" />
+    <ClInclude Include="hook\libugui.h" />
+    <ClInclude Include="hook\libugutilsint.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

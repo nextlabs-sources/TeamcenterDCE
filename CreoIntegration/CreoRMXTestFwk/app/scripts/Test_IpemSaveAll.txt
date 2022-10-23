@@ -1,0 +1,2 @@
+~ Command `txd_iManCIAll`; 
+~ Command `XTest_EndCase`;

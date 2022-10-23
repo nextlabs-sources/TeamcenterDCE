@@ -1,0 +1,330 @@
+# Make file to publish output.
+#
+# The following variables must be defined in commandline:
+#	VERSION_BUILD_SHORT
+#
+# Example:
+#	make -f Makefile.publish repo
+#	make -f Makefile.publish sync
+
+
+#
+# Check for errors
+#
+
+OS=$(shell uname)
+
+ifeq ($(PROJECT_NAME),)
+  $(error PROJECT_NAME undefined.)
+endif
+
+ifeq ($(VERSION_STR),)
+  $(error VERSION_STR undefined.)
+endif
+
+ifeq ($(VERSION_BUILD_SHORT),)
+  $(error VERSION_BUILD_SHORT undefined.)
+endif
+
+ifeq ($(BUILD_DATE),)
+  $(error BUILD_DATE undefined.)
+endif
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(REPOSITORY_ROOT),)
+  $(error REPOSITORY_ROOT undefined.)
+endif
+
+ifeq ($(RELEASE_ARTIFACTS_ROOT),)
+  $(error RELEASE_ARTIFACTS_ROOT undefined.)
+endif
+
+ifeq ($(SKYDRM_SDK_ROOT),)
+  $(error  SKYDRM_SDK_ROOT undefined.)
+endif
+
+#
+# Constants
+#
+
+LOCAL_OUTPUT_DIR=$(NLPROJECTROOT)/tmp_output
+LOCAL_WORK_DIR=$(NLPROJECTROOT)/tmp_work
+LOCAL_XLIB_DIR=$(NLPROJECTROOT)/tmp_xlibs
+
+ifeq ($(CADRMX_REPOSITORY),)
+	REPOSITORY_FOLDER_NAME=RightsManagementExtension
+else
+	REPOSITORY_FOLDER_NAME=$(CADRMX_REPOSITORY)
+endif
+
+ifeq ("$(OS)","Linux")
+	BASE_DIR=Teamcenter/$(REPOSITORY_FOLDER_NAME)/$(PROJECT_NAME)/$(VERSION_STR)_linux/$(VERSION_BUILD_SHORT)
+	ZIP_FILE_NAME_BIN=$(PROJECT_NAME)-$(VERSION_STR)-$(VERSION_BUILD_SHORT)-$(BUILD_DATE)-linux.zip
+	BUILD_OUTPUT_DIR=$(NLPROJECTROOT)/$(BUILDTYPE)
+else
+	BASE_DIR=Teamcenter/$(REPOSITORY_FOLDER_NAME)/$(PROJECT_NAME)/$(VERSION_STR)/$(VERSION_BUILD_SHORT)
+	ZIP_FILE_NAME_BIN=$(PROJECT_NAME)-$(VERSION_STR)-$(VERSION_BUILD_SHORT)-$(BUILD_DATE)-bin.zip
+	BUILD_OUTPUT_DIR=$(NLPROJECTROOT)/Release
+endif
+REPOSITORY_BUILD_DIR=$(REPOSITORY_ROOT)/$(BASE_DIR)
+RELEASE_ARTIFACTS_DIR=$(RELEASE_ARTIFACTS_ROOT)/$(BASE_DIR)
+
+BUILD_MANIFEST_FILE_NAME=build.manifest
+TC_BIN10=$(LOCAL_OUTPUT_DIR)/TC_BIN10
+TC_BIN11=$(LOCAL_OUTPUT_DIR)/TC_BIN11
+TC_BIN_LINUX=$(LOCAL_OUTPUT_DIR)/TC_BIN_LINUX
+FCC_LIB=$(LOCAL_OUTPUT_DIR)/FCC_LIB
+RUNNERS=$(LOCAL_OUTPUT_DIR)/TC_RUNNER
+
+RMX_ROOT=$(LOCAL_OUTPUT_DIR)/RMX_ROOT
+NX_RMX_ROOT=$(LOCAL_OUTPUT_DIR)/NX_RMX_ROOT
+
+EXTERNALDIR_NX_ROOT=$(NLEXTERNALDIR)/siemens/nx
+
+#
+# Info
+#
+
+$(info --------------------------------------------------------------)
+$(info PROJECT_NAME                   = $(PROJECT_NAME)) 
+$(info VERSION_STR                    = $(VERSION_STR)) 
+$(info VERSION_BUILD_SHORT            = $(VERSION_BUILD_SHORT)) 
+$(info ZIP_FILE_NAME_BIN              = $(ZIP_FILE_NAME_BIN)) 
+$(info REPOSITORY_BUILD_DIR           = $(REPOSITORY_BUILD_DIR)) 
+$(info RELEASE_ARTIFACTS_DIR          = $(RELEASE_ARTIFACTS_DIR)) 
+$(info LOCAL_WORK_DIR                 = $(LOCAL_WORK_DIR)) 
+$(info LOCAL_OUTPUT_DIR               = $(LOCAL_OUTPUT_DIR)) 
+$(info NX_BASE_DIR					  = $(NX_BASE_DIR))
+$(info SKYDRM_SDK_ROOT				  = $(SKYDRM_SDK_ROOT))
+$(info SPLM_LICENSE_SERVER			  = $(SPLM_LICENSE_SERVER))
+$(info --------------------------------------------------------------)
+$(info )
+
+
+#
+# Targets
+#
+
+.PHONY: all
+all: archive 
+
+.PHONY: archive
+ifeq ("$(OS)","Linux")
+archive: archive_linux
+else ifeq ($(CADRMX_REPOSITORY),)
+archive: archive_tc11 archive_tc12 archive_tc13 archive_runners archive_nx
+else
+archive: archive_nx
+endif
+	@echo "Zipping distribution package..."
+	cd $(LOCAL_OUTPUT_DIR);	zip -r "$(LOCAL_WORK_DIR)/$(ZIP_FILE_NAME_BIN)" .
+	@echo "Copying distribution zip file to repository..."
+	@if [ ! -d $(REPOSITORY_BUILD_DIR) ]; then	\
+		mkdir -p $(REPOSITORY_BUILD_DIR) ;		\
+	fi
+	cp -rf $(LOCAL_WORK_DIR)/$(ZIP_FILE_NAME_BIN) $(REPOSITORY_BUILD_DIR)
+	ls -lR $(REPOSITORY_BUILD_DIR)
+	@echo "Copying build artifacts to repository..."
+	@if [ ! -d $(RELEASE_ARTIFACTS_DIR) ]; then	\
+		mkdir -p $(RELEASE_ARTIFACTS_DIR) ;		\
+	fi
+	cp -rf $(BUILD_OUTPUT_DIR)/* $(RELEASE_ARTIFACTS_DIR)
+	ls -lR $(RELEASE_ARTIFACTS_DIR)
+
+
+.PHONY: archive_tc10
+archive_tc10:make_dir
+	@echo "Archiving libraries for TC10_ROOT/bin"
+	mkdir -p $(TC_BIN10)
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc10/NxlAutoProtect.dll $(TC_BIN10)/NxlAutoProtect.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc10/NxlSCFIntegration.dll $(TC_BIN10)/NxlSCFIntegration.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(TC_BIN10)
+	ls -l $(TC_BIN10)
+
+.PHONY: archive_linux
+archive_linux:make_dir
+	@echo "Archiving Linux libraries for TC_ROOT/bin"
+	mkdir -p $(TC_BIN_LINUX)
+	cp -pf $(NLPROJECTROOT)/$(BUILDTYPE)/linux/*.so $(TC_BIN_LINUX)
+	ls -l $(TC_BIN_LINUX)
+	gcc --version
+	ldd --version
+	nm -g $(TC_BIN_LINUX)/*.so | grep GLIBC
+	@if [ "`nm -g $(TC_BIN_LINUX)/*.so | grep GLIBC_2.14`" ]; then	\
+		grep "memcpy" tmp/*.s;	\
+		exit 1;	\
+	fi
+
+.PHONY: archive_tc11
+archive_tc11:make_dir
+	@echo "Archiving libraries for TC11_ROOT/bin"
+	mkdir -p $(TC_BIN11)
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc11/NxlAutoProtect.dll $(TC_BIN11)/NxlAutoProtect.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc11/NxlSCFIntegration.dll $(TC_BIN11)/NxlSCFIntegration.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(TC_BIN11)
+	ls -l $(TC_BIN11)
+
+.PHONY: archive_tc12
+archive_tc12:make_dir
+	@echo "Archiving libraries for TC12_ROOT/bin"
+	mkdir -p $(LOCAL_OUTPUT_DIR)/TC_BIN12
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc12/NxlAutoProtect.dll $(LOCAL_OUTPUT_DIR)/TC_BIN12/NxlAutoProtect.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc12/NxlSCFIntegration.dll $(LOCAL_OUTPUT_DIR)/TC_BIN12/NxlSCFIntegration.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(LOCAL_OUTPUT_DIR)/TC_BIN12
+	ls -l $(LOCAL_OUTPUT_DIR)/TC_BIN12
+	
+.PHONY: archive_tc13
+archive_tc13:make_dir
+	@echo "Archiving libraries for TC13_ROOT/bin"
+	mkdir -p $(LOCAL_OUTPUT_DIR)/TC_BIN13
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc13/NxlAutoProtect.dll $(LOCAL_OUTPUT_DIR)/TC_BIN13/NxlAutoProtect.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/tc13/NxlSCFIntegration.dll $(LOCAL_OUTPUT_DIR)/TC_BIN13/NxlSCFIntegration.dll
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(LOCAL_OUTPUT_DIR)/TC_BIN13
+	ls -l $(LOCAL_OUTPUT_DIR)/TC_BIN13
+
+.PHONY: archive_tccs
+archive_tccs:make_dir
+	@echo "Archiving libraries for TC_ROOT/tccs/lib"
+	mkdir -p $(FCC_LIB)
+	cp -pf $(NLPROJECTROOT)/Release/x64/DLPApplicationHookv10064.dll $(FCC_LIB)
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(FCC_LIB)
+	cp -pf $(NLPROJECTROOT)/Release/Win32/DLPApplicationHookv100.dll $(FCC_LIB)
+	cp -pf $(NLPROJECTROOT)/Release/Win32/NxlUtils32.dll $(FCC_LIB)
+	ls -l $(FCC_LIB)
+
+.PHONY: archive_runners
+archive_runners:make_dir archive_xlibs sign_dlls
+	@echo "Archiving libraries for TC Runners"
+	mkdir -p $(RMX_ROOT)/bin32
+	cp -pf $(NLPROJECTROOT)/Release/Win32/nxlrunner.exe $(RMX_ROOT)/bin32
+	#cp -pf $(LOCAL_XLIB_DIR)/libeay32/x86/libeay32.dll $(RMX_ROOT)/bin32
+	cp -pf $(SKYDRM_SDK_ROOT)redist/SDKLib_redist_x86/libeay32.dll $(RMX_ROOT)/bin32
+	mkdir -p $(RUNNERS)
+	cp -pf $(NLPROJECTROOT)/Release/x86/ProxyRunner.exe $(RUNNERS)
+	ls -l $(RUNNERS)
+
+.PHONY: archive_nx
+archive_nx:make_dir archive_xlibs sign_dlls archive_nx2007 archive_nx1980 archive_nx12 archive_nx1953
+	@echo "Signing the NxlTcImportIntegration dlls...." ;	\
+	"$(NX_BASE_DIR)/UGOPEN/signcpp.exe" $(NLPROJECTROOT)/Release/x64/NxlTcImportIntegration.dll
+	cp -pf $(NLPROJECTROOT)/log4cplus.properties $(NX_RMX_ROOT)/
+	@echo "Archiving libraries for tcin_import Integration"
+	mkdir -p $(NX_RMX_ROOT)/NxlTcImportIntegration/startup
+	mkdir -p $(NX_RMX_ROOT)/NxlTcImportIntegration/udo
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlTcImportIntegration.dll $(NX_RMX_ROOT)/NxlTcImportIntegration/udo
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(NX_RMX_ROOT)/NxlTcImportIntegration/udo
+	
+	mkdir -p $(NX_RMX_ROOT)/bin
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlUtils64.dll $(NX_RMX_ROOT)/bin
+	cp -pf $(NLPROJECTROOT)/Release/x64/RPMUtils64.dll $(NX_RMX_ROOT)/bin
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlHelper.exe $(NX_RMX_ROOT)/bin
+	cp -pf $(NLPROJECTROOT)/Release/x64/NxlHelper.exe.config $(NX_RMX_ROOT)/bin
+	#cp -pf $(LOCAL_XLIB_DIR)/libeay32/x64/libeay32.dll $(NX_RMX_ROOT)/bin
+	cp -pf $(SKYDRM_SDK_ROOT)redist/SDKLib_redist_x64/libeay32.dll $(NX_RMX_ROOT)/bin
+	
+	
+	mkdir -p $(NX_RMX_ROOT)/bin32
+	cp -pf $(NLPROJECTROOT)/Release/Win32/nxlrunner.exe $(NX_RMX_ROOT)/bin32
+	#cp -pf $(LOCAL_XLIB_DIR)/libeay32/x86/libeay32.dll $(NX_RMX_ROOT)/bin32
+	cp -pf $(SKYDRM_SDK_ROOT)redist/SDKLib_redist_x86/libeay32.dll $(NX_RMX_ROOT)/bin32
+	
+	ls -lR $(NX_RMX_ROOT)
+	
+
+.PHONY: archive_nx2007
+archive_nx2007:SPLM_LICENSE_SERVER=28000@10.65.2.92
+archive_nx2007:make_dir archive_xlibs
+	@echo "Signing the NXRMX2007 dlls(SPLM_LICENSE_SERVER=$(SPLM_LICENSE_SERVER))...." ;	\
+	"$(EXTERNALDIR_NX_ROOT)/2007.1700.0.0/NXBIN/signcpp.exe" $(NLPROJECTROOT)/Release/x64/NXRMX2007.dll
+	@echo "Archiving libraries for NX 2007..."
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration2007/application/
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/icons/* $(NX_RMX_ROOT)/NXIntegration2007/application/
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration2007/startup
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/menus/* $(NX_RMX_ROOT)/NXIntegration2007/startup
+	cp -pf $(NLPROJECTROOT)/NXIntegration/nx2007/menus/* $(NX_RMX_ROOT)/NXIntegration2007/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/NXRMX2007.dll $(NX_RMX_ROOT)/NXIntegration2007/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/MiniRMX2007.dll $(NX_RMX_ROOT)/NXIntegration2007/startup
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration2007/udo
+	
+	mkdir -p $(NX_RMX_ROOT)/NXDRMIntegration
+	cp -pf $(NLPROJECTROOT)/Release/x64/NXDRMIntegration2007.dll $(NX_RMX_ROOT)/NXDRMIntegration
+	
+	
+.PHONY: archive_nx1980
+archive_nx1980:make_dir archive_xlibs
+	@echo "Signing the NXRMX1980 dlls(SPLM_LICENSE_SERVER=$(SPLM_LICENSE_SERVER))...." ;	\
+	"$(EXTERNALDIR_NX_ROOT)/1980.1700.0.0/NXBIN/signcpp.exe" $(NLPROJECTROOT)/Release/x64/NXRMX1980.dll
+	@echo "Archiving libraries for NX 1980..."
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1980/application/
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/icons/* $(NX_RMX_ROOT)/NXIntegration1980/application/
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1980/startup
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/menus/* $(NX_RMX_ROOT)/NXIntegration1980/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/NXRMX1980.dll $(NX_RMX_ROOT)/NXIntegration1980/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/MiniRMX1980.dll $(NX_RMX_ROOT)/NXIntegration1980/startup
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1980/udo
+	
+	
+.PHONY: archive_nx1953
+archive_nx1953:make_dir archive_xlibs
+	@echo "Signing the NXRMX1953 dlls(SPLM_LICENSE_SERVER=$(SPLM_LICENSE_SERVER))...." ;	\
+	"$(EXTERNALDIR_NX_ROOT)/1953.1700.0.0/NXBIN/signcpp.exe" $(NLPROJECTROOT)/Release/x64/NXRMX1953.dll
+	@echo "Archiving libraries for NX 1953..."
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1953/application/
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/icons/* $(NX_RMX_ROOT)/NXIntegration1953/application/
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1953/startup
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/menus/* $(NX_RMX_ROOT)/NXIntegration1953/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/NXRMX1953.dll $(NX_RMX_ROOT)/NXIntegration1953/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/MiniRMX1953.dll $(NX_RMX_ROOT)/NXIntegration1953/startup
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration1953/udo
+		
+	
+.PHONY: archive_nx12
+archive_nx12:make_dir archive_xlibs
+	@echo "Signing the NXRMX12 dlls(SPLM_LICENSE_SERVER=$(SPLM_LICENSE_SERVER))...." ;	\
+	"$(NX_BASE_DIR)/UGOPEN/signcpp.exe" $(NLPROJECTROOT)/Release/x64/NXRMX12.dll
+	@echo "Archiving libraries for NX 12..."
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration12/application/
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/icons/* $(NX_RMX_ROOT)/NXIntegration12/application/
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration12/startup
+	cp -pf $(NLPROJECTROOT)/NXIntegration/NXRMX/menus/* $(NX_RMX_ROOT)/NXIntegration12/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/NXRMX12.dll $(NX_RMX_ROOT)/NXIntegration12/startup
+	cp -pf $(NLPROJECTROOT)/Release/x64/MiniRMX12.dll $(NX_RMX_ROOT)/NXIntegration12/startup
+	mkdir -p $(NX_RMX_ROOT)/NXIntegration12/udo
+	
+	
+	
+.PHONY:archive_xlibs
+archive_xlibs:make_dir
+	#@if [ ! -d "$(LOCAL_XLIB_DIR)/libeay32" ]; then	\
+		#mkdir -p $(LOCAL_XLIB_DIR)/libeay32/x64;	\
+		#cp -pf "$(SKYDRM_SDK_ROOT)redist/SDKLib_redist_x64.zip" "$(LOCAL_XLIB_DIR)"/;	\
+		#unzip "$(LOCAL_XLIB_DIR)/SDKLib_redist_x64.zip" -d $(LOCAL_XLIB_DIR)/libeay32/x64;	\
+		#mkdir -p $(LOCAL_XLIB_DIR)/libeay32/x86;	\
+		#cp -pf "$(SKYDRM_SDK_ROOT)redist/SDKLib_redist_x86.zip" $(LOCAL_XLIB_DIR)/;	\
+		#unzip $(LOCAL_XLIB_DIR)/SDKLib_redist_x86.zip -d $(LOCAL_XLIB_DIR)/libeay32/x86;	\
+	#fi
+	ls -l $(LOCAL_XLIB_DIR)
+
+.PHONY: sign_dlls
+sign_dlls:
+	@echo "Signing nxlrunner.exe for RPM with NextLabs cert...."
+	cd "$(NLPROJECTROOT)/Release/Win32" && "$(CADRMX_COMMON_DIR)/Build/signModulesByServer256Only.bat"
+
+.PHONY:make_dir
+make_dir:
+	@if [ ! -d $(LOCAL_OUTPUT_DIR) ]; then	\
+		mkdir -p $(LOCAL_OUTPUT_DIR) ;		\
+	fi
+	@rm -rf $(LOCAL_OUTPUT_DIR)/*
+	@if [ ! -d $(LOCAL_WORK_DIR) ]; then	\
+		mkdir -p $(LOCAL_WORK_DIR) ;		\
+	fi
+	rm -rf $(LOCAL_WORK_DIR)/*
+	@if [ ! -d $(LOCAL_XLIB_DIR) ]; then	\
+		mkdir -p $(LOCAL_XLIB_DIR) ;		\
+	fi
+
+

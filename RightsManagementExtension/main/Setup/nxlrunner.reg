@@ -1,0 +1,81 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\.nxl]
+@="NextLabs.Handler.1"
+
+[HKEY_CLASSES_ROOT\nxlfile]
+@="nxlfile"
+
+[HKEY_CLASSES_ROOT\nxlfile\shell]
+
+[HKEY_CLASSES_ROOT\nxlfile\shell\open]
+
+[HKEY_CLASSES_ROOT\nxlfile\shell\open\command]
+@="%TC_ROOT%\\portal\\nxlrunner.exe %1"
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner]
+"NxlApps"=hex(7):6e,00,78,00,6c,00,72,00,75,00,6e,00,6e,00,65,00,72,00,2e,00,\
+  65,00,78,00,65,00,00,00,6e,00,78,00,72,00,6d,00,73,00,68,00,65,00,6c,00,6c,\
+  00,2e,00,64,00,6c,00,6c,00,00,00,73,00,6b,00,79,00,64,00,72,00,6d,00,2e,00,\
+  65,00,78,00,65,00,00,00,73,00,6b,00,79,00,64,00,72,00,6d,00,5c,00,62,00,69,\
+  00,6e,00,5c,00,76,00,69,00,65,00,77,00,65,00,72,00,2e,00,65,00,78,00,65,00,\
+  00,00,6e,00,78,00,72,00,6d,00,68,00,61,00,6e,00,64,00,6c,00,65,00,72,00,2e,\
+  00,65,00,78,00,65,00,00,00,6e,00,78,00,72,00,6d,00,76,00,69,00,65,00,77,00,\
+  65,00,72,00,2e,00,65,00,78,00,65,00,00,00,00,00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\acrord32.exe]
+"CommandArgs"="/n \"%1\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\winword.exe]
+"CommandArgs"="/x \"%1\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\excel.exe]
+"CommandArgs"="/x \"%1\""
+"RunAsTrustApp"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\powerpnt.exe] 
+"WaitForFileHandle"=dword:00000001
+"IsSTAApp"=dword:00000001
+"RetryIfProcesIsAlive"=dword:00000005
+"MaxTryOfHandleSearch"=dword:00000014
+
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\PhotoViewer.dll]
+"Command"="rundll32.exe"
+"CommandArgs"="\"%2\", ImageView_Fullscreen %1"
+"UseNxlName"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\photoshop.exe]
+"CommandArgs"="%1"
+"UseNxlName"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\iexplore.exe]
+"CommandArgs"="-noframemerging \"%1\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\ugs_router.exe]
+"WaitForChildProcess"="ugraf.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\ugraf.exe]
+"MaxTryOfHandleSearch"=dword:00000005
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\Skydrm.exe]
+"WaitForChildProcess"="Viewer.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\Viewer.exe]
+"WaitForFileHandle"=dword:00000001
+"MaxTryOfHandleSearch"=dword:00000014
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\nxrmhandler.exe]
+"WaitForChildProcess"="nxrmviewer.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\nxrmviewer.exe]
+"WaitForFileHandle"=dword:00000001
+"MaxTryOfHandleSearch"=dword:00000014
+
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\.nxl]
+"Command"="C:\\Program Files\\NextLabs\\SkyDRM\\bin\\nxrmviewer.exe"
+"CommandArgs"="-view \"%1\""
+

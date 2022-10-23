@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<preferences version="10.0">
+  <category name="Active Workspace">
+    <category_description></category_description>
+    <preference name="Dataset.CellProperties" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Active Workspace Tile Properties</preference_description>
+      <context name="Teamcenter">        
+        <value>tool_used</value>
+        <value>nxl3_is_nxl_protected</value>
+      </context>
+    </preference>
+  </category>
+</preferences>

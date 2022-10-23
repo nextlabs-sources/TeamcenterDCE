@@ -1,0 +1,954 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+
+	<!-- Global properties -->
+	<property name="package_dir" value="${repository_root}/Teamcenter/RightsManagementExtension/${package_name}/${version_str}/${build_number}" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+	<property name="dist_zip_file_name_win" value="${package_name}-${version_str}-${build_number}-${build_date_long}-win.zip" />
+	<property name="dist_zip_file_name_linux" value="${package_name}-${version_str}-${build_number}-${build_date_long}-linux.zip" />
+	<property file="${nlbuildroot}/build/build_common.properties" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+	<echo message="INFO: nlbuildroot: ${nlbuildroot}" />
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="package" />
+
+
+	<target name="package" description="package the components">
+		<mkdir dir="${nlbuildroot}/rmx_package" />
+		<mkdir dir="${nlbuildroot}/rmx_package/engine" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/AWC" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/AWC/OneStepCommands" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Customized Menu Item" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/config" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/BatchProtect" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/DataModel" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Dispatcher" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Dispatcher/openaz" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/PartialDownload" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/PartialDownloadClient" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NXLOverlay" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/shared_libs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/shared_libs/openaz" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/shared_libs/jaxb-ri" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/BBIntegration" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/BBIntegration/NonRPM" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11/Windows" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11/Linux" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12/Windows" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12/Linux" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13/Windows" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13/Linux" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/Runners" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/bin32" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc11" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc11/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.3" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.3/nextlabs" />	
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.4" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.4/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.1" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.1/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.2" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.2/nextlabs" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/TemplateModifier" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Setup" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Translator" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Translator/tonxlfile" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/Translator/tonxlfile/bin" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/TranslatorRightsChecker" />
+		<mkdir dir="${nlbuildroot}/rmx_package/TcDRM/TcPreferences" />
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/" overwrite="true">
+			<!-- <fileset file="${xlib_jar_dir}/NextLabs Rights Management For Creo.msi" />
+			<fileset file="${xlib_jar_dir}/NextLabs Rights Management For NX.msi" />
+			<fileset file="${xlib_jar_dir}/NextLabs Rights Management For SolidWorks.msi" />
+			<fileset file="${xlib_jar_dir}/NextLabs Rights Management For AutoCAD.msi" /> -->
+			<fileset file="${xlib_jar_dir}/RMDRPM/Setup.exe" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/AWC/OneStepCommands" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/OneStepCommands" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/Customized Menu Item" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/Customized Menu Item" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/config" overwrite="true">
+			<fileset dir="${nlbuildroot}/config" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/BatchProtect" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/BatchProtect" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/DataModel" overwrite="true">
+			<fileset dir="${nlbuildroot}/DataModel" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/Dispatcher" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/Dispatcher" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/PartialDownload" overwrite="true">
+			<!-- <fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/bcpkix-jdk15on-1.64.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/bcprov-jdk15on-1.64.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/com.nextlabs.teamcenter.fms.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/common-framework.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-cli-1.2.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-codec-1.11.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-io-2.5.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-lang3-3.5.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-logging-1.2.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/commons-pool2-2.5.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/crypt.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/gson-2.3.1.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/guava-18.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpclient-4.5.12.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpcore-4.4.13.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/httpmime-4.5.12.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/javax.servlet-api-3.1.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/log4j-api-2.10.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/log4j-core-2.10.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/rmjavasdk-ng.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/shared.jar" /> -->
+			<fileset dir="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/bin/" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/log4j2.properties" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_server/FMS_PartialDownload/sdk.properties" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/PartialDownloadClient" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/" />
+			<!-- <fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/com.nextlabs.teamcenter.fms.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/common-framework.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/commons-io-2.5.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/commons-pool2-2.5.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/log4j-api-2.10.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/log4j-core-2.10.0.jar" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/FMSRMX.dll" />
+			<fileset file="${xlib_jar_dir}/PartialDownload_client/FMS_PartialDownload/bin/libeay32.dll" /> -->
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc11/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc11/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc11/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc11" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc11/com.teamcenter.rac.common_11000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc11/com.teamcenter.rac.viewer.win32_11000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc11/com.teamcenter.rac.viewer_11000.2.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12/com.teamcenter.rac.common_12000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12/com.teamcenter.rac.viewer.win32_12000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12/com.teamcenter.rac.viewer_12000.2.0.jar" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.3/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.3/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.3/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.3" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.3/com.teamcenter.rac.common_12000.3.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.3/com.teamcenter.rac.viewer.win32_12000.3.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.3/com.teamcenter.rac.viewer_12000.3.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.4/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.4/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.4/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc12.4" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.4/com.teamcenter.rac.common_12000.4.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.4/com.teamcenter.rac.viewer.win32_12000.4.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc12.4/com.teamcenter.rac.viewer_12000.4.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13/com.teamcenter.rac.common_13000.0.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13/com.teamcenter.rac.viewer.win32_13000.0.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13/com.teamcenter.rac.viewer_13000.0.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.1/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.1/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.1/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.1" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.1/com.teamcenter.rac.common_13000.1.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.1/com.teamcenter.rac.viewer.win32_13000.1.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.1/com.teamcenter.rac.viewer_13000.1.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.2/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.2/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.2/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.2" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.2/com.teamcenter.rac.common_13000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.2/com.teamcenter.rac.viewer.win32_13000.2.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.2/com.teamcenter.rac.viewer_13000.2.0.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.3/nextlabs" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.3/nextlabs/aspectjrt.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.3/nextlabs/aspectjweaver.jar" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX/tc13.3" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.3/com.teamcenter.rac.common_13000.3.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.3/com.teamcenter.rac.viewer.win32_13000.3.0.jar" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/tc13.3/com.teamcenter.rac.viewer_13000.3.0.jar" />
+		</copy>
+		
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/RACRMX" overwrite="true">
+			<fileset file="${xlib_jar_dir}/racrmx/bin/libeay32.dll" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/RACRMX.dll" />
+			<fileset file="${xlib_jar_dir}/racrmx/bin/viewwatermark64.dll" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NXLOverlay" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/NXLOverlay" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/shared_libs/openaz" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/Dispatcher/openaz" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/shared_libs/jaxb-ri" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/jaxb-ri" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/shared_libs/" overwrite="true">
+			<fileset file="${xlib_jar_dir}/BBIntegration/bczmodifier.bat" />
+			<fileset file="${xlib_jar_dir}/BBIntegration/bczmodifier.sh" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/TC_BIN11" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN11/NxlSCFIntegration.dll" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/TC_BIN12" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN12/NxlSCFIntegration.dll" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/TC_BIN13" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN13/NxlSCFIntegration.dll" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/NX_RMX_ROOT/NxlTcImportIntegration" overwrite="true">
+			<dirset dir="${xlib_jar_dir}/NX_RMX_ROOT/NxlTcImportIntegration/" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/TC_BIN_LINUX" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlSCFIntegration11.so/" />
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlSCFIntegration12.so/" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/SCFIntegration/TC_BIN_LINUX/NxlTcImportIntegration/udo" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlTcImportIntegration.so/" />
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/libNxlUtils.so" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/BBIntegration" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/BBIntegration" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/BBIntegration/bin" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/fmsrmx/BBRMX" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/BBIntegration/plugins" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/BBPlugin" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11/Windows" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TC_BIN11" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11/Linux" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/libNxlUtils.so" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+		<copy tofile="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN11/Linux/NxlAutoProtect.so" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlAutoProtect11.so" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12/Windows" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TC_BIN12" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12/Linux" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/libNxlUtils.so" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+		<copy tofile="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN12/Linux/NxlAutoProtect.so" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlAutoProtect12.so" />
+		</copy>
+		
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13/Windows" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TC_BIN13" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13/Linux" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/libNxlUtils.so" />
+			<fileset file="${xlib_jar_dir}/nlJavaSDK2.jar" />
+		</copy>
+		<copy tofile="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/TC_BIN13/Linux/NxlAutoProtect.so" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TC_BIN_LINUX/NxlAutoProtect13.so" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/NxlAutoProtect/Runners" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TC_RUNNER" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/bin32" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/RMX_ROOT/bin32" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/TemplateModifier" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TemplateModifier" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/Translator/tonxlfile/bin" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/Translator" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/TranslatorRightsChecker" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/TranslatorRightsChecker" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/Setup" overwrite="true">
+			<fileset dir="${nlbuildroot}/Setup" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM" overwrite="true">
+			<fileset file="${xlib_jar_dir}/TCLdifGenerator.zip" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/TcPreferences" overwrite="true">
+			<fileset dir="${nlbuildroot}/TcPreferences" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM/XSLT" overwrite="true">
+			<fileset dir="${nlbuildroot}/XSLT" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package" overwrite="true">
+			<fileset dir="${nlbuildroot}/installer" />
+		</copy>
+
+		<copy todir="${nlbuildroot}/rmx_package/fips/sdk" overwrite="true">
+			<fileset dir="${xlib_jar_dir}/FIPSJavaSDK/lib" />
+		</copy>
+
+		<delete dir="${nlbuildroot}/rmx_package/certs"/>
+		<delete file="${nlbuildroot}/rmx_package/features.xml"/>
+
+		<copy todir="${nlbuildroot}/rmx_package/TcDRM" overwrite="true">
+			<fileset file="${nlbuildroot}/installer/features.xml" />
+		</copy>
+
+
+		<!-- preparing ruby engine and gems for windows-->
+		<copy todir="${nlbuildroot}" overwrite="true">
+			<fileset file="${env.NLEXTERNALDIR2}/chef/chef-client/12.6/engine_winx.zip" />
+			<fileset file="${env.NLEXTERNALDIR2}/chef/chef-client/12.4/gems_winx.zip" />
+		</copy>
+
+		<unzip src="${nlbuildroot}/engine_winx.zip" dest="${nlbuildroot}/rmx_package/engine"/>
+		<unzip src="${nlbuildroot}/gems_winx.zip" dest="${nlbuildroot}/rmx_package/engine"/>
+
+		<copy todir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/" failonerror="true">
+			<fileset dir="${nlbuildroot}/rmx_package/engine/gems/gems/">
+				<include name="**"/>
+				<include name="**/*"/>
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/specifications/" failonerror="true">
+			<fileset dir="${nlbuildroot}/rmx_package/engine/gems/specifications/">
+				<include name="**"/>
+				<include name="**/*"/>
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+
+		<delete dir="${nlbuildroot}/rmx_package/engine/gems"/>
+
+		<!-- delete unnecessary gems -->
+		<delete includeemptydirs="true">
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/bin">
+				<include name="chef-apply"/>
+				<include name="chef-apply.bat"/>
+				<include name="chef-service-manager"/>
+				<include name="chef-service-manager.bat"/>
+				<include name="chef-shell"/>
+				<include name="chef-shell.bat"/>
+				<include name="chef-solo"/>
+				<include name="chef-solo.bat"/>
+				<include name="ohai"/>
+				<include name="ohai.bat"/>
+			</fileset>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/mingw"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/bin">
+				<include name="[.exe"/>
+				<include name="a2p.exe"/>
+				<include name="appbundler"/>
+				<include name="appbundler.bat"/>
+				<include name="awk.exe"/>
+				<include name="basename.exe"/>
+				<include name="bash.exe"/>
+				<include name="bashbug"/>
+				<include name="bison.exe"/>
+				<include name="bundle"/>
+				<include name="bundle.bat"/>
+				<include name="bundler"/>
+				<include name="bundler.bat"/>
+				<include name="c2ph"/>
+				<include name="cat.exe"/>
+				<include name="chef-apply"/>
+				<include name="chef-apply.bat"/>
+				<include name="chef-shell"/>
+				<include name="chef-shell.bat"/>
+				<include name="chef-solo"/>
+				<include name="chef-solo.bat"/>
+				<include name="chef-zero"/>
+				<include name="chef-zero.bat"/>
+				<include name="chgrp.exe"/>
+				<include name="chmod.exe"/>
+				<include name="chown.exe"/>
+				<include name="chroot.exe"/>
+				<include name="cksum.exe"/>
+				<include name="cls"/>
+				<include name="clsb"/>
+				<include name="cmd"/>
+				<include name="cmp.exe"/>
+				<include name="coderay"/>
+				<include name="coderay.bat"/>
+				<include name="comm.exe"/>
+				<include name="config_data"/>
+				<include name="cp.exe"/>
+				<include name="cpan"/>
+				<include name="cpantest"/>
+				<include name="crc32"/>
+				<include name="crypt.exe"/>
+				<include name="csplit.exe"/>
+				<include name="cut.exe"/>
+				<include name="date.exe"/>
+				<include name="dd.exe"/>
+				<include name="df.exe"/>
+				<include name="diff.exe"/>
+				<include name="diff3.exe"/>
+				<include name="dir.exe"/>
+				<include name="dircolors.exe"/>
+				<include name="dirname.exe"/>
+				<include name="dprofpp"/>
+				<include name="du.exe"/>
+				<include name="echo.exe"/>
+				<include name="egrep.exe"/>
+				<include name="enc2xs"/>
+				<include name="env.exe"/>
+				<include name="erb"/>
+				<include name="erb.bat"/>
+				<include name="error-mode.exe"/>
+				<include name="erubis"/>
+				<include name="erubis.bat"/>
+				<include name="expand.exe"/>
+				<include name="expr.exe"/>
+				<include name="factor.exe"/>
+				<include name="false.exe"/>
+				<include name="ffi-yajl-bench"/>
+				<include name="ffi-yajl-bench.bat"/>
+				<include name="fgrep.exe"/>
+				<include name="file.exe"/>
+				<include name="find.exe"/>
+				<include name="find2perl"/>
+				<include name="flex.exe"/>
+				<include name="fmt.exe"/>
+				<include name="fold.exe"/>
+				<include name="ftp"/>
+				<include name="gawk.exe"/>
+				<include name="gawk-3.1.7.exe"/>
+				<include name="grep.exe"/>
+				<include name="groups"/>
+				<include name="h2ph"/>
+				<include name="h2xs"/>
+				<include name="head.exe"/>
+				<include name="hostname.exe"/>
+				<include name="htmldiff"/>
+				<include name="htmldiff.bat"/>
+				<include name="id.exe"/>
+				<include name="igawk"/>
+				<include name="info.exe"/>
+				<include name="infokey.exe"/>
+				<include name="install.exe"/>
+				<include name="install.exe.manifest"/>
+				<include name="install-info.exe"/>
+				<include name="install-info.exe.manifest"/>
+				<include name="instmodsh"/>
+				<include name="irb"/>
+				<include name="irb.bat"/>
+				<include name="join.exe"/>
+				<include name="kill.exe"/>
+				<include name="ld2"/>
+				<include name="ldiff"/>
+				<include name="ldiff.bat"/>
+				<include name="less.exe"/>
+				<include name="lessecho.exe"/>
+				<include name="lesskey.exe"/>
+				<include name="link.exe"/>
+				<include name="ln.exe"/>
+				<include name="lnkcnv"/>
+				<include name="logname.exe"/>
+				<include name="ls.exe"/>
+				<include name="lwp-download"/>
+				<include name="lwp-mirror"/>
+				<include name="lwp-request"/>
+				<include name="lwp-rget"/>
+				<include name="m4.exe"/>
+				<include name="make.exe"/>
+				<include name="makeinfo.exe"/>
+				<include name="md5sum.exe"/>
+				<include name="mintty.exe"/>
+				<include name="mkdir.exe"/>
+				<include name="mkfifo.exe"/>
+				<include name="mknod.exe"/>
+				<include name="mount"/>
+				<include name="msys-1.0.dll"/>
+				<include name="msys-iconv-2.dll"/>
+				<include name="msys-magic-1.dll"/>
+				<include name="msysmnt.exe"/>
+				<include name="msys-perl5_8.dll"/>
+				<include name="mv.exe"/>
+				<include name="nice.exe"/>
+				<include name="nl.exe"/>
+				<include name="nohup.exe"/>
+				<include name="od.exe"/>
+				<include name="ohai"/>
+				<include name="ohai.bat"/>
+				<include name="oldfind.exe"/>
+				<include name="paste.exe"/>
+				<include name="pathchk.exe"/>
+				<include name="pdftexi2dvi"/>
+				<include name="perl.exe"/>
+				<include name="perl5.8.8.exe"/>
+				<include name="perlbug"/>
+				<include name="perlcc"/>
+				<include name="perldoc"/>
+				<include name="perlivp"/>
+				<include name="perlld"/>
+				<include name="perlrebase"/>
+				<include name="pgawk.exe"/>
+				<include name="pgawk-3.1.7.exe"/>
+				<include name="piconv"/>
+				<include name="pinky.exe"/>
+				<include name="pirb"/>
+				<include name="pirb.bat"/>
+				<include name="pl2pm"/>
+				<include name="pod_cover"/>
+				<include name="pod2html"/>
+				<include name="pod2latex"/>
+				<include name="pod2man"/>
+				<include name="pod2readme"/>
+				<include name="pod2text"/>
+				<include name="pod2usage"/>
+				<include name="podchecker"/>
+				<include name="podselect"/>
+				<include name="pr.exe"/>
+				<include name="printenv.exe"/>
+				<include name="printf.exe"/>
+				<include name="prove"/>
+				<include name="pruby"/>
+				<include name="pruby.bat"/>
+				<include name="pry"/>
+				<include name="pry.bat"/>
+				<include name="ps.exe"/>
+				<include name="psed"/>
+				<include name="pstruct"/>
+				<include name="ptar"/>
+				<include name="ptardiff"/>
+				<include name="ptee"/>
+				<include name="ptx.exe"/>
+				<include name="pwd.exe"/>
+				<include name="rackup"/>
+				<include name="rackup.bat"/>
+				<include name="rake"/>
+				<include name="rake.bat"/>
+				<include name="rdoc"/>
+				<include name="rdoc.bat"/>
+				<include name="readlink.exe"/>
+				<include name="ri"/>
+				<include name="ri.bat"/>
+				<include name="rm.exe"/>
+				<include name="rmdir.exe"/>
+				<include name="rspec"/>
+				<include name="rspec.bat"/>
+				<include name="ruby-prof"/>
+				<include name="ruby-prof.bat"/>
+				<include name="ruby-prof-check-trace"/>
+				<include name="ruby-prof-check-trace.bat"/>
+				<include name="s2p"/>
+				<include name="scandeps.pl"/>
+				<include name="sdiff.exe"/>
+				<include name="sed.exe"/>
+				<include name="seq.exe"/>
+				<include name="serverspec-init"/>
+				<include name="serverspec-init.bat"/>
+				<include name="sh.exe"/>
+				<include name="sha1sum.exe"/>
+				<include name="shasum"/>
+				<include name="shred.exe"/>
+				<include name="sleep.exe"/>
+				<include name="sort.exe"/>
+				<include name="splain"/>
+				<include name="split.exe"/>
+				<include name="start"/>
+				<include name="stat.exe"/>
+				<include name="stty.exe"/>
+				<include name="su.exe"/>
+				<include name="sum.exe"/>
+				<include name="sync.exe"/>
+				<include name="tac.exe"/>
+				<include name="tail.exe"/>
+				<include name="tcl85.dll"/>
+				<include name="tee.exe"/>
+				<include name="test.exe"/>
+				<include name="testrb"/>
+				<include name="testrb.bat"/>
+				<include name="texi2dvi"/>
+				<include name="texi2pdf"/>
+				<include name="texindex.exe"/>
+				<include name="tk85.dll"/>
+				<include name="touch.exe"/>
+				<include name="tr.exe"/>
+				<include name="true.exe"/>
+				<include name="tsort.exe"/>
+				<include name="tty.exe"/>
+				<include name="umount"/>
+				<include name="uname.exe"/>
+				<include name="unexpand.exe"/>
+				<include name="uniq.exe"/>
+				<include name="unlink.exe"/>
+				<include name="users.exe"/>
+				<include name="vdir.exe"/>
+				<include name="wc.exe"/>
+				<include name="which"/>
+				<include name="who.exe"/>
+				<include name="whoami.exe"/>
+				<include name="xargs.exe"/>
+				<include name="xsubpp"/>
+				<include name="yacc"/>
+				<include name="yes.exe"/>
+				<include name="ysh"/>
+			</fileset>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/perl5"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/pkgconfig"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/tcltk"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib">
+				<include name="libmsvcrt-ruby200.dll.a"/>
+				<include name="libmsvcrt-ruby200-static.a"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/bundler/gems" includes="**/*"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/cache" includes="**/*"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-ldap-0.11"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/netrc-0.11.0"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-scp-1.2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-ssh-2.9.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-ssh-gateway-1.2.0"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-ssh-multi-1.2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/net-telnet-0.1.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/addressable-2.3.8/spec"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/vendor/local/lib"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/vendor/local/share"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/atk-2.2.5-x86-mingw32/lib/2.2"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32">
+				<include name="AUTHORS"/>
+				<include name="COPYING"/>
+				<include name="Gemfile"/>
+				<include name="GPL"/>
+				<include name="NEWS"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/samples"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/vendor/local/lib"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/vendor/local/share"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/vendor/local/etc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/cairo-1.14.1-x86-mingw32/vendor/local/bin">
+				<include name="fc-cache.exe"/>
+				<include name="fc-cat.exe"/>
+				<include name="fc-list.exe"/>
+				<include name="fc-match.exe"/>
+				<include name="fc-pattern.exe"/>
+				<include name="fc-query.exe"/>
+				<include name="fc-scan.exe"/>
+				<include name="fc-validate.exe"/>
+				<include name="libcairo-gobject-2.dll"/>
+				<include name="libcairo-script-interpreter-2.dll"/>
+				<include name="libstdc++-6.dll"/>
+				<include name="png-fix-itxt.exe"/>
+				<include name="pngfix.exe"/>
+				<include name="xmlcatalog.exe"/>
+				<include name="xmllint.exe"/>
+			</fileset>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/chef-12.6.0-universal-mingw32/distro"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/chef-12.6.0-universal-mingw32/spec"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/erubis-2.7.0/doc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/erubis-2.7.0/doc-api"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/erubis-2.7.0/test"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-1.9.10-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-1.9.10-x86-mingw32/lib/1.8"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-1.9.10-x86-mingw32/lib/1.9"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-1.9.10-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-1.9.10-x86-mingw32/lib/2.2"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-yajl-2.2.2/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ffi-yajl-2.2.2/spec"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/sample"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/vendor/local/lib"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gdk_pixbuf2-2.2.5-x86-mingw32/vendor/local/share"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/sample"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/vendor/local/lib"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/glib2-2.2.5-x86-mingw32/vendor/local/share"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/sample"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/etc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/bin">
+				<include name="gtk-builder-convert"/>
+				<include name="gtk-demo.exe"/>
+				<include name="gtk-query-immodules-2.0.exe"/>
+				<include name="gtk-update-icon-cache.exe"/>
+				<include name="libgailutil-18.dll"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/lib/pkgconfig"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/lib">
+				<include name="gailutil.def"/>
+				<include name="gdk-win32-2.0.def"/>
+				<include name="gtk-win32-2.0.def"/>
+				<include name="libgailutil.dll.a"/>
+				<include name="libgailutil.la"/>
+				<include name="libgdk-win32-2.0.dll.a"/>
+				<include name="libgdk-win32-2.0.la"/>
+				<include name="libgtk-win32-2.0.dll.a"/>
+				<include name="libgtk-win32-2.0.la"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/share/gtk-2.0"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/share/gtk-doc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/share/license"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/gtk2-2.2.5-x86-mingw32/vendor/local/share/locale"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/highline-1.7.8/examples"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/highline-1.7.8/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/highline-1.7.8/site"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/libyajl2-1.2.0/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/libyajl2-1.2.0/spec"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/sample"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/lib/2.1"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/lib/2.2"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/vendor/local/include"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/vendor/local/share"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/vendor/local/bin">
+				<include name="*.exe"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/pango-2.2.5-x86-mingw32/vendor/local/lib">
+				<include name="**/*"/>
+				<exclude name="pango/"/>
+			</fileset>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/rack-1.5.5/contrib"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/rack-1.5.5/test"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/rake-10.4.2/doc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/rake-10.4.2/test"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ruby-prof-0.15.9/doc"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ruby-prof-0.15.9/ext"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ruby-prof-0.15.9/test"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/ruby-prof-0.15.9/examples"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/simplecov-html-0.10.0/assets"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/simplecov-html-0.10.0/public"/>
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/simplecov-html-0.10.0/test"/>
+
+			<fileset dir="${nlbuildroot}/rmx_package/engine/chef/embedded/lib/ruby/gems/2.0.0/gems/specinfra-2.47.0/spec"/>
+
+		</delete>
+
+		<!-- end of preparing ruby engine and gems for windows-->
+		<delete file="${nlbuildroot}/rmx_package/install_ui.sh"/>
+		<delete file="${nlbuildroot}/rmx_package/silence/install.sh"/>
+		<zip destfile="${nlbuildroot}/${dist_zip_file_name_win}" encoding="UTF-8">
+			<fileset dir="${nlbuildroot}/rmx_package">
+				<include name="**" />
+			</fileset>
+		</zip>
+
+		<mkdir dir="${package_dir}" />
+		<copy todir="${package_dir}" overwrite="true">
+			<fileset file="${nlbuildroot}/${dist_zip_file_name_win}" />
+		</copy>
+
+		<!-- end of windows build -->
+
+
+		<!-- preparing ruby engine and gems for Linux-->
+		<copy todir="${nlbuildroot}" overwrite="true">
+			<fileset file="${env.NLEXTERNALDIR2}/chef/chef-client/12.6/engine_linux.zip" />
+			<fileset file="${env.NLEXTERNALDIR2}/chef/chef-client/12.4/gems_linux.zip" />
+		</copy>
+		<mkdir dir="${nlbuildroot}/linux_engine" />
+		<unzip src="${nlbuildroot}/gems_winx.zip" dest="${nlbuildroot}/linux_engine"/>
+
+
+		<!-- <delete dir="${nlbuildroot}/rmx_package/engine"/> -->
+		<!-- <mkdir dir="${nlbuildroot}/rmx_package/engine"/> -->
+		<copy todir="${nlbuildroot}/rmx_package/engine" overwrite="true">
+			<fileset file="${nlbuildroot}/engine_linux.zip" />
+			<fileset file="${nlbuildroot}/gems_linux.zip" />
+			<fileset dir="${nlbuildroot}/linux_engine/gems/gems/">
+				<include name="rubyzip-1.2.0"/>
+				<include name="rubyzip-1.2.0/**"/>
+			</fileset>
+			<fileset dir="${nlbuildroot}/linux_engine/gems/specifications/">
+				<include name="rubyzip-1.2.0.gemspec"/>
+			</fileset>
+		</copy>
+		<!-- end of preparing ruby engine and gems for Linux-->
+
+		<copy todir="${nlbuildroot}/rmx_package" overwrite="true">
+			<fileset file="${nlbuildroot}/installer/install_ui.sh" />
+		</copy>
+		<copy todir="${nlbuildroot}/rmx_package/silence" overwrite="true">
+			<fileset file="${nlbuildroot}/installer/silence/install.sh" />
+		</copy>
+		<!-- <delete file="${nlbuildroot}/rmx_package/install.bat"/> -->
+		<!-- <delete file="${nlbuildroot}/rmx_package/silence/install_silence.bat"/> -->
+
+		<zip destfile="${nlbuildroot}/${dist_zip_file_name_linux}" encoding="UTF-8" update="true">
+			<fileset dir="${nlbuildroot}/rmx_package">
+				<exclude name="install_ui.sh"/>
+				<exclude name="silence/**"/>
+			</fileset>
+
+			<zipfileset dir="${nlbuildroot}/rmx_package" filemode="755">
+				<include name="silence/**"/>
+			</zipfileset>
+
+			<zipfileset dir="${nlbuildroot}/rmx_package" filemode="755">
+				<include name="install_ui.sh"/>
+			</zipfileset>
+		</zip>
+
+		<copy todir="${package_dir}" overwrite="true">
+			<fileset file="${nlbuildroot}/${dist_zip_file_name_linux}" />
+		</copy>
+
+		<!-- end of Linux build-->
+
+
+	</target>
+
+</project>

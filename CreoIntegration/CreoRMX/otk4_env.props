@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <PRO_MACHINE_TYPE>x86e_win64</PRO_MACHINE_TYPE>
+    <CREO_TK_ROOT>$(NLEXTERNALDIR)\ptc\creo4_m040</CREO_TK_ROOT>
+    <PROTOOL_ROOT>$(CREO_TK_ROOT)\$(Platform)\Common Files\protoolkit</PROTOOL_ROOT>
+    <OTK_CPP_ROOT>$(CREO_TK_ROOT)\$(Platform)\Common Files\otk\otk_cpp</OTK_CPP_ROOT>
+    <CREO_BIN>$(CREO_TK_ROOT)\$(Platform)\Parametric\bin</CREO_BIN>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_PropertySheetDisplayName>otksdk4_env</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(PROTOOL_ROOT)/includes;$(OTK_CPP_ROOT)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PRO_USE_VAR_ARGS;PRO_MACHINE=36;PRO_OS=4;USE_ANSI_IOSTREAMS;CREO_VER=4;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(OTK_CPP_ROOT)/$(PRO_MACHINE_TYPE)/obj;$(PROTOOL_ROOT)/$(PRO_MACHINE_TYPE)/obj;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>otk_cpp.lib;otk_no222.lib;protk_dll_NU.lib;ucore.lib;udata.lib;netapi32.lib;wsock32.lib;psapi.lib;mpr.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>"$(CREO_BIN)\protk_unlock.bat" -cxx "$(TargetPath)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="PRO_MACHINE_TYPE">
+      <Value>$(PRO_MACHINE_TYPE)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="CREO_TK_ROOT">
+      <Value>$(CREO_TK_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PROTOOL_ROOT">
+      <Value>$(PROTOOL_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="OTK_CPP_ROOT">
+      <Value>$(OTK_CPP_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CREO_BIN">
+      <Value>$(CREO_BIN)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+~ Command `ProCmdModelBackup`;
+~ Command `XTest_SelRPMDir`;
+~ Activate `file_saveas` `OK`;
+~ Command `ProCmdModelBackup`;
+~ Command `XTest_SelNonRPMDir`;
+~ Activate `file_saveas` `OK`;
+~ Command `XTest_EndCase`;

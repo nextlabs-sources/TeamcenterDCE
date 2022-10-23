@@ -1,0 +1,5 @@
+NextLabs Create Build Manifest Script
+Parameters:
+  Log File       = buildRelease.log
+
+INFO: Parse log file

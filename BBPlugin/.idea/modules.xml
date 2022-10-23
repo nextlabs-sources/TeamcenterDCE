@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BBPlugin.iml" filepath="$PROJECT_DIR$/BBPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xlib/xlib.iml" filepath="$PROJECT_DIR$/xlib/xlib.iml" />
+    </modules>
+  </component>
+</project>

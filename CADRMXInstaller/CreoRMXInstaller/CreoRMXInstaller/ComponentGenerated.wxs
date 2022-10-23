@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="log4cplus.properties" Guid="{F690461B-10C1-4CFD-BB0D-507ECAFEBEEB}">
+                <File Id="log4cplus.properties" KeyPath="yes" Source="$(var.CREORMXROOT)\log4cplus.properties" />
+            </Component>
+            <Component Id="log4j.properties" Guid="{039C3D9D-3EA2-454E-A205-A9B1327F9475}">
+                <File Id="log4j.properties" KeyPath="yes" Source="$(var.CREORMXROOT)\log4j.properties" />
+            </Component>
+            <Directory Id="Creo_4.0" Name="Creo 4.0">
+                <Component Id="CreoRMX_x64.dll" Guid="{7C0675CF-8D33-4A9B-9AEB-F855A1F5F011}">
+                    <File Id="CreoRMX_x64.dll" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\CreoRMX_x64.dll" />
+                </Component>
+                <Component Id="creotk.dat" Guid="{7A6B3139-A9AC-4B20-AB7B-0ED3A14807EE}">
+                    <File Id="creotk.dat" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\creotk.dat" />
+                </Component>
+                <Component Id="libeay32.dll" Guid="{E57D68E9-6786-4165-B0BC-7B22EB16AFC0}">
+                    <File Id="libeay32.dll" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\libeay32.dll" />
+                </Component>
+                <Component Id="LibRMX_x64.dll" Guid="{CFD041FB-7B0F-4BF4-94E4-1D46D45D91E8}">
+                    <File Id="LibRMX_x64.dll" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\LibRMX_x64.dll" />
+                </Component>
+                <Component Id="rmxutility.exe" Guid="{B4D0A4BF-7DEC-47E6-9DF4-537B555D0444}">
+                    <File Id="rmxutility.exe" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\rmxutility.exe" />
+                </Component>
+                <Directory Id="ipem" Name="ipem">
+                    <Component Id="aspectjrt.jar" Guid="{A54C9CAF-3B57-4A94-9837-A64AC36C17B2}">
+                        <File Id="aspectjrt.jar" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\ipem\aspectjrt.jar" />
+                    </Component>
+                    <Component Id="aspectjweaver.jar" Guid="{23C4386A-EB16-447D-8EA5-5B45C8DC0C9A}">
+                        <File Id="aspectjweaver.jar" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\ipem\aspectjweaver.jar" />
+                    </Component>
+                    <Component Id="ipemrmx.jar" Guid="{8A457AB1-238D-4354-8A91-B590E3B0C449}">
+                        <File Id="ipemrmx.jar" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\ipem\ipemrmx.jar" />
+                    </Component>
+                    <Component Id="log4j_1.2.17.jar" Guid="{54226C70-1554-427B-A1C8-990FE73B3CE6}">
+                        <File Id="log4j_1.2.17.jar" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\ipem\log4j-1.2.17.jar" />
+                    </Component>
+                </Directory>
+                <Directory Id="text" Name="text">
+                    <Component Id="rmx_msg.txt" Guid="{472F75A3-C775-42E2-B4C0-9DD5F2E9EA53}">
+                        <File Id="rmx_msg.txt" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 4.0\text\rmx_msg.txt" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="Creo_7.0" Name="Creo 7.0">
+                <Component Id="CreoRMX_x64.dll_1" Guid="{FBD1955D-AB84-4621-B717-F7EE97B25CD0}">
+                    <File Id="CreoRMX_x64.dll_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\CreoRMX_x64.dll" />
+                </Component>
+                <Component Id="creotk.dat_1" Guid="{85AC6D70-6754-4D93-8199-8B09A30D507F}">
+                    <File Id="creotk.dat_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\creotk.dat" />
+                </Component>
+                <Component Id="libeay32.dll_1" Guid="{1AA42641-3369-4DCC-957E-C1062EFBCB6A}">
+                    <File Id="libeay32.dll_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\libeay32.dll" />
+                </Component>
+                <Component Id="LibRMX_x64.dll_1" Guid="{06A3A918-5819-4865-BAC7-8B981FC2688E}">
+                    <File Id="LibRMX_x64.dll_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\LibRMX_x64.dll" />
+                </Component>
+                <Component Id="rmxutility.exe_1" Guid="{22F483BE-89F0-4777-B673-A4AA1C51A9B1}">
+                    <File Id="rmxutility.exe_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\rmxutility.exe" />
+                </Component>
+                <Directory Id="ipem_1" Name="ipem">
+                    <Component Id="aspectjrt.jar_1" Guid="{6A78D643-BABE-4E98-89A0-A9E5C9D6C592}">
+                        <File Id="aspectjrt.jar_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\ipem\aspectjrt.jar" />
+                    </Component>
+                    <Component Id="aspectjweaver.jar_1" Guid="{D4AF0DBB-12A1-46FA-B64A-F145211B9D55}">
+                        <File Id="aspectjweaver.jar_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\ipem\aspectjweaver.jar" />
+                    </Component>
+                    <Component Id="ipemrmx.jar_1" Guid="{6144C252-171A-427F-BAF3-60D121684F04}">
+                        <File Id="ipemrmx.jar_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\ipem\ipemrmx.jar" />
+                    </Component>
+                    <Component Id="log4j_1.2.17.jar_1" Guid="{F381B703-813E-4226-9FC9-6B9F83B4B915}">
+                        <File Id="log4j_1.2.17.jar_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\ipem\log4j-1.2.17.jar" />
+                    </Component>
+                </Directory>
+                <Directory Id="text_1" Name="text">
+                    <Component Id="rmx_msg.txt_1" Guid="{29E60F5B-517A-454C-9A2F-DEF93A6675FB}">
+                        <File Id="rmx_msg.txt_1" KeyPath="yes" Source="$(var.CREORMXROOT)\Creo 7.0\text\rmx_msg.txt" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id="tools" Name="tools">
+                <Component Id="libeay32.dll_2" Guid="{33C6ECF1-CCC6-4770-8BFB-25321DBD4A76}">
+                    <File Id="libeay32.dll_2" KeyPath="yes" Source="$(var.CREORMXROOT)\tools\libeay32.dll" />
+                </Component>
+                <Component Id="NxlHelper.exe" Guid="{49FE401C-D18C-4FA3-802B-2ABD917D4013}">
+                    <File Id="NxlHelper.exe" KeyPath="yes" Source="$(var.CREORMXROOT)\tools\NxlHelper.exe" />
+                </Component>
+                <Component Id="rmxutility.exe_2" Guid="{E2D6F5EB-2504-4132-B16B-2DB3E035C91C}">
+                    <File Id="rmxutility.exe_2" KeyPath="yes" Source="$(var.CREORMXROOT)\tools\rmxutility.exe" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="log4cplus.properties" />
+            <ComponentRef Id="log4j.properties" />
+            <ComponentRef Id="CreoRMX_x64.dll" />
+            <ComponentRef Id="creotk.dat" />
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="LibRMX_x64.dll" />
+            <ComponentRef Id="rmxutility.exe" />
+            <ComponentRef Id="aspectjrt.jar" />
+            <ComponentRef Id="aspectjweaver.jar" />
+            <ComponentRef Id="ipemrmx.jar" />
+            <ComponentRef Id="log4j_1.2.17.jar" />
+            <ComponentRef Id="rmx_msg.txt" />
+            <ComponentRef Id="CreoRMX_x64.dll_1" />
+            <ComponentRef Id="creotk.dat_1" />
+            <ComponentRef Id="libeay32.dll_1" />
+            <ComponentRef Id="LibRMX_x64.dll_1" />
+            <ComponentRef Id="rmxutility.exe_1" />
+            <ComponentRef Id="aspectjrt.jar_1" />
+            <ComponentRef Id="aspectjweaver.jar_1" />
+            <ComponentRef Id="ipemrmx.jar_1" />
+            <ComponentRef Id="log4j_1.2.17.jar_1" />
+            <ComponentRef Id="rmx_msg.txt_1" />
+            <ComponentRef Id="libeay32.dll_2" />
+            <ComponentRef Id="NxlHelper.exe" />
+            <ComponentRef Id="rmxutility.exe_2" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

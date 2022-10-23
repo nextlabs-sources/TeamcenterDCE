@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="acad.rx" Guid="{3D5D1D62-1A4D-4409-B5D6-73D23BD72A00}">
+                <File Id="acad.rx" KeyPath="yes" Source="$(var.ACADRMXROOT)\acad.rx" />
+            </Component>
+            <Component Id="log4cplus.properties" Guid="{28F83E0D-51D0-4133-877B-EA8E5BD5B827}">
+                <File Id="log4cplus.properties" KeyPath="yes" Source="$(var.ACADRMXROOT)\log4cplus.properties" />
+            </Component>
+            <Directory Id="AutoCAD_2022" Name="AutoCAD 2022">
+                <Component Id="AutoCADRMX2022.arx" Guid="{2296B8CE-FB46-42B2-8F90-CDC7EEB25495}">
+                    <File Id="AutoCADRMX2022.arx" KeyPath="yes" Source="$(var.ACADRMXROOT)\AutoCAD 2022\AutoCADRMX2022.arx" />
+                </Component>
+                <Component Id="libeay32.dll" Guid="{E825D5C7-0BEC-4039-8C42-C95D0B73085D}">
+                    <File Id="libeay32.dll" KeyPath="yes" Source="$(var.ACADRMXROOT)\AutoCAD 2022\libeay32.dll" />
+                </Component>
+                <Component Id="LibRMX_x64.dll" Guid="{991CF041-2630-43B0-A549-E6BC03C6B7A0}">
+                    <File Id="LibRMX_x64.dll" KeyPath="yes" Source="$(var.ACADRMXROOT)\AutoCAD 2022\LibRMX_x64.dll" />
+                </Component>
+            </Directory>
+            <Directory Id="tools" Name="tools">
+                <Component Id="libeay32.dll_1" Guid="{62C27A9E-0D1D-451D-BD2D-5825104930DF}">
+                    <File Id="libeay32.dll_1" KeyPath="yes" Source="$(var.ACADRMXROOT)\tools\libeay32.dll" />
+                </Component>
+                <Component Id="rmxutility.exe" Guid="{EF161D40-DB44-47B9-9D16-6ED5F471BEAE}">
+                    <File Id="rmxutility.exe" KeyPath="yes" Source="$(var.ACADRMXROOT)\tools\rmxutility.exe" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="acad.rx" />
+            <ComponentRef Id="log4cplus.properties" />
+            <ComponentRef Id="AutoCADRMX2022.arx" />
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="LibRMX_x64.dll" />
+            <ComponentRef Id="libeay32.dll_1" />
+            <ComponentRef Id="rmxutility.exe" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

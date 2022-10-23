@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Directory Id="bin" Name="bin">
+                <Component Id="libeay32.dll" Guid="{6AA437C9-50DB-44DF-88C3-F25233BFE668}">
+                    <File Id="libeay32.dll" KeyPath="yes" Source="$(var.NXRMXROOT)\bin\libeay32.dll" />
+                </Component>
+                <Component Id="rmxutility.exe" Guid="{3A1D7008-C465-4A16-97C7-120CFBCE5F07}">
+                    <File Id="rmxutility.exe" KeyPath="yes" Source="$(var.NXRMXROOT)\bin\rmxutility.exe" />
+                </Component>
+            </Directory>
+            <Directory Id="bin32" Name="bin32">
+                <Component Id="libeay32.dll_1" Guid="{F23CE9E5-B315-4F37-90A3-BBA73CC4D18D}">
+                    <File Id="libeay32.dll_1" KeyPath="yes" Source="$(var.NXRMXROOT)\bin32\libeay32.dll" />
+                </Component>
+                <Component Id="nxlrunner.exe" Guid="{E25B5CEB-63EC-4476-A3C7-9D5D77E5CD11}">
+                    <File Id="nxlrunner.exe" KeyPath="yes" Source="$(var.NXRMXROOT)\bin32\nxlrunner.exe" />
+                </Component>
+            </Directory>
+            <Directory Id="NXIntegration" Name="NXIntegration">
+                <Directory Id="startup" Name="startup">
+                    <Component Id="libeay32.dll_2" Guid="{92E88DD1-16BD-4B75-B7B9-2FD115425B53}">
+                        <File Id="libeay32.dll_2" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\libeay32.dll" />
+                    </Component>
+                    <Component Id="NXIntegration.dll" Guid="{F6241F9C-E7D3-45A1-95B5-301C018A175A}">
+                        <File Id="NXIntegration.dll" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\NXIntegration.dll" />
+                    </Component>
+                    <Component Id="NxlHelper.exe" Guid="{02FC7932-1D63-4CE8-8B5C-437FCABA050D}">
+                        <File Id="NxlHelper.exe" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\NxlHelper.exe" />
+                    </Component>
+                    <Component Id="NxlHelper.exe.config" Guid="{7D906230-DA12-4F96-B6DE-A80A9D24B091}">
+                        <File Id="NxlHelper.exe.config" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\NxlHelper.exe.config" />
+                    </Component>
+                    <Component Id="NxlHook.dll" Guid="{E6AE3561-303A-4D35-B9C2-6E157E01F072}">
+                        <File Id="NxlHook.dll" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\NxlHook.dll" />
+                    </Component>
+                    <Component Id="NxlUtils64.dll" Guid="{B9A75A82-1390-4C61-B902-C27AB03CF5F0}">
+                        <File Id="NxlUtils64.dll" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\NxlUtils64.dll" />
+                    </Component>
+                    <Component Id="nx_rmx_app.men" Guid="{47DFE17C-62C1-42C1-8118-E00D9F982FBB}">
+                        <File Id="nx_rmx_app.men" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\nx_rmx_app.men" />
+                    </Component>
+                    <Component Id="nx_rmx_app_button.men" Guid="{2EA39C24-4B7D-4CE2-91C9-D87E870A942A}">
+                        <File Id="nx_rmx_app_button.men" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\nx_rmx_app_button.men" />
+                    </Component>
+                    <Component Id="nx_rmx_usage_control.men" Guid="{1B00B519-0DD1-4AD8-8087-A3734CA351D2}">
+                        <File Id="nx_rmx_usage_control.men" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\nx_rmx_usage_control.men" />
+                    </Component>
+                    <Component Id="RPMUtils64.dll" Guid="{48099DBE-BA29-4C4C-9C6F-AC3C7E38122B}">
+                        <File Id="RPMUtils64.dll" KeyPath="yes" Source="$(var.NXRMXROOT)\NXIntegration\startup\RPMUtils64.dll" />
+                    </Component>
+                </Directory>
+                <Directory Id="udo" Name="udo">
+                    <Component Id="__89EADAFE_E0E3_4663_B550_3CDE2C7E4D85_" Guid="{9F868E2E-5167-4670-805B-1A0FCBBD8DCB}" KeyPath="yes">
+                        <CreateFolder />
+                    </Component>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="rmxutility.exe" />
+            <ComponentRef Id="libeay32.dll_1" />
+            <ComponentRef Id="nxlrunner.exe" />
+            <ComponentRef Id="libeay32.dll_2" />
+            <ComponentRef Id="NXIntegration.dll" />
+            <ComponentRef Id="NxlHelper.exe" />
+            <ComponentRef Id="NxlHelper.exe.config" />
+            <ComponentRef Id="NxlHook.dll" />
+            <ComponentRef Id="NxlUtils64.dll" />
+            <ComponentRef Id="nx_rmx_app.men" />
+            <ComponentRef Id="nx_rmx_app_button.men" />
+            <ComponentRef Id="nx_rmx_usage_control.men" />
+            <ComponentRef Id="RPMUtils64.dll" />
+            <ComponentRef Id="__89EADAFE_E0E3_4663_B550_3CDE2C7E4D85_" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke custom application build script
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildDev
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildRelease
+
+#
+# Compile
+#
+
+LOG_FILE=buildRelease.log
+
+source ../../CADRMXCommon/setRPMSDKEnv
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ -f ${WORKSPACE}/../config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${WORKSPACE}/../config.xml
+fi
+
+
+# Prepare environment
+./configure --type=release || exit $?
+source build.config
+
+OSVERSION=`uname`
+
+# Compile code and build installers
+if [ "$OSVERSION" == "Linux" ]; then
+	make -f Build/Makefile.compile.linux || exit $?
+else
+	$ANT -f Build/build_xlib.xml || exit $?
+	make -f Build/Makefile.compile || exit $?
+fi
+
+# Publish installers and artifacts
+make -f Build/Makefile.publish all
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

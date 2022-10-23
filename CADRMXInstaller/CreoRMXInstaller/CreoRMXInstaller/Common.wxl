@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  
+  <String Id="ProductName">NextLabs Rights Management eXtension For Creo</String>
+  <String Id="ProductNameShort">Rights Management eXtension For Creo</String>
+  <String Id="ProductNameSkyDRM">SkyDRM Rights Management eXtension For Creo</String>
+
+  <!-- Customize String value -->
+  <String Id="VerifyReadyDlgInstallTitle">{\WixUI_Font_Title}Ready to install Rights Management eXtension For Creo</String>
+  <!-- End of Customize String value -->
+  <String Id="CompanyFolderName">Nextlabs</String>
+  <String Id="ProductFolderName">CreoRMX</String>
+
+  <String Id="Language">1033</String>
+
+  <String Id="Company">NextLabs, Inc.</String>
+
+  <String Id="Description">Rights Management eXtension for PTC Creo Parametric</String>
+  <String Id="Keywords">nextlabs, rmx, edrm, creo</String>
+  <String Id="Comments">Allow user work with persistent NextLabs rights-protection file in Creo and during save, save as operations</String>
+
+  <String Id="DowngradeErrorMessage">A newer version of RMX For Creo is already installed.</String>
+
+  <String Id="CreoInstallDirDlgDescription">Please enter location where Creo Parametric is installed and click Next.</String>
+  <String Id="CreoInstallDirDlgTitle">{\WixUI_Font_Title}Creo Parametric Installation Folder</String>
+  
+  <String Id="CreoInstallDirDlgFolderLabel">Location Where Creo Parametric is installed
+Example: C:\Program Files\PTC\Creo 4.0\M050\Parametric
+  </String>
+  <String Id="CreoInstallDirDlgChange">Browse</String>
+
+  <String Id="CreoIpemDirDlgDescription">Please enter location where Creo Integration is installed and click Next.</String>
+  <String Id="CreoIpemDirDlgTitle">{\WixUI_Font_Title}Creo Integration Installation Folder</String>
+  <String Id="CreoIpemDirDlgFolderLabel">
+    Teamcenter Creo Integration installation folder
+    This information only require for managed mode. Example: C:\Ipem
+  </String>
+  <String Id="CreoIpemDirDlgChange">Browse</String>
+  
+</WixLocalization>

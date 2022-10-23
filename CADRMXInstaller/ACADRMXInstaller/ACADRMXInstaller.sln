@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ACADRMXInstaller", "ACADRMXInstaller\ACADRMXInstaller.wixproj", "{723CF5D1-62EA-467C-B208-7B39CB768078}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F027DEF1-4673-4508-A528-015BDC74D4F1} = {F027DEF1-4673-4508-A528-015BDC74D4F1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACADRMXCA", "ACADRMXCA\ACADRMXCA.csproj", "{F027DEF1-4673-4508-A528-015BDC74D4F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Debug|x64.ActiveCfg = Release|x64
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Debug|x64.Build.0 = Release|x64
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Debug|x86.ActiveCfg = Debug|x64
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Release|x64.ActiveCfg = Release|x64
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Release|x64.Build.0 = Release|x64
+		{723CF5D1-62EA-467C-B208-7B39CB768078}.Release|x86.ActiveCfg = Release|x64
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Debug|x64.ActiveCfg = Release|x64
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Debug|x64.Build.0 = Release|x64
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Debug|x86.ActiveCfg = Debug|x86
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Debug|x86.Build.0 = Debug|x86
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Release|x64.ActiveCfg = Release|x64
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Release|x64.Build.0 = Release|x64
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Release|x86.ActiveCfg = Release|x86
+		{F027DEF1-4673-4508-A528-015BDC74D4F1}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

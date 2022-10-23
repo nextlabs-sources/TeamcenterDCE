@@ -1,0 +1,186 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="jnidir" location="${xlib_jar_dir}/jni" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+	
+	<fail message="nlexternaldir2 is not set" unless="nlexternaldir2" />
+	<fail message="nlexternaldir2 is empty">
+		<condition>
+			<equals arg1="${nlexternaldir2}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir2}" type="dir" property="local.nlexternaldir2_exists" />
+	<fail message="nlexternaldir2 directory does not exist - ${nlexternaldir2}" unless="local.nlexternaldir2_exists" />
+	
+	<fail message="fms_rmx_zip_file is not set" unless="fms_rmx_zip_file" />
+	<fail message="fms_rmx_zip_file is empty">
+		<condition>
+			<equals arg1="${fms_rmx_zip_file}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${fms_rmx_zip_file}" type="file" property="local.fms_rmx_zip_file_exists" />
+	<fail message="fms_rmx_zip_file directory does not exist - ${fms_rmx_zip_file}" unless="local.fms_rmx_zip_file_exists" />
+		
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_external_jar" />
+
+	<target name="prepare_external_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<mkdir dir="${xlib_jar_dir}/aspectj" />
+		<mkdir dir="${xlib_jar_dir}/aspectj/1.7.4" />
+		<mkdir dir="${xlib_jar_dir}/aspectj/1.8.14" />
+		<mkdir dir="${xlib_jar_dir}/tc11" />
+		<mkdir dir="${xlib_jar_dir}/tc12" />
+		<mkdir dir="${xlib_jar_dir}/tc12.3" />
+		<mkdir dir="${xlib_jar_dir}/tc12.4" />
+		<mkdir dir="${xlib_jar_dir}/tc13" />
+		<mkdir dir="${xlib_jar_dir}/tc13.1" />
+		<mkdir dir="${xlib_jar_dir}/tc13.2" />
+		<mkdir dir="${xlib_jar_dir}/tc13.3" />
+		<copy file="${nlexternaldir}/aspectj/1.7.4/aspectjrt.jar" todir="${xlib_jar_dir}/aspectj/1.7.4" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/aspectj/1.7.4/aspectjtools.jar" todir="${xlib_jar_dir}/aspectj/1.7.4" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/aspectj/1.7.4/aspectjweaver.jar" todir="${xlib_jar_dir}/aspectj/1.7.4" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/aspectj/1.8.14/aspectjrt.jar" todir="${xlib_jar_dir}/aspectj/1.8.14" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/aspectj/1.8.14/aspectjtools.jar" todir="${xlib_jar_dir}/aspectj/1.8.14" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/aspectj/1.8.14/aspectjweaver.jar" todir="${xlib_jar_dir}/aspectj/1.8.14" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter11/eclipse/org.eclipse.core.commands_3.6.1.v20120521-2332.jar" todir="${xlib_jar_dir}/tc11/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/eclipse/org.eclipse.jface_3.8.0.v20120521-2332.jar" todir="${xlib_jar_dir}/tc11/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/eclipse/org.eclipse.osgi.services_3.3.100.v20120522-1822.jar" todir="${xlib_jar_dir}/tc11/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/eclipse/org.eclipse.swt.win32.win32.x86_3.8.0.v3833.jar" todir="${xlib_jar_dir}/tc11/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.aifrcp_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.common_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.kernel_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.util_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.viewer.win32_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/com.teamcenter.rac.viewer_11000.2.0.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter11/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc11/" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter12/eclipse/org.eclipse.core.commands_3.9.200.v20180827-1727.jar" todir="${xlib_jar_dir}/tc12/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/eclipse/org.eclipse.jface_3.15.0.v20181123-1505.jar" todir="${xlib_jar_dir}/tc12/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/eclipse/org.eclipse.osgi.services_3.7.100.v20180827-1536.jar" todir="${xlib_jar_dir}/tc12/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/eclipse/org.eclipse.swt.win32.win32.x86_64_3.109.0.v20181204-1801.jar" todir="${xlib_jar_dir}/tc12/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.aifrcp_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.common_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.kernel_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.util_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.viewer.win32_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/com.teamcenter.rac.viewer_12000.2.0.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc12/" preservelastmodified="true" overwrite="false" verbose="true" />
+				
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.aifrcp_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.common_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.kernel_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.util_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.viewer.win32_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/com.teamcenter.rac.viewer_12000.3.0.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.3/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc12.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+				
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.aifrcp_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.common_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.kernel_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.util_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.viewer.win32_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/com.teamcenter.rac.viewer_12000.4.0.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter12.4/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc12.4/" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter13/eclipse/org.eclipse.core.commands_3.9.200.v20180827-1727.jar" todir="${xlib_jar_dir}/tc13/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/eclipse/org.eclipse.jface_3.15.0.v20181123-1505.jar" todir="${xlib_jar_dir}/tc13/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/eclipse/org.eclipse.osgi.services_3.7.100.v20180827-1536.jar" todir="${xlib_jar_dir}/tc13/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/eclipse/org.eclipse.swt.win32.win32.x86_64_3.109.0.v20181204-1801.jar" todir="${xlib_jar_dir}/tc13/eclipse" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.aifrcp_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.common_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.kernel_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.util_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.viewer.win32_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/com.teamcenter.rac.viewer_13000.0.0.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc13/" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.aifrcp_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.common_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.kernel_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.util_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.viewer.win32_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/com.teamcenter.rac.viewer_13000.1.0.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.1/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc13.1/" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.aifrcp_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.common_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.kernel_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.util_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.viewer.win32_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/com.teamcenter.rac.viewer_13000.2.0.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.2/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc13.2/" preservelastmodified="true" overwrite="false" verbose="true" />
+		
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.aifrcp_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.common_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.kernel_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.util_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.viewer.win32_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/com.teamcenter.rac.viewer_13000.3.0.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/teamcenter13.3/SingleEmbeddedViewer.jar" todir="${xlib_jar_dir}/tc13.3/" preservelastmodified="true" overwrite="false" verbose="true" />
+				
+		<unzip src="${fms_rmx_zip_file}" dest="${jnidir}" overwrite="yes">
+			<mapper type="flatten" />
+		</unzip>
+		
+		<delete dir="${jnidir}/FMSRMX" />
+		<delete dir="${jnidir}/RACRMX" />
+	</target>
+	
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+	</target>
+</project>

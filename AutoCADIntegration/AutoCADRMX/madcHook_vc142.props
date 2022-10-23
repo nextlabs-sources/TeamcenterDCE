@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <MADHOOK_API>$(NLEXTERNALDIR2)\mch\3.1.12\</MADHOOK_API>
+	<MADHOOK_LIB>$(SolutionDir)3rdParty\mch3.1.12\</MADHOOK_LIB>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MADHOOK_API)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MADHOOK_LIB)lib\vs2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture)mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="MADHOOK_API">
+      <Value>$(MADHOOK_API)</Value>
+    </BuildMacro>
+	<BuildMacro Include="MADHOOK_LIB">
+      <Value>$(MADHOOK_LIB)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

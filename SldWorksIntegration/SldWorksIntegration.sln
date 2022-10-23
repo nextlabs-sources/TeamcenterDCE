@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SldWorksRMX", "SldWorksRMX\SldWorksRMX.vcxproj", "{4A32C051-F68F-4374-A0C5-F638B353665F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		ReleaseBuild|x64 = ReleaseBuild|x64
+		ReleaseBuild|x86 = ReleaseBuild|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Debug|x64.ActiveCfg = Debug|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Debug|x64.Build.0 = Debug|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Debug|x86.ActiveCfg = Debug|Win32
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Debug|x86.Build.0 = Debug|Win32
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Release|x64.ActiveCfg = Release|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Release|x64.Build.0 = Release|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Release|x86.ActiveCfg = Release|Win32
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.Release|x86.Build.0 = Release|Win32
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.ReleaseBuild|x64.ActiveCfg = Release|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.ReleaseBuild|x64.Build.0 = Release|x64
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.ReleaseBuild|x86.ActiveCfg = ReleaseBuild|Win32
+		{4A32C051-F68F-4374-A0C5-F638B353665F}.ReleaseBuild|x86.Build.0 = ReleaseBuild|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

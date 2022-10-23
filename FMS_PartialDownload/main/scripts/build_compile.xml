@@ -1,0 +1,210 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+	<property name="package_dir" value="${build_dir}/${package_name}" />
+	<property name="dist_zip_file_name_server" value="${package_name}-${version_str}-${build_number}-${build_date_long}-server.zip" />
+	<property name="dist_zip_file_name_client" value="${package_name}-${version_str}-${build_number}-${build_date_long}-client.zip" />
+		
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+	
+	<path id="compile.classpath">
+		<fileset dir="${xlib_jar_dir}/junit">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/rmjavasdk">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/log4j">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/commonspool">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/commonsio">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/obfuscate">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/jaxb-ri">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="injectVersion, compile, obfuscate, package" />
+
+    <target name="compile" description="Compile the project" depends="">
+	
+		<mkdir dir="${classes_dir}" />
+		  
+    	<javac srcdir="${nlbuildroot}/src/com/nextlabs/teamcenter/fms/configuration" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac srcdir="${nlbuildroot}/src/com/teamcenter/fms/decrypt/segment" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac srcdir="${nlbuildroot}/src/com/nextlabs/teamcenter/fms/decrypt/segment" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	    	
+    	<javac srcdir="${nlbuildroot}/testsrc" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<copy todir="${classes_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+        <jar destfile="${build_dir}/com.nextlabs.teamcenter.fms.jar" basedir="${classes_dir}" excludes="**/com/nextlabs/teamcenter/fms/test/**,**/com/teamcenter/fms/decrypt/**" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/com.teamcenter.fms.jar" basedir="${classes_dir}" excludes="**/com/nextlabs/teamcenter/fms/test/**,**/com/nextlabs/teamcenter/fms/configuration/**,**/com/nextlabs/teamcenter/fms/**">
+    		<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+    	</jar>
+    	
+    	<jar destfile="${build_dir}/com.nextlabs.teamcenter.fms.test.jar" basedir="${classes_dir}" excludes="**/com/nextlabs/teamcenter/fms/decrypt/**,**/com/teamcenter/fms/decrypt**,**/com/teamcenter/fms/decrypt/**">
+    		<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+    	</jar>
+	</target>
+	
+	
+	<target name="package" description="builds each plugin module">		
+		<mkdir dir="${package_dir}" />
+		<mkdir dir="${package_dir}/bin" />
+		<!--<mkdir dir="${package_dir}/testfiles" />-->
+			
+		<copy todir="${package_dir}/bin" overwrite="true">
+			<fileset file="${build_dir}/*.jar">
+				<exclude name="com.nextlabs.teamcenter.fms.jar" />
+			</fileset>
+			<!--<fileset file="${xlib_dir}/junit/*.jar" />-->
+			<fileset file="${xlib_jar_dir}/rmjavasdk/*.jar" />
+			<fileset file="${xlib_jar_dir}/commonspool/*.jar" />
+			<fileset file="${xlib_jar_dir}/commonsio/*.jar" />
+			<fileset file="${xlib_jar_dir}/log4j/*.jar" />
+			<fileset file="${xlib_jar_dir}/jni/*" />
+			<fileset file="${xlib_jar_dir}/jaxb-ri/*" />
+		</copy>
+		
+		<move file="${package_dir}/bin/com.nextlabs.teamcenter.fms.obf.jar" tofile="${package_dir}/bin/com.nextlabs.teamcenter.fms.jar"/>
+		
+		<!--<copy todir="${package_dir}/testfiles" overwrite="true">
+			<fileset dir="${nlbuildroot}/testfiles">
+			</fileset>
+		</copy>-->
+		
+		<copy todir="${package_dir}/" overwrite="true">
+			<fileset dir="${nlbuildroot}/conf">
+			</fileset>
+		</copy>
+			
+		<zip destfile="${build_dir}/${dist_zip_file_name_server}" encoding="UTF-8"> 
+			<fileset dir="${build_dir}"> 
+				<include name="${package_name}/**" />
+				<exclude name="${package_name}/bin/FMSRMX.dll" />
+				<exclude name="${package_name}/bin/libeay32.dll" />
+			</fileset>
+		</zip>
+		
+		<zip destfile="${build_dir}/${dist_zip_file_name_client}" encoding="UTF-8">
+			<fileset dir="${build_dir}">
+				<include name="${package_name}/**" />
+				<exclude name="${package_name}/bin/bcpkix-jdk15on-*.jar" />
+				<exclude name="${package_name}/bin/bcprov-jdk15on-*.jar" />
+				<exclude name="${package_name}/bin/commons-cli-*.jar" />
+				<exclude name="${package_name}/bin/commons-codec-*.jar" />
+				<exclude name="${package_name}/bin/commons-lang3-*.jar" />
+				<exclude name="${package_name}/bin/commons-logging-*.jar" />
+				<exclude name="${package_name}/bin/crypt.jar" />
+				<exclude name="${package_name}/bin/gson-*.jar" />
+				<exclude name="${package_name}/bin/guava-*.jar" />
+				<exclude name="${package_name}/bin/httpclient-*.jar" />
+				<exclude name="${package_name}/bin/httpcore-*.jar" />
+				<exclude name="${package_name}/bin/httpmime-*.jar" />
+				<exclude name="${package_name}/bin/javax.servlet-api-*.jar" />
+				<exclude name="${package_name}/bin/rmjavasdk-ng.jar" />
+				<exclude name="${package_name}/bin/shared.jar" />
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="injectVersion">
+	     <replaceregexp file="${nlbuildroot}/src/com/nextlabs/teamcenter/fms/configuration/NextLabsConstants.java" match=" \(NextLabs\) \d*.\d*.\d*" replace=" (NextLabs) ${version_str}.${build_number}" />
+	</target>
+		
+	<target name="obfuscate" description="obfuscate the code">
+		<taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask">
+			<classpath>
+				<pathelement path="${xlib_jar_dir}/obfuscate/allatori.jar" />
+				<pathelement path="${xlib_jar_dir}/obfuscate/allatori-annotations.jar" />
+			</classpath>
+		</taskdef>
+		<allatori config="${nlbuildroot}/scripts/config.xml"/>
+	</target>
+
+</project>
+

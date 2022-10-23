@@ -1,0 +1,1 @@
+<project name="build_deploy"	 default="deploy"	 basedir="."	 xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors">	<property file="build.properties" />	<target name="deploy" depends="">	</target></project>

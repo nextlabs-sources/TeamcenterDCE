@@ -1,0 +1,120 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VER_FILEVERSION
+ PRODUCTVERSION VER_PRODUCTVERSION
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", VER_COMPANYNAME_STR "\0"
+            VALUE "FileDescription", VER_FILEDESCRIPTION_STR "\0"
+            VALUE "FileVersion", VER_FILEVERSION_STR "\0"
+            VALUE "InternalName", VER_INTERNALNAME_STR "\0"
+            VALUE "LegalCopyright", VER_LEGALCOPYRIGHT_STR "\0"
+            VALUE "OriginalFilename", VER_ORIGINALFILENAME_STR "\0"
+            VALUE "ProductName", VER_PRODUCTNAME_STR "\0"
+            VALUE "ProductVersion", VER_PRODUCTVERSION_STR "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_PROJNAME            "AutoCADRMX"
+    IDS_ERROR_DENY_SAVEAS   "Operation Denied.\nYou do not have 'Save As' permission to perform this action on the current document"
+    IDS_ERROR_DENY_PRINT    "Operation Denied.\nYou do not have 'Print' permission to perform this action on the current document"
+    IDS_ERROR_DENY_EDIT     "Operation Denied.\nYou do not have 'Edit' permission to perform this action on the current document"
+    IDS_ERROR_DENY_VIEW     "Operation Denied.\nYou do not have 'View' permission to access this protected document"
+    IDS_ERROR_DENY_OP       "Operation Denied.\nYou do not have '%1' permission to perform this action on the current document"
+    IDS_ERROR_DENY_UNLOADAPP 
+                            "Operation Denied.\nOne or more protected documents opened in the session. Please close them and try again."
+    IDS_ERROR_APP_LOAD      "Cannot load RMX due to the error \n%1"
+    IDS_ERROR_ALWAYS_DENY   "Operation Denied.\nYou are not allowed to perform this action when the current document is protected."
+    IDS_ERROR_DENY_DIRTY    "Operation Denied.\nYou do not have 'Edit' permission on current document but it is modified in session."
+    IDS_ERROR_DENY_ALWAYS   "Operation Denied.\nYou are not allowed to perform this action on a protected document."
+    IDS_ERROR_DENY_XREF     "Operation Denied.\nYou do not have '%1' permission to perform this action on the Xref:"
+    IDS_ERROR_DENY_ALWAYS_XREF   "Operation Denied.\nYou are not allowed to perform this action with any protected Xref."
+    IDS_WARN_DISCARD_CHANGE    "Changes will be discarded. You do not have 'Edit' permission to save the changes on the following document:\n"
+    IDS_WRAN_CANNOTSAVE      "You don't have 'Edit' permssion on the following document. Any change made will be discarded when save.\n"
+    IDS_ERROR_DENY_UNDERLAY  "Operation Denied.\nYou do not have '%1' permission to perform this action on the Underlay:"
+    IDS_ABOUT_TEXT          "NexLabs Rights Management eXtension for AutoCAD\nVersion %1 (Build %2)\n\n@%3 NextLabs Inc. All rights reserved."
+    IDS_WARN_SAVE_CHANGE    "Current drawing modified. Do you want to save changes and continue?"
+    IDS_ERROR_DENY_WHEN_RMXLOADED   "Operation Denied.\nPlease ensure to close all protected documents and unload RMX plugin before executing."
+    IDS_ERROR_DENY_RMXSAVECOMPLETE "Operation Denied.\nYou do not have '%1' permission to perform this action on the source document. The newly saved document will delete."
+    IDS_DENY_SAVEALL      "Operation Denied.\nYou don't have 'Edit' permssion on the following document:\n"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+

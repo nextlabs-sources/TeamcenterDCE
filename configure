@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	This script generates a number of bash variables used in PCV and release build.
+#
+#	The main objective is to make it easy to rebuild in case of build error. Also build
+#	parameters are explicit so that it is easy to understand or override. This script
+#	generates a ./build.config file to be used by ./buildRelease, ./buildPcv and ./buildDev.
+#	Run this script after ./setEnv.
+#
+# USAGE
+#	See printUsage()
+#
+# NOTES
+#	When bash script is run from Hudson, the output string of $(hostname), $(whoami) is return
+#	with a trailing '\r'. Use tr to remove the trailing '\r' ($(hostname | tr -d -c [:print:])).
+
+
+echo "NextLabs Rights Management eXtension Build Configuration Script"
+echo "Specify --help for more information"
+
+# This script is not needed for Single Job Build Script.

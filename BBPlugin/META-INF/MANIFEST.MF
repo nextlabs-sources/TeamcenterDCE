@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Briefcase Browser CAD RMX
+Bundle-SymbolicName: com.nextlabs.bbextension;singleton:=true
+Bundle-Version: 5.4.0.0
+Automatic-Module-Name: BBExtension11
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Vendor: NextLabs, Inc.
+Require-Bundle: com.teamcenter.bce.cad.nx;bundle-version="11000.2.0",
+ com.teamcenter.bce.core;bundle-version="11000.2.0",
+ com.teamcenter.bce.editor;bundle-version="11000.2.0",
+ com.teamcenter.bce.model;bundle-version="11000.2.0"

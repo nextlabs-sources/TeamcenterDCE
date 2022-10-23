@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	This script sets up the environment to compile code on pcv or release build machine.
+#
+# INSTRUCTIONS
+#	For developer build:
+#		1. Change to root directory of source tree
+#		2. Set NLEXTERNALDIR to location where //depot/main/external is on local disk
+#		3. Set BUILD_VERSION to a numeric value
+#		4. If you are running from CDC or SGDC, you do not have access to s:\.
+#			You need to set environment variable BUILD_WITHOUT_S_DRIVE=1 (using 
+#			Windows system Advanced Properties).
+#		5. If you are running from CDC or SGDC, you need to construct ${NLBUILDROOT}/xlib 
+#			by unzipping buld artifact *-zlib.zip.
+#		6. Run 'source ./buildDev'
+#		7. Run one of the following command to compile code:
+#			ant -f src/build.xml compileOnly
+#			ant -f src/build-scripts/project/build.xml build-inquiryCenter
+#
+#		Example:
+#			export NLEXTERNALDIR=C:/hudson/jobs/source_main_external/workspace
+#			export VERSION_BUILD=10001 
+#			export BUILD_WITHOUT_S_DRIVE=1
+#			<unzip *-zlib.zip into ${NLBUILDROOT}/xlib>
+#			source ./setEnv
+#			source ./buildDev
+#
+#	For manual PCV build:
+#		1. Change to root directory of source tree
+#		2. Set NLEXTERNALDIR to location where //depot/main/external is on local disk
+#		3. Set BUILD_VERSION to a numeric value
+#
+#		Example:
+#			export NLEXTERNALDIR=C:/hudson/jobs/source_main_external/workspace
+#			export VERSION_BUILD=10001
+#			source ./setEnv
+#			./buildPcv 
+#
+#	For Hudson release build:
+#		Perforce workspace
+#			//depot/dev/D_SiriusR2_MMR1108/... //hudson_nbc01_endpoint_mmr1108_5_5_5_autowrap/...
+#		
+#		Script
+#			cd $WORKSPACE
+#			export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#			export VERSION_BUILD=${BUILD_NUMBER}
+#			source ./setEnv
+#			./buildRelease
+
+echo "NextLabs Build Environment Preparation Script (setEnv)"
+echo "Specify --help for more information"
+
+#
+# Set common environment variables
+#
+
+if [ "$ProgramW6432" == "" ]; then
+	ENV_OS=x86
+	PROGRAM_FILES_X86="C:/Program Files"
+else
+	ENV_OS=x64
+	PROGRAM_FILES_X86="C:/Program Files (x86)"
+fi
+
+PROGRAM_FILES_X86_DOS=`cygpath -d "${PROGRAM_FILES_X86}"`
+
+# When running in Tomcat as SYSTEM user, s:/ is mapped to \\nextlabs.com\share instead of \\nextlabs.com\share\data.
+# Drive mapping may be done using subst or net use. It needs to be deleted using the correct command.
+# The output from subst may look like the following when mapped using subst. Mapping will not
+# be shown if mapped using net use. Similarly, net use does not show mappings done using subst.
+#	S:\: => UNC\nextlabs.com\share\data
+if [ "${BUILD_WITHOUT_S_DRIVE}" == "" ] || [ ${BUILD_WITHOUT_S_DRIVE} -eq 0 ]; then
+	[ `subst | grep -ic S:` -ne 0 ] && subst s: /D
+	[ `net use | grep -ic S:` -ne 0 ] && net use s: /D
+	
+	net use s: "\\\\nextlabs.com\\share\\data"
+fi
+set +x
+
+echo "Drive Mapping After:"
+set -x
+subst
+net use
+set +x
+
+#
+# Set build environment variables
+#
+if [ "X${NLEXTERNALDIR}" == "X" ]; then
+	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+fi
+
+export NLBUILDROOT=$(cygpath -m $(pwd))
+
+alias dev='cd ${NLBUILDROOT}'
+
+#
+# Print message
+#
+echo ""
+echo "-------------------------------------------------------------------------"
+echo "IMPORTANT: You must source this script in a Bash shell to setup the environment."
+echo "Invoking ./setEnv will create a new child shell process and the script will"
+echo "run in the child process. Changes to the environment is limited to the child"
+echo "process, parent process is not affected. The command you should run is:"
+echo "  source ./setEnv"
+echo "-------------------------------------------------------------------------"

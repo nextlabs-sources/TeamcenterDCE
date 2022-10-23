@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Directory Name="bin" Id="sdk_bin">
+                <Directory Name="x64" Id="sdk_x64">
+                    <Directory Name="release" Id="sdk_release">
+                        <Component Id="CADRMXLib.dll" Guid="*"><File Id="CADRMXLib.dll" KeyPath="yes" Source="$(var.RMXSDK)\bin\x64\release\CADRMXLib.dll" /></Component>
+                        <Component Id="libeay32.dll" Guid="*"><File Id="libeay32.dll" KeyPath="yes" Source="$(var.RMXSDK)\bin\x64\release\libeay32.dll" /></Component>
+                        <Component Id="log4cplus.properties" Guid="*"><File Id="log4cplus.properties" KeyPath="yes" Source="$(var.RMXSDK)\bin\x64\release\log4cplus.properties" /></Component>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Name="docs" Id="sdk_docs">
+                <Component Id="cadrmxsdk.pdf" Guid="*"><File Id="cadrmxsdk.pdf" KeyPath="yes" Source="$(var.RMXSDK)\docs\cadrmxsdk.pdf" /></Component>
+            </Directory>
+            <Directory Name="include" Id="sdk_include">
+                <Component Id="RMXLGlobal.h" Guid="*"><File Id="RMXLGlobal.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLGlobal.h" /></Component>
+                <Component Id="RMXLInc.h" Guid="*"><File Id="RMXLInc.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLInc.h" /></Component>
+                <Component Id="RMXLInstance.h" Guid="*"><File Id="RMXLInstance.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLInstance.h" /></Component>
+                <Component Id="RMXLResult.h" Guid="*"><File Id="RMXLResult.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLResult.h" /></Component>
+                <Component Id="RMXLTypeDef.h" Guid="*"><File Id="RMXLTypeDef.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLTypeDef.h" /></Component>
+                <Component Id="RMXLUser.h" Guid="*"><File Id="RMXLUser.h" KeyPath="yes" Source="$(var.RMXSDK)\include\RMXLUser.h" /></Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="CADRMXLib.dll" />
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="log4cplus.properties" />
+            <ComponentRef Id="cadrmxsdk.pdf" />
+            <ComponentRef Id="RMXLGlobal.h" />
+            <ComponentRef Id="RMXLInc.h" />
+            <ComponentRef Id="RMXLInstance.h" />
+            <ComponentRef Id="RMXLResult.h" />
+            <ComponentRef Id="RMXLTypeDef.h" />
+            <ComponentRef Id="RMXLUser.h" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

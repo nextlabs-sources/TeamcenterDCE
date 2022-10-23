@@ -1,0 +1,169 @@
+/*! \mainpage Introduction
+*
+* \section overview Overview
+* The CADRMX Client SDK provides object-oriented C++ APIs to develop Rights Management eXtension (RMX) for CAD applications.\n
+* \n
+* The following table describes the terminology and components.
+<table>
+	<tr><th>Terminology/Component    <th>Description	
+    <tr><td>Rights Management eXtension (RMX)<td>A third-party module that uses CADRMX Client SDK to extend Rights Management functionality.
+    <tr><td>Rights Protection Manager (RPM)<td>A Windows driver running in the kernel to handle Rights Management transparently.
+	<tr><td>Rights Management Desktop (RMD)<td>An Windows desktop application for Rights Management.
+	<tr><td>RPM Folder<td>A secure folder to let native applications handle NXL file transparently.
+	<tr><td>NXL File<td>The NextLabs encrypt file format with .nxl extension.
+	<tr><td>Tag<td>The meta data persistent in NXL file.
+</table>
+* \n
+* As a developer, you can use CADRMX Client SDK to accomplish the following tasks:
+* - Protect file with tags.
+* - Evaluate rights for the rights-projected file.
+* - Access and edit rights-protected files.
+* - Manage RPM folders.
+* - Manage RPM trusted applications.
+* - Create view overlay with dynamic watermark.
+* - Evaluate resource rights from central policies.
+* 
+* <b>Next topics</b>: \n
+* \ref environmentPage "Platform and Environment Support"\n
+* \ref getStartedPage "Getting Started"
+*/
+/*! \page environmentPage Platform and Environment Support
+* \section opEnv Operating System
+* - Windows 7 64-bit
+* - Windows 10 64-bit
+* 
+* \section runEnv Runtime Environment
+* - NextLabs SkyDRM Desktop for Windows 2020.08
+* - NextLabs SkyDRM Rights Management Server 2020.08
+* - NextLabs Control Center 9.1
+* 
+* \section devEnv Development Environment
+*  - Microsoft Visual Studio 2015 with Update 3
+*  - CADRMX Client SDK 2020.08
+* 
+* <b>Next topics</b>: \n
+* \ref getStartedPage "Getting Started"
+*/
+
+/*! \page getStartedPage Getting Started
+* \section vsEnv Setting up Development Environment
+* - Create a Visual Studio C++ project for RMX module.
+* - Configure the following Studio project properties:
+** - <b>Include Directories</b>: {SDK_INSTALLDIR}/include
+** - <b>Additional Library Directories</b>: {SDK_INSTALLDIR}/bin/x64/release
+** - <b>Additional Dependencies</b>: CADRMXLib.lib;
+* 
+* - Implement RMX functionalites via CADRMX Client SDK and CAD appliation SDK.
+* - Build and deploy RMX plugin on the target application machine.
+* - Deploy libeay32.dll, CADRMXLib.dll and log4cplus.properties provided in SDK to the same directory of RMX plugin in the target application.
+* 
+* \section useAPI Using APIs to implement Rights Management features
+* See below examples which illustrate how to use APIs.
+* \subsection eg1 Example 1: Intialize RMX
+*  @code{.cpp}
+	#include <RMXLInc.h>
+   
+	IRMXInstance* pInst;
+	IRMXUser* pUser;
+
+	//
+	// Initialize RMX instance with current logged users via RMD
+	//
+	RMXResult result = RMX_GetCurrentLoggedInUser(pInst, pUser);
+	if (!result) {
+		std::wcout << result.GetErrMessage() << std::endl;
+		return;
+	}
+
+	wchar_t szProcessName[MAX_PATH];
+	GetModuleFileName(NULL, &szProcessName[0], MAX_PATH);
+	//
+	// Register caller app as trusted app
+	//
+	bool registered;
+	if (pInst->IsAppRegistered(szProcessName, registered) == 0 && !registered) {
+		result = pInst->RegisterApp(szProcessName);
+		if (!result) {
+			std::wcout << result.GetErrMessage() << std::endl;
+			return;
+		}
+	}
+	//
+	// Notify RPM driver the RMX gets started to run
+	//
+	result = pInst->NotifyRMXStatus(true);
+	if (!result) {
+		std::wcout << result.GetErrMessage() << std::endl;
+		return;
+	}
+
+	// ....Do other operations
+
+	//
+	// Uninitialize RMX instance when app or plugin terminates
+	// 
+	RMX_DeleteRMXInstance(pInst);
+
+* @endcode
+* \subsection eg2 Example 2: Handle RPM folder
+*  @code{.cpp}
+	//
+	// Check if specified directory is RPM folder
+	//
+	bool isRPMDir = false;
+	const wchar_t* dir = L"c:\\users\\rpmtest";
+	RMXResult result = pInst->IsRPMFolder(dir, isRPMDir);
+	if (!result) {
+		std::wcout << result.GetErrMessage() << std::endl;
+		return;
+	}
+				
+	//
+	// Add new RPM folder
+	//
+	if (!isRPMDir) {
+		result = pInst->AddRPMDir(dir, 1);
+		if (!result) {
+			std::wcout << result.GetErrMessage() << std::endl;
+		}
+	}
+* @endcode
+* \subsection eg3 Example 3: Protect file
+	*  @code{.cpp}
+	//
+	// Protect file with the specified tags
+	//		
+	std::wstring newNXLFile;
+	const wchar_t* filePath = L"c:\\users\\rpmtest\\HelloWorld.txt";
+	const char* tags = "{\"ip_classification\":[\"secret\"]}";
+	RMXResult result = pUser->ProtectFile(filePath, L"c:\\users\\rpmtest", tags, newNXLFile);
+	if (!result) {
+		std::wcout << result.GetErrMessage() << std::endl;
+	}
+* @endcode
+* \subsection eg4 Example 4: Evaluate right
+	*  @code{.cpp}
+	//
+	// Check if edit permission is granted or not
+	//
+	bool allowEdit = false;	
+	const wchar_t* filePath = L"c:\\users\\rpmtest\\HelloWorld.txt";
+	RMXResult result = pInst->CheckFileRight(filePath, RMX_RIGHT_EDIT, allowEdit);
+	if (!result) {
+		std::wcout << result.GetErrMessage() << std::endl;
+	}
+* @endcode
+* 
+* \section note General Notes
+* - APIs return the @ref RMXResult that contains integer code and error message. The error code is 0 if the operation is successful.
+* - Must call @ref RMX_DeleteRMXInstance to terminate the RMX session when the RMX plugin is unloadled.
+*/
+/*! \page changeLog What's New
+* \section rel202008 2020.08 Release
+* \subsection newAPI New API
+* - @ref IRMXInstance::CheckFileRight
+* - @ref IRMXInstance::RPMGetFileInfo
+* - \ref IRMXInstance::RPMSetFileAttributes
+* \subsection changeAPI Changed API
+* - \ref IRMXInstance::AddRPMDir
+*/

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <TC_VER>13.2</TC_VER>
+    <TC_API>$(NLEXTERNALDIR)\siemens\teamcenter$(TC_VER)</TC_API>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(TC_API)\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(TC_API)\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>libdispatcher.lib;libbase_utils.lib;libtc.lib;libepm.lib;libtccore.lib;libpom.lib;libsa.lib;libae.lib;libres.lib;libconstants.lib;libgms.lib;libtie.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>IPLIB=$(ProjectName);TC_LIB_VER="$(TC_VER)";ENV_PRODUCT_ROOT="RMX_ROOT";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="TC_VER">
+      <Value>$(TC_VER)</Value>
+    </BuildMacro>
+    <BuildMacro Include="TC_API">
+      <Value>$(TC_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

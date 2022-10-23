@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke custom application build script
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export NLPROFSERVDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildDev
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildDev
+
+#
+# Compile
+#
+
+LOG_FILE=buildlocal_xlib.log
+
+(
+# Prepare environment
+./configure || exit $?
+source build.config
+
+OSVERSION=`uname`
+
+# Prepare dependencies
+$ANT -f Build/build_xlib.xml || exit $?
+
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

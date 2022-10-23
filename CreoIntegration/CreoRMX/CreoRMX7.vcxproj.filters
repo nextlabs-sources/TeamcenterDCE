@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RPMDirectoryMgr.cpp" />
+    <ClCompile Include="UsageController.cpp" />
+    <ClCompile Include="ProtectController.cpp" />
+    <ClCompile Include="ProtectJob.cpp" />
+    <ClCompile Include="WatermarkController.cpp" />
+    <ClCompile Include="..\common\DelayLoadDllHlp.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CADRMXCommon\PathEx.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OtkXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CADRMXCommon\RMXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OtkXModel.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RegKeyEntry.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OtkXSessionCache.cpp" />
+    <ClCompile Include="CustomizeUsageControl.cpp" />
+    <ClCompile Include="OtkXHooks.cpp">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="FileClosedHooks.cpp">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="IpemRMX.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\XmlParser.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="RMXCommandMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="RPMDirectoryMgr.h" />
+    <ClInclude Include="UsageController.h" />
+    <ClInclude Include="ProtectController.h" />
+    <ClInclude Include="ProtectJob.h" />
+    <ClInclude Include="WatermarkController.h" />
+    <ClInclude Include="CommonInc.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CommonTypes.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CreoRMXLogger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\DelayLoadDllHlp.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CADRMXCommon\PathEx.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXTypes.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CADRMXCommon\RMXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXModel.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RegKeyEntry.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CADRMXCommon\SysErrorMessage.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXSessionCache.h" />
+    <ClInclude Include="CustomizeUsageControl.h" />
+    <ClInclude Include="HookDefs.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXHooks.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="FileClosedHooks.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="IpemRMX.h" />
+    <ClInclude Include="..\..\CADRMXCommon\XmlParser.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OtkXUIStrings.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RMXCommandMgr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VersionInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="text\rmx_msg.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Creo Registry File">
+      <UniqueIdentifier>{632e7363-7f9b-4edd-9405-09d8e54535fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{7813a22b-04fd-4a60-8cfc-aa65552f53ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks">
+      <UniqueIdentifier>{cc018e1c-2889-45d8-806e-7a6052edab42}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="creotk_7.0.dat">
+      <Filter>Creo Registry File</Filter>
+    </None>
+    <None Include="..\common\log4cplus.properties" />
+  </ItemGroup>
+</Project>

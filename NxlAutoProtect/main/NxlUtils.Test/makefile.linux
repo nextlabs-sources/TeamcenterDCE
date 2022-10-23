@@ -1,0 +1,37 @@
+UTILS_DIR=../NxlUtils
+
+SRCS := $(wildcard *.c)
+SRCS += $(wildcard src/*.c)
+$(info $(PROJECTNAME).SRCS=$(SRCS))
+
+OBJS := ${SRCS:.c=.o}
+$(info $(PROJECTNAME).OBJS=$(OBJS))
+
+INCLUDE_DIRS :=include $(UTILS_DIR)/include $(UTILS_DIR)/include_internal $(JNISDK)/include $(JNISDK)/include/linux
+$(info $(PROJECTNAME).INCLUDE_DIRS=$(INCLUDE_DIRS))
+
+LIBRARY_DIRS :=$(JNISDK)/jre/lib/amd64/server $(UTILS_DIR)
+$(info $(PROJECTNAME).LIBRARY_DIRS=$(LIBRARY_DIRS))
+
+LIBRARIES :=jvm NxlUtils
+$(info $(PROJECTNAME).LIBRARIES=$(LIBRARIES))
+
+PREPROCESSORS=__linux__ PROJECT_NAME=\"$(PROJECTNAME)\" DEBUG
+
+CPPFLAGS :=$(GCC_FLAGS)
+CPPFLAGS += $(foreach pp,$(PREPROCESSORS),-D $(pp))
+CPPFLAGS += $(foreach incdir,$(INCLUDE_DIRS),-I$(incdir))
+
+LDFLAGS :=-o $(OUTPUTFILE)
+LDFLAGS += $(foreach libdir,$(LIBRARY_DIRS),-L$(libdir))
+LDFLAGS += $(foreach lib,$(LIBRARIES),-l$(lib))
+
+.PHONY: all clean build test
+
+all:clean build
+
+build:
+	gcc $(CPPFLAGS) $(SRCS) $(LDFLAGS)
+
+clean:
+	-rm -rf *.log *.dll *.so

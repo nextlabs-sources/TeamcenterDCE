@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Created-By: AspectJ Compiler
+Ant-Version: Apache Ant 1.7.0
+Java-Version: 1.7.0_71
+Implementation-Vendor: NextLabs, Inc.
+Implementation-Title: 
+Implementation-Version: 5.4.0.0 (283)
+Implementation-Time: Tue, 11 Aug 2020 00:36:12 -0700

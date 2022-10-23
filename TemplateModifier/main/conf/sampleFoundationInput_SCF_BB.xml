@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NextLabsTemplateModifier>
+	<TcDataset typeName="CAEGeom">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="CAEMesh">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="CAESolution">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="NXAFEM">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="NXDerived">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="NXMotion">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="NXSimulation">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="UGALTREP">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="UGMASTER">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="UGPART">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="UGSCENARIO">
+		<TcDatasetReference name="UGPART" />
+	</TcDataset>
+	<TcDataset typeName="JtSimplification">
+		<TcDatasetReference name="ALSG" />
+	</TcDataset>
+	<TcDataset typeName="DirectModel">
+		<TcDatasetReference name="JTPART" />
+	</TcDataset>
+	<TcDataset typeName="DirectModelMotion">
+		<TcDatasetReference name="JTPART" />
+	</TcDataset>
+	<TcDataset typeName="PDF">
+		<TcDatasetReference name="PDF_Reference" />
+	</TcDataset>
+	<TcDataset typeName="MSWord">
+		<TcDatasetReference name="word" />
+	</TcDataset>
+	<TcDataset typeName="MSWordX">
+		<TcDatasetReference name="word" />
+	</TcDataset>
+	<TcDataset typeName="CrfOutputMSWord">
+		<TcDatasetReference name="word" />
+	</TcDataset>
+	<TcDataset typeName="FullText">
+		<TcDatasetReference name="word" />
+	</TcDataset>
+	<TcDataset typeName="MSExcel">
+		<TcDatasetReference name="excel" />
+	</TcDataset>
+	<TcDataset typeName="MSExcelX">
+		<TcDatasetReference name="excel" />
+	</TcDataset>
+	<TcDataset typeName="CAEResults">
+		<TcDatasetReference name="excel" />
+	</TcDataset>
+	<TcDataset typeName="CrfOutputExcel">
+		<TcDatasetReference name="excel" />
+	</TcDataset>
+	<TcDataset typeName="MSPowerPoint">
+		<TcDatasetReference name="powerpoint" />
+	</TcDataset>
+	<TcDataset typeName="MSPowerPointX">
+		<TcDatasetReference name="powerpoint" />
+	</TcDataset>
+	<TcDataset typeName="Bitmap_Thumbnail">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="DirectModelMarkup">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Image">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Markup">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="NetworkImage">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Sheet">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="SnapShotViewData">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="TempDirectModelMarkup">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="TempMarkup">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Bitmap">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Postscript">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="Mfg0PlantCarpet">
+		<TcDatasetReference name="Image" />
+	</TcDataset>
+	<TcDataset typeName="JPEG">
+		<TcDatasetReference name="JPEG_Reference" />
+	</TcDataset>
+	<TcDataset typeName="JPEG_Thumbnail">
+		<TcDatasetReference name="JPEG_Reference" />
+	</TcDataset>
+	<TcDataset typeName="TIF">
+		<TcDatasetReference name="TIF_Reference" />
+	</TcDataset>
+</NextLabsTemplateModifier>

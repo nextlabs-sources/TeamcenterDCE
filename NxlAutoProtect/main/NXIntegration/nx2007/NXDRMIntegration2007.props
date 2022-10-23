@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\..\log4cpp.v142.unicode.props" />
+    <Import Project="..\nxrmx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <NX_DRM_API>$(ProjectDir)\NX-NexLabs-DRM-Rev1.2</NX_DRM_API>
+    <NX_MAJOR_VER>2007</NX_MAJOR_VER>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(NX_DRM_API)\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>NXDRMINTEGRATION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="NX_DRM_API">
+      <Value>$(NX_DRM_API)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NX_MAJOR_VER">
+      <Value>$(NX_MAJOR_VER)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

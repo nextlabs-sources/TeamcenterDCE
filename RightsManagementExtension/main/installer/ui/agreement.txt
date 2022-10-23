@@ -1,0 +1,213 @@
+PLEASE READ THIS AGREEMENT CAREFULLY
+
+
+
+NextLabs, Inc. Software License Agreement
+
+
+IMPORTANT NOTICE:  PLEASE READ THIS AGREEMENT CAREFULLY.  BY CLICKING ON THE "ACCEPT" BUTTON BELOW, CUSTOMER ACKNOWLEDGES THAT CUSTOMER HAS READ THIS AGREEMENT, UNDERSTANDS IT, AND AGREES TO BE BOUND BY IT.  IF CUSTOMER DOES NOT AGREE TO ANY OF THE TERMS BELOW, NEXTLABS IS UNWILLING TO LICENSE THE SOFTWARE AND DOCUMENTATION TO CUSTOMER, AND CUSTOMER SHOULD CLICK ON THE "DO NOT ACCEPT" BUTTON BELOW TO DISCONTINUE THE INSTALLATION PROCESS.  
+
+This Software License Agreement (the "Agreement") is between NextLabs, Inc. ("NextLabs") and the entity (the "Customer") that wishes to purchase, or has purchased, one or more license(s) to use NextLabs' proprietary software and the accompanying online help files and user documentation.  If the Software is an updated or new version of any software for which you have previously executed a written software license agreement with NextLabs (the "Original Software License Agreement"), the terms of this Agreement shall apply and supersede the terms of such Original Software License Agreement.  NextLabs is willing to grant Customer the following license to use the Software according to this Agreement only if Customer agrees to be bound by all of the terms of this Agreement.  
+
+1.0 DEFINITIONS
+
+Terms used in this Agreement which are capitalized shall have the definitions set forth below or elsewhere in this Agreement.
+
+1.1     Documentation means all on-line help files or written instruction manuals regarding the Use of the Software.
+
+1.2     Effective Date is the date that the Customer first downloads the Software.
+
+1.3     Intellectual Property Rights means all existing and future patents, utility models, mask works, designs, algorithms, copyrights, works of authorship, moral rights, trade secrets, trademarks, service marks, trade dresses, and trade names, including all applications and registrations of all of the foregoing, and any and all other intellectual property and industrial property rights.
+
+1.4     License means the number of Software units, on a Named User, Per CPU and/or a Per Seat basis, that are authorized under this Agreement as expressly set forth in an Order pursuant to Section 2.0.
+
+1.5     Software means NextLabs’ proprietary software program or programs purchased by Customer in accordance with Section 2.0.
+
+1.6     Term means, if applicable, the specific period stated in the Order in which Customer may Use the Software pursuant to a Term License Grant, as set forth in Section 3.2.
+
+1.7     Use means the loading, utilization, storage or display of the Software in object code format and specifically covered by Licenses hereunder solely (a) by individuals under the employment of Customer (or by Contractors pursuant to Section 3.6) (b) to serve Customer’s internal business purposes only and (c) in accordance with the Documentation.
+
+2.0 SUBMISSION OF PURCHASE ORDERS; ACCEPTANCE
+
+2.1     Customer may order units of Software and technical support and maintenance from NextLabs by sending written purchase orders (each, an “Order”) to NextLabs, each of which shall: (a) bear a unique number; (b) specify (i) the type of license (i.e., perpetual or term), (ii) the license Term, if applicable, (iii) the SKU of each Software product (as quoted by NextLabs to Customer in writing), (iv) a Software product name or description, (v) the quantity of units ordered, (vi) the License fee per unit (as quoted by NextLabs to Customer in writing), (vii) the extended price, and (viii) the total applicable License fee; and (c) be sent to the attention of a designated NextLabs contact person at a specified number and/or address.  NextLabs shall accept or reject each Order within ten (10) business days of receipt thereof from Customer.  Delivery of the software ordered by Customer shall constitute acceptance.  If the software is not delivered within such ten day period, the Order shall be deemed rejected.  Upon acceptance, Orders are non-cancelable by Customer. Orders shall be governed by the terms of this Agreement unless otherwise agreed to in a writing signed by both parties that specifically references this Agreement and the affected purchase order.
+
+3.0 LICENSE GRANTS
+
+3.1     Grant of Perpetual License. If Customer is purchasing a perpetual license as set forth in the Order, for so long as this Agreement is in force, and subject to the terms and conditions of this Agreement, NextLabs grants to Customer a non-exclusive, non-transferable (except as permitted under Section 11.1), non-sublicenseable, personal, perpetual (subject to termination in accordance with the terms of this Agreement) license to (a) Use the Software, (b) use the Documentation in connection with such Use of the Software and (c) make one copy of the Software for backup or archival purposes solely in support of Customer’s Use of the Software, provided that all titles, trademark symbols, copyright symbols and legends, and other proprietary markings are fully reproduced without modification.
+
+3.2     Grant of Term License. If Customer is purchasing a term license as set forth in the Order, for so long as this Agreement is in force, and subject to the terms and conditions of this Agreement, NextLabs grants to Customer a non-exclusive, non-transferable (except as permitted under Section 11.1), non-sublicenseable, personal term license to (a) Use the Software only for the Term set forth in the Order, (b) use the Documentation in connection with such Use of the Software and (c) make one copy of the Software for backup or archival purposes solely in support of Customer’s Use of the Software, provided that all titles, trademark symbols, copyright symbols and legends, and other proprietary markings are fully reproduced without modification.  Term Licenses are subject to the additional terms and conditions set forth in Section 3.7.
+
+3.3     Reservation of Rights. Except as expressly set forth in Section 3.1 or 3.2, as applicable, all right, title and interest in and to the Software and Documentation and all Intellectual Property Rights in and to the Software (including but not limited to all computer codes, animations, logos, images and text therein) and Documentation are the sole and exclusive property of NextLabs.  All rights not expressly granted herein to Customer are reserved to NextLabs and its licensors.
+
+3.4     Delivery of Software.  Customer hereby acknowledges that NextLabs has made the Software available online for download by Customer.  Customer shall be responsible for installing the Software on its computers as permitted under this Agreement.  The Software will be deemed accepted upon delivery.
+
+3.5     Audit Rights.  Customer agrees to give NextLabs access and assistance as may be necessary to audit Customer operations wherever situated to confirm Customer’s Use of the Software conforms in all respects to the terms and conditions of this Agreement.
+
+3.6     Contractors.  Individuals or companies employed under contract (“Contractor”) with Customer may operate the Software on the Customer’s behalf, provided that (a) Customer provides NextLabs with prior written notice, (b) Customer is responsible for ensuring that any such Contractor fully complies with the terms of this Agreement as they relate to the use of the Software on the same basis as applies to Customer, (c) such use is only in relation to Customer’s internal business purposes, (d) such use does not represent or constitute an increase in the number of Licenses purchased by Customer, and (e) Customer shall remain fully liable for any and all acts or omissions by Contractor related to this Agreement.
+
+3.7     Additional Terms Applicable to Term Licenses.  (i) additional License subscriptions may be added in minimum blocks of 25 pursuant to a valid and properly executed Order which references this Agreement; (ii) the Term of the additional License subscriptions shall be coterminous with the expiration of the subscription Term in effect at the time the additional Licenses are added; and (iii) pricing for the additional License subscriptions shall be the same as that for the pre-existing subscriptions, prorated for the remainder of the subscription Term in effect at the time the additional License are added.
+
+4.0 LICENSE RESTRICTIONS
+
+4.1     Customer agrees not to (or cause or permit any parent, subsidiary, affiliate or other third party to): (a) sell, lease, license, sublicense, encumber or Use any portion of the Software or Documentation, (b) alter, revise, modify, adapt, decompile, disassemble, or reverse engineer any portion of the Software, or otherwise attempt to discover or learn the source code, structure, algorithms or ideas underlying the Software or any NextLabs Confidential Information, unless and solely to the extent required under applicable national law, (c) modify, create, or develop any derivative works or any other software based, in whole or in part, on the Software or Documentation (or any portion thereof), any NextLabs Confidential Information or any Intellectual Property rights of NextLabs, (d) provide, disclose, divulge or make available to, or permit use of the Software or Documentation by any person or entity other than Customer’s employees and Contractors without NextLabs’ prior written consent, or (e) exceed the number of Licenses purchased by Customer.
+
+5.0 LICENSE FEE; SUPPORT FEE
+
+5.1     In consideration of the rights granted herein, Customer shall pay to NextLabs the non-refundable (except as permitted under Section 7.2), non-cancelable license fee for the number of Licenses and technical support and maintenance as set forth in the Order.  Upon acceptance of an Order, NextLabs will issue an invoice to Customer for the applicable License fee, and Customer will pay such invoice within thirty (30) days following the invoice date. Customer acknowledges and agrees that no license shall be deemed granted unless and until Customer has paid the applicable License fees in full.   All prices are in U.S. dollars and do not include taxes or shipping fees.
+
+5.2     All fees and charges specified in this Agreement are exclusive of all taxes, duties and other governmental levies and assessments.  Customer shall be responsible for paying to NextLabs all applicable taxes not based on NextLabs’ net income, including penalties and interest and all other governmental duties and levies arising in connection with this Agreement.
+
+5.3     Customer will pay all fees and charges payable hereunder free and clear of all deductions, withholdings, set-offs or counterclaims whatsoever except for those required pursuant to law.
+
+6.0 MAINTENANCE AND SUPPORT
+
+6.1     During the Term of this Agreement and provided Customer requested support in the Order and has paid the applicable technical support and maintenance fees in accordance with the Order, Customer shall be entitled to receive software technical support and maintenance in accordance with NextLabs’ then current support policy.  NextLabs’ current support policy as of the Effective Date is set forth in Exhibit A.
+
+7.0 LIMITED WARRANTY
+
+7.1     NextLabs warrants to Customer that the Software will perform in substantial accordance with the Documentation for a period of sixty (60) days from the Effective Date (the “Warranty Period”).
+
+7.2     If the Software does not perform as warranted, NextLabs shall undertake to correct the Software, or if the correction of the Software is not reasonably possible, replace such Software free of charge with conforming software.  If neither of the foregoing is commercially practicable, NextLabs shall terminate this Agreement with respect to the non-conforming program or programs and refund the monies paid by Customer attributable to such non-conforming program or programs.  The foregoing are Customer’s sole and exclusive remedies for breach of warranty.  The warranty set forth above is made to and for the benefit of Customer and shall not apply to non-conformities attributable to:  (a) the Software not being properly installed, (b) failure to use the Software at all times in accordance with the Documentation and instructions for such use; (c) any modifications, alterations or additions to the Software that are not expressly performed or authorized by NextLabs, (d) failure of the Customer to maintain the equipment or operating environment for the Software, (e) any act or omission or other cause outside of the control of NextLabs, (f) any breach of this Agreement by Customer, or (g) any third party products.
+
+7.3     NextLabs will have no liability under the warranties set forth above unless it has received written notice from Customer of any non-compliance with the warranties which is discovered during the Warranty Period and which is received by NextLabs within ten (10) days from the date of discovery.
+
+8.0 DISCLAIMER OF WARRANTY
+
+8.1     EXCEPT AS SET FORTH ABOVE, NEXTLABS DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED OR STATUTORY, INCLUDING WITHOUT LIMITATION: (A) ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, TITLE, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE (EVEN IF NEXTLABS HAD BEEN INFORMED OF SUCH PURPOSE), (B) ANY IMPLIED WARRANTIES ARISING FROM COURSE OF DEALING, COURSE OF PERFORMANCE, OR USAGE OF TRADE, AND (C) ANY WARRANTIES THAT THE SOFTWARE OR ANY DOCUMENTATION WILL BE UNINTERRUPTED OR ERROR-FREE OR FREE OF VIRUSES, WORMS, TROJAN HORSES AND OTHER HARMFUL COMPONENTS.
+
+8.2     CUSTOMER HEREBY ACKNOWLEDGES AND AGREES THAT IN EACH JURISDICTION IN WHICH ANY SUCH DISCLAIMER IS UNENFORCEABLE,  THE DURATION OF ANY SUCH IMPLIED WARRANTIES IS LIMITED TO SIXTY (60) DAYS FROM THE DATE CUSTOMER FIRST INSTALLED THE SOFTWARE ON CUSTOMER'S COMPUTER; PROVIDED, HOWEVER, THAT CUSTOMER'S SOLE REMEDY SHALL IN ANY CASE BE THAT NEXTLABS WILL, AT ITS OPTION, REPAIR OR REPLACE CUSTOMER'S COPY OF THE SOFTWARE, OR TERMINATE THIS LICENSE AGREEMENT AND REFUND AMOUNTS ALREADY PAID THEREFOR BY CUSTOMER.  Some States, Provinces, or other jurisdictions do not allow for exclusions of implied warranties or limitations on how long an implied warranty lasts, so the above exclusion or limitation may not apply to CUSTOMER.  CUSTOMER may have other rights which vary from State to State, Province to Province, or in other jurisdictions.
+
+8.3     No employee, agent, representative, contractor, or affiliate of NextLabs or any other person or entity has the authority to bind NextLabs to any oral or written representations or warranty relating to the Software or Documentation.  Any written representations or warranty not expressly contained in this Agreement is unenforceable.
+  
+9.0 LIMITATION OF LIABILITY
+
+9.1     REGARDLESS OF WHETHER ANY REMEDY SET FORTH HEREIN FAILS OF ITS ESSENTIAL PURPOSE OR OTHERWISE, NEXTLABS WILL NOT BE LIABLE FOR (A) ANY INDIRECT, EXEMPLARY, SPECIAL, CONSEQUENTIAL, OR INCIDENTAL DAMAGES OF ANY CHARACTER, INCLUDING BUT NOT LIMITED TO DAMAGES FOR COMPUTER MALFUNCTION, LOSS OF INFORMATION, LOST PROFITS AND BUSINESS INTERRUPTION, OR (B) THE COST TO OBTAIN SUBSTITUTE SOFTWARE, TECHNOLOGY PRODUCTS OR SERVICES, WITH RESPECT TO ANY SUBJECT MATTER OF THIS AGREEMENT OR ARISING IN ANY WAY OUT OF THIS AGREEMENT OR THE USE OF (OR INABILITY TO USE) THE SOFTWARE HOWEVER CAUSED AND WHETHER ARISING UNDER A THEORY OF CONTRACT, TORT OR ANY OTHER LEGAL THEORY, EVEN IF NEXTLABS WAS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+9.2     IN NO EVENT WILL NEXTLABS’ (OR ITS LICENSORS’ OR SUPPLIERS’) TOTAL LIABILITY TO CUSTOMER UNDER OR RELATING TO THIS AGREEMENT, (INCLUDING, WITHOUT LIMITATION, THE USE OR INABILITY TO USE THE SOFTWARE) EXCEED, IN THE AGGREGATE, THE AMOUNT PAID BY CUSTOMER TO NEXTLABS FOR THIS LICENSE.  SOME STATES OR JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL, CONSEQUENTIAL OR SPECIAL DAMAGES, SO THE ABOVE LIMITATIONS MAY NOT APPLY TO CUSTOMER.  NEXTLABS SHALL NOT BE LIABLE FOR ANY CLAIMS OF THIRD PARTIES RELATING TO THE SOFTWARE.  CUSTOMER ACKNOWLEGES THAT NEXTLABS WOULD NOT PROVIDE OR LICENSE THE SOFTWARE TO CUSTOMER IF CUSTOMER DID NOT AGREE TO THE "DISCLAIMER OF WARRANTIES" AND "LIMITATION OF LIABILITY" PROVISIONS IN THIS AGREEMENT.
+
+10.0 TERM AND TERMINATION OF AGREEMENT
+
+10.1    Term of Perpetual License.  If Customer is purchasing a perpetual license as set forth in the Order, this Agreement shall commence as of the Effective Date and remain in effect unless terminated pursuant to the termination provisions in this Section.
+
+10.2    Term of Term License.  If Customer is purchasing a term license as set forth in the Order, this Agreement shall commence as of the Effective Date and remain in effect until all License subscriptions granted in accordance with this Agreement have expired or been terminated, unless terminated pursuant to the termination provisions in this Section.  License subscriptions commence on the start date specified in the Order and continue for the subscription Term specified therein.
+
+10.3    Termination for Breach.  Either party may terminate the Agreement on ten (10) days written notice upon a material breach by the other party of any representation, covenant, warranty or term of this Agreement that is not cured within thirty (30) days after written notice thereof by the non-breaching party; provided that the cure period provided in this Section 10.3 shall be ten (10) days after written notice thereof by NextLabs in the event of Customer’s breach of an obligation to make a payment as and when required by this Agreement.
+
+10.4    Termination for Bankruptcy.  Either party may terminate this Agreement in the event that (a) the other party files a bankruptcy petition that is not dismissed within ninety (90) day or is adjudicated as bankrupt, (b) a petition in bankruptcy is filed against the other party, (c) the other party becomes insolvent or makes an assignment for the benefit of its creditors or an arrangement for its creditors pursuant to any bankruptcy law, (d) an action is instituted by or against the other party seeking its dissolution or liquidation of such party’s assets or seeking the appointment of a trustee, interim trustee, receiver or other custodian for such party’s property or business and such action is not dismissed within ninety (90) days after the date upon which it was instituted, or (e) a receiver is appointed for the other party or its business.
+
+10.5    Notwithstanding the foregoing, Customer may, upon thirty (30) days prior written notice to NextLabs and payment of all license fees, terminate this Agreement.  However, no such termination will entitle Customer to a refund of any monies that have been paid to NextLabs.
+
+10.6    Effects of Termination.  Upon the termination of this Agreement for any reason whatsoever, (a) each party shall return or destroy all Confidential Information of the other party in each party’s possession and Customer shall destroy all copies of the Software, (b) Customer shall immediately stop all Use of the Software and delete all copies of the Software held or controlled by Customer on computer or computer-readable media, (c) all rights, licenses and obligations of the parties shall immediately cease and terminate, except those provisions that shall survive termination as provided below in this Section, (d) Customer shall not be relieved of its obligations to pay any outstanding fees, charges or other sums that have accrued or are otherwise outstanding or owed by Customer to NextLabs at the date of termination, (e) NextLabs’ obligations to provide Maintenance and Support under this Agreement will immediately cease without liability by NextLabs to refund any support fees to Customer or otherwise, and (f) Customer shall furnish to NextLabs a certificate signed by an executive officer of Customer verifying that the same has been done.  Notwithstanding the foregoing, upon any termination of a term license for cause by Customer, NextLabs shall refund Customer any prepaid fees covering the remainder of the subscription Term, if applicable, after the date of termination.
+
+The provisions of Sections 1 (Definitions), 5 (Fees), 8 (Disclaimer of Warranty), 9 (Limitation of Liability), 10.6 (Effects of Termination), and 11 (General Provisions) shall survive any termination of this Agreement. All unpaid payment obligations of Customer shall survive termination.
+
+11.0 GENERAL PROVISIONS
+
+11.1    Assignment; Successors and Assigns.  Customer may not assign this Agreement, in whole or in part, without the prior written notice of NextLabs, which may be withheld in NextLabs’ sole discretion.  NextLabs may freely assign this Agreement without the consent of the Customer.  This Agreement will be binding on, inure to the benefit of, and be enforceable by each party and its permitted successors and assigns.
+
+11.2    Waiver, Amendment, Modification.  No waiver, amendment or modification, including by custom, usage of trade, or course of dealing, of any provision of this Agreement will be effective unless in writing and signed by both parties.  Performance of any obligation required of a party under this Agreement may be waived only by a written waiver signed by a duly authorized officer of the other party; such waiver will be effective only with respect to the specific obligation described therein. No waiver by any party of any breach by the other party of any provision of this Agreement will constitute a waiver of any subsequent breach of the same provision.
+
+11.3    Force Majeure.  Neither party will be deemed in default of this Agreement of the extent that performance of its obligations, or attempts to cure any breach, are delayed or prevented by reason of circumstance beyond its reasonable control, including without limitation fire, natural disaster, earthquake, accident or other acts of God ("Force Majeure"), provided that the party seeking to delay its performance gives the other written notice of any such Force Majeure within 15 days after the discovery, and further provided that such party uses its good faith efforts to cure the Force Majeure.  This Section will not be applicable to any payment obligations of either party.
+
+11.4    Confidential Information.  Each party acknowledges that it may be furnished with or may otherwise receive or have access to information or material that relates to past, present or future products, software (including source code and object code), research development, inventions, processes, techniques, designs or technical information and data, and marketing plans (the "Confidential Information").  Without limiting the generality of the foregoing, Customer agrees that the Software, Documentation and any information relating to the Software or Documentation or any Use or other use thereof is the Confidential Information of NextLabs.  Each party agrees to preserve and protect the confidentiality of the Confidential Information and all physical forms, whether disclosed to the other party before this Agreement is signed or afterward.  In addition, a party will not disclose or disseminate the Confidential Information for its own benefit or for the benefit of any third party unless otherwise provided in this Agreement.  The foregoing obligations do not apply to any information that (a) is publicly known through no fault of the Customer; (b) is given to a party by someone else who is not obligated to maintain confidentiality; or (c) a party had already developed prior to the day this Agreement is signed, as evidenced by documents unless, otherwise provided herein.  Neither party will take or cause to be taken any physical forms of Confidential Information (nor make copies of same) without the other party's written permission.  Within three (3) days after the termination of this Agreement (or any other time at the other party's request), a party will return to the other party all copies of Confidential Information in tangible form.  Despite any other provisions of this Agreement, the requirements of this section will survive termination of this Agreement.
+
+11.5    Independent Contractor.  Each party acknowledges and agrees that the other party is an independent contractor in the performance of this Agreement and is solely responsible for all of its employees, consultants, contractors and agents and its labor costs and expenses arising in connection therewith.  Nothing contained in this Agreement will be deemed to place the parties in the relationship of employer / employee, partners, or joint venturers.  Neither party has any right or authority to obligate or bind the other in any manner without the prior written consent of such other party.  Each party will be responsible for any withholding taxes, payroll taxes, disability insurance payments, unemployment taxes, and other similar taxes or charges with respect to its activities in relation to performance of its obligations under this Agreement.
+
+11.6    Publicity.  The parties agree that, during the term of this Agreement, NextLabs may reveal to third parties that Customer has contracted for the Software with NextLabs.  Upon the execution of this Agreement, Customer and NextLabs will issue a mutually agreeable joint press release announcing their business relationship.  Neither party shall issue any other press release or make any other public announcement concerning this Agreement.  Customer will assist NextLabs in developing a case study describing (a) how Customer uses the Software and (b) the benefits that were derived from the use of the Software (the "Case Study").  Customer agrees that the Case Study may be used in connection with NextLabs' advertising, promotion and marketing of its business.  The parties agree that, during the term of this Agreement, NextLabs may use and reproduce the Customer's name, trademarks, service marks, trade names, other marketing names and other related textual and graphic materials (the "Customer Logos") in connection with NextLabs' advertising, promotion and marketing of its business.
+
+11.7    Cumulative Rights.  Except as otherwise expressly stated in this Agreement, any specific right or remedy provided in this Agreement will not be exclusive, but will be cumulative upon all other rights and remedies set forth in this Agreement and allowed under applicable law.
+
+11.8    Governing Law, Jurisdiction.  This Agreement will be governed by the laws of the State of California without regard to the conflicts of law provisions thereof and without regard to the United Nations Convention on Contracts for the International Sale of Goods. Jurisdiction of any disputes relating to this Agreement shall rest exclusively with the state and federal courts in San Mateo County, California.
+
+11.9    Entire Agreement.  The parties acknowledge that this Agreement expresses their entire understanding and agreement with respect to the subject matter hereof, and that there have been no warranties, representations, covenants or understandings made by either party to the other except such as are expressly set forth in this Agreement.  The parties further acknowledge that this Agreement supersedes any and all prior agreements, proposals, negotiations, and discussions, written or oral, between the parties with respect to the matters set forth herein.
+
+11.10   Standard Terms of Customer.  No terms, provisions or conditions of any purchase order, acknowledgement or other business form that Customer may use in connection with the licensing of the Software will have any effect on the rights, duties or obligations of the parties hereunder, or otherwise modify, this Agreement, regardless of any failure of NextLabs to object to such terms, provisions or conditions.
+
+11.11   Counterparts.  This Agreement may be executed in multiple counterparts, any of which will be deemed an original, but all of which will constitute one and the same instrument.
+
+11.12   Attorneys’ Fees.  In the event that either party is required to retain the services of any attorney to enforce or otherwise litigate or arbitrate any matter or claim arising out of or in connection with this Agreement, the substantially prevailing party will be entitled to recover from the other party, in addition to any other relief awarded or granted, its reasonable costs and expenses (including attorneys' fees) incurred in the proceeding.
+
+11.13   Compliance with Law.  Both parties agree to comply with all applicable federal, state, and local laws and regulations in performing their duties.
+
+11.14   Severability.  In the event that any provision of this Agreement is found invalid or unenforceable pursuant to judicial decree or decision, the remainder of this Agreement will remain valid and enforceable according to its terms.  Without limiting the foregoing, it is expressly understood and agreed that each and every provision of this Agreement that provides for a limitation of liability, disclaimer of warranties, or exclusion of damages is intended by the parties to be severable and independent of any other provision and to be enforced as such.  Further, it is expressly understood and agreed that in the event any remedy in this Agreement is determined to have failed of its essential purpose, all other limitations of liability and exclusion of damages set forth herein will remain in full force and effect.
+
+11.15   Notices.  All notices, demands or consents required or permitted under this Agreement will be in writing and will be delivered, sent by facsimile or mailed certified return receipt requested to the respective parties at the addresses stated above or at any other address the party will specify to the other party in writing.  Any notice required or permitted to be given by the provisions of this Agreement will be conclusively deemed to have been received on the day it is delivered to that party by U.S. Mail with acknowledgment of receipt or by any commercial courier providing equivalent acknowledgment of receipt.
+
+11.16   U.S. Government End Users.  If Customer is a branch or agency of the United States Government, the following provision applies.  The Software and Documentation are comprised of "commercial computer software" and "commercial computer software documentation" as such terms are used in 48 C.F.R. 12.212 and are provided to the Government (i) for acquisition by or on behalf of civilian agencies, consistent with the policy set forth in 48 C.F.R. 12.212; or (ii) for acquisition by or on behalf of units of the Department of Defense, consistent with the policies set forth in 48 C.F.R. 227.7202-1 and 227.7202-3.
+
+11.17   Export Laws.  The Software and Documentation are subject to U.S. export control laws and may be subject to export or import regulations in other countries.  Customer agrees to strictly comply with all such laws and regulations and acknowledges that Customer is responsible for obtaining such licenses to export, re-export, or import as may be required.  Customer will indemnify and hold NextLabs harmless from any and all claims, losses, liabilities, damages, fines, penalties, costs and expenses (including attorney's fees) arising from or relating to any breach by Customer of its obligations under this Section.  Customer's obligations under this paragraph will survive the expiration or termination of this Agreement.
+
+EXHIBIT A
+STANDARD MAINTENANCE & SUPPORT POLICY
+
+
+1.0 Definitions
+
+Terms used herein with the initial letter capitalized which are not otherwise defined herein, shall have the meaning given to said terms in Section 1 of the Agreement.
+
+1.1     “NextLabs’ Web-site” means the World Wide Web-site found at http://www.NextLabs.com/support.
+
+1.2     “Maintenance Release” means a set of the Software containing bug-fixes.
+
+1.3     “Major Release” means a set of the Software in which new software functionality and major software restructuring has been included.
+
+1.4     “Minor Release” means a set of the Software in which new Software functionality and bug-fixes have been included.
+
+1.5     “Response Time” means the elapsed time between the receipt of a Support Incident and the time within which NextLabs begins Support as verified by a verbal or written confirmation to Customer.
+
+1.6     “Support Hours” means NextLabs’ usual office hours from 7:00 a.m. to 5.00 p.m., Monday through Friday, Pacific Time, excluding holidays as observed by NextLabs.
+
+1.7     “Support” means (a) the provision, when and if available, of Maintenance Releases, Major Releases and Minor Releases and the on-line Documentation related to the licensed Software, and b) the provision, during Support Hours, of assistance by telephone, facsimile, email or otherwise with respect to the Software, including (i) clarification of functions and features of the Software; (ii) clarification of the Documentation; (iii) guidance in the operation of the Software; and (iv) error verification, analysis and correction by telephone, facsimile and/or internet.
+
+1.8     “Support Incident” means Support Incident Severity 1, 2, 3, or 4, jointly or separately.
+
+    a.  Severity 1 means that all control policies implemented in the Software are failing in production for all users and the product requires immediate real-time attention.  Customer agrees to work with NextLabs continuously until the problem is resolved or an acceptable work-around is established.
+    b.  Severity 2 means a high-impact problem where the production is proceeding, but in a significantly impaired fashion.
+    c.  Severity 3 means business operations are impaired; or an important component of the Software is impacting production devices.
+    d.  Severity 4 means Customer’s business is not impacted materially, but there continues to be a problem with a component of the Software, the resolution of which is not time critical.  General product and usability questions also fall into this category.
+
+1.9     “Support Term” means (i) for perpetual licenses, the twelve (12) month period following the Effective Date of this Agreement, or any twelve (12) month renewal period thereafter, and (ii) for term licenses, the Term set forth in the Order.
+ 
+2.0 Support Services
+
+2.1     Subject to the payment of the applicable Support fee as indicated in the Order, NextLabs agrees to provide Support to Customer during the Support Term.
+
+2.2     Support for the Software is available during Support Hours.  Response Time for all Support Incidents shall be: (i) Support Incident Severity 1:  one (1) hour; (ii) Support Incident Severity 2:  four (4) hours; (iii) Support Incident Severity 3:  eight (8) hours; and (iv) Support Incident Severity 4:  sixteen (16) hours.
+
+2.3     Upon Customer’s request, NextLabs can provide Support at the Customer site.  In such event, Customer shall pay NextLabs on a time and materials basis and also reimburse NextLabs for all related traveling expenses and costs for board and lodging.
+
+2.4     This Support policy does not include services requested as a result of, or with respect to causes, which are not attributable to NextLabs. Causes which are not attributable to NextLabs include but are not limited to: (a) accident; unusual physical, electrical or electromagnetic stress; neglect; misuse; failure or fluctuation of electric power, air conditioning or humidity control; failure of rotation media not furnished by NextLabs; excessive heating; fire and smoke damage; operation of the Software with other media and hardware, software or telecommunication interfaces not meeting or not maintained in accordance with the manufacturer's specifications; or causes other than ordinary use, (b) improper installation by Customer or use of the Software that deviates from any operating procedures established by NextLabs in the applicable Documentation, (c) modification, customization, alteration or addition or attempted modification, customization, alteration or addition of the Software undertaken by any party other than NextLabs; software programs made by Customer or other parties.
+
+3.0 Responsibilities of Customer
+
+3.1     NextLabs' provision of Support to Customer is subject to: (a) Customer shall provide NextLabs with necessary access to Customer's personnel and its equipment during Support Hours.  This access may include the ability to remotely access the equipment on which the Software is operating and may also include the ability to obtain the same access to the equipment as those of Customer's employees having the highest privilege or clearance level.  NextLabs shall at all times be bound by the Confidentiality provisions of the Agreement, and will only disclose information within NextLabs to those individuals who need to know in order to assist in solving Customer’s problem. NextLabs will inform via the NextLabs Web-site about the specifications of the modem equipment and associated software needed, and Customer will be responsible for the costs and use of said equipment, (b) Customer shall provide supervision, control and management of the Use of the Software.  In addition, Customer shall implement procedures for the protection of information and the implementation of backup facilities in the event of errors or malfunction of the Software or equipment, (c) Customer shall document and promptly report all detected errors or malfunctions of the Software to NextLabs.  Customer shall take all steps necessary to carry out procedures for the rectification of errors or malfunctions within a reasonable time after such procedures have been received from NextLabs, (d) Customer shall maintain a current backup copy of all programs and data, (e) Customer shall properly train its personnel in the Use and application of the Software, and (f) Customer shall obtain access, to the World Wide Web at its expense, in order to access NextLabs’ Web-site.
+
+4.0 Case Registry Contact
+
+4.1     Customer shall appoint one (1) individual within Customer who is knowledgeable in the operation of the Software to serve as primary contact between Customer and NextLabs regarding the registry and report of Support Incidents.  Customer shall provide the name, phone number, and email address of the appointed individual within thirty (30) days after the Effective Date.  All of Customers’ Support inquiries shall be initialized through this contact.  This will not prevent other individuals within Customer’s organization to directly request NextLabs Support related information via the NextLabs’ Web-site.
+
+5.0 Supported Versions
+
+5.1     Support for the Software is available only for the current Major Release version and the immediate prior Major Release version.
+
+6.0 License Support Fee
+
+6.1     The Support fee for the initial Support Term is indicated on the Order and is due and payable in full within thirty (30) days after the Effective Date.  For any subsequent Support Term, the annual Support fee is indicated in the Order and will be due and payable thirty (30) days before the commencement of such subsequent Support Term.
+
+6.2     The annual Support fee for any subsequent Support Term shall be a percentage based on the same percentage of the License Fees paid as set forth in the Order.  NextLabs may increase the annual Support fee by giving at least thirty (30) days prior written notice to Customer.  Such increase shall not take effect until the next Support Term.
+
+7.0 Support Term Renewal
+
+7.1     Unless a party gives the other party at least sixty (60) days prior written notice of termination of the Support Services prior to termination of the then current Support Term, the Support Term will renew automatically for additional periods of one (1) year provided that Customer pays the relevant Support Fee to NextLabs when due.
+
+8.0 Support Policy Changes
+
+8.1     This Exhibit reflects NextLabs’ policy with respect to the provision of Support in force as of the Effective Date. Customer acknowledges that these terms are subject to change and NextLabs shall inform Customer of any such changes.  All changes shall be published on NextLabs’ Web-site and shall take effect after the end of the then-current Support Term.
+
+
+
+
+
+
+
+

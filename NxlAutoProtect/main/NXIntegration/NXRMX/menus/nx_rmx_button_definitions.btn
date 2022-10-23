@@ -1,0 +1,41 @@
+
+VERSION 120
+CREATE BUTTON_DEFINITIONS
+
+BUTTON NXRMX_BUTTON_ABOUT
+LABEL About
+BITMAP nxl_about
+ACTIONS NXL_NXRMX_about
+
+BUTTON NXRMX_BUTTON_VIEW_RIGHTS
+LABEL View Rights of Displayed Parts
+BITMAP nxl_view_info
+ACTIONS NXL_NXRMX_view_rights
+
+BUTTON NXRMX_BUTTON_VIEW_FILEINFO
+LABEL View File Info
+MESSAGE Views NextLabs file info of the work part
+BITMAP nxl_view_info
+ACTIONS NXL_NXRMX_view_workpart_info
+
+BUTTON NXRMX_BUTTON_PROTECT_WORKPART
+LABEL Protect Work Part
+MESSAGE Protects the work part as NextLabs format
+BITMAP nxl_protect
+ACTIONS NXL_NXRMX_protect_workpart
+
+BUTTON NXRMX_BUTTON_PROTECT_WORKPART_CHILDREN
+LABEL Protect Work Part and Children
+MESSAGE Protects work part and its child parts as NextLabs format
+BITMAP nxl_protect_assembly
+ACTIONS NXL_NXRMX_protect_workpart_children
+
+BUTTON NXRMX_BUTTON_PROTECT_ASSEMBLY
+LABEL Protect Displayed Part
+MESSAGE Protects all part files in the displayed part as NextLabs format
+BITMAP nxl_protect_assembly
+ACTIONS NXL_NXRMX_protect_displayedpart
+
+TOGGLE_BUTTON NXRMX_BUTTON_LOGBUTTON
+LABEL Log Button Click
+ACTIONS NXL_NXRMX_log_button

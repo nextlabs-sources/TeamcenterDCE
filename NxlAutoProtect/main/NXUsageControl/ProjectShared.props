@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <NX10_API>$(NLEXTERNALDIR)\siemens\nx\ugopen</NX10_API>
+    <MADHOOK_API>$(NLEXTERNALDIR2)\mch\3.1.12\</MADHOOK_API>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(MADHOOK_API)inc;$(SolutionDir)NXIntegration\include;$(SolutionDir)NxlUtils\include;$(NX10_API);$(IncludePath)</IncludePath>
+    <LibraryPath>$(MADHOOK_API)lib\free;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>NXUSAGECONTROL_EXPORTS;VER_FILE_STR="$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH) build $(VER_BUILD)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture).lib;libufun.lib;libufun_cae.lib;libufun_cam.lib;libugopenint.lib;libugopenint_cae.lib;libugopenint_cam.lib;NxlUtils$(PlatformArchitecture).lib;NXIntegration.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(NX10_API);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>NxlUtils$(PlatformArchitecture).dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="NX10_API">
+      <Value>$(NX10_API)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MADHOOK_API">
+      <Value>$(MADHOOK_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

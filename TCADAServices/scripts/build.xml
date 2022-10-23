@@ -1,0 +1,1 @@
+<project name="build"	 default="build"	 basedir="."	 xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors">	<property file="build.properties" />	<import file="build_xlib.xml" />	<import file="build_compile.xml" />	<import file="build_deploy.xml" />    <target name="build" description="Compile the project">	</target></project>

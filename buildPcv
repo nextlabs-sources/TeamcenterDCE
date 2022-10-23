@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke PCV build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildPcv
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildPcv
+#
+# Compile
+#
+
+LOG_FILE=buildPcv.log
+
+source version_control
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ -f ${WORKSPACE}/../config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${WORKSPACE}/../config.xml
+fi
+
+set -e
+echo "Workspace Folder: ${WORKSPACE}"
+
+echo "Building Project : CADRMXCommon Project"
+cd ${WORKSPACE}/CADRMXCommon
+source setEnv
+./buildPcv
+
+echo "Building Project : AWC_OneStepCommands Project"
+cd ${WORKSPACE}/AWC_OneStepCommands/main
+source setEnv
+./buildPcv
+
+echo "Building Project : BatchProtect Project"
+cd ${WORKSPACE}/BatchProtect/main
+source setEnv
+./buildPcv
+
+echo "Building Project : Translator Project"
+cd ${WORKSPACE}/Translator/main
+source setEnv
+./buildPcv
+
+echo "Building Project : BBIntegration Project"
+cd ${WORKSPACE}/BBIntegration
+source setEnv
+./buildPcv
+
+echo "Building Project : BBPlugin Project"
+cd ${WORKSPACE}/BBPlugin
+source setEnv
+./buildPcv
+
+echo "Building Project : com.nextlabs.menuitem Project"
+cd ${WORKSPACE}/com.nextlabs.menuitem/main
+source setEnv
+./buildPcv
+
+echo "Building Project : FMSRMX Project"
+cd ${WORKSPACE}/FMSRMX/main
+source setEnv
+./buildPcv
+
+echo "Building Project : FMS_PartialDownload Project"
+cd ${WORKSPACE}/FMS_PartialDownload/main
+source setEnv
+./buildPcv
+
+echo "Building Project : RACRMX Project"
+cd ${WORKSPACE}/racrmx/main
+source setEnv
+./buildPcv
+
+echo "Building Project : NXLOverlay Project"
+cd ${WORKSPACE}/NXLOverlay
+source setEnv
+./buildPcv
+
+echo "Building Project : SCFIntegration Project"
+cd ${WORKSPACE}/SCFIntegration/main
+source setEnv
+./buildPcv
+
+echo "Building Project : TCLdifGenerator Project"
+cd ${WORKSPACE}/TCLdifGenerator
+source setEnv
+./buildPcv
+
+echo "Building Project : TemplateModifier Project"
+cd ${WORKSPACE}/TemplateModifier/main
+source setEnv
+./buildPcv
+
+echo "Building Project : ToNxlFile Project"
+cd ${WORKSPACE}/ToNxlFile/main
+source setEnv
+./buildPcv
+
+echo "Building Project : TranslatorRightsChecker Project"
+cd ${WORKSPACE}/TranslatorRightsChecker
+source setEnv
+./buildPcv
+
+# echo "Building Project : CreoIntegration Project"
+# cd ${WORKSPACE}/CreoIntegration
+# source setEnv
+# ./buildPcv
+
+# echo "Building Project : SldWorksIntegration Project"
+# cd ${WORKSPACE}/SldWorksIntegration
+# source setEnv
+# ./buildPcv
+
+# echo "Building Project : AutoCADIntegration Project"
+# cd ${WORKSPACE}/AutoCADIntegration
+# source setEnv
+# ./buildPcv
+
+echo "Building Project : NxlAutoProtect Project"
+cd ${WORKSPACE}/NxlAutoProtect/main
+source setEnv
+./buildPcv
+
+# echo "Building Project : CADRMXInstaller Project"
+# cd ${WORKSPACE}/CADRMXInstaller
+# source setEnv
+# ./buildPcv
+
+echo "Building Project : RightsManagementExtension Project"
+cd ${WORKSPACE}/RightsManagementExtension/main
+source setEnv
+./buildPcv
+
+set +x
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}
+

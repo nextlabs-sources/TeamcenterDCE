@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--This is to set custom action data for deferred custom action ActionInstall can pickup related variable.-->
+    <CustomAction Id="SetDirInstall" Property="ActionInstall" Value="ACAD_DIR=[ACAD_DIR];INSTALLFOLDER=[INSTALLFOLDER];ACAD_INTEGRATION_DIR=[ACAD_INTEGRATION_DIR]" />
+    
+    <CustomAction Id='ActionInstall' 
+                  BinaryKey='BINInstall'
+                  DllEntry='InstallACADRMX'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINInstall' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionRepair' 
+                  BinaryKey='BINRepair' 
+                  DllEntry='RepairACADRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINRepair' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionUninstall' 
+                  BinaryKey='BINUninstall' 
+                  DllEntry='UninstallACADRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINUninstall' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateACADDir' 
+                  BinaryKey='BINValidateACADDir' 
+                  DllEntry='ValidateACADDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINValidateACADDir' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='FindACADDir' 
+                  BinaryKey='BINFindACADDir' 
+                  DllEntry='FindACADDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINFindACADDir' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateACADIntegrationDir'
+          BinaryKey='BINValidateACADIntegrationDir'
+          DllEntry='ValidateACADIntegrationDir'
+          Execute='immediate'
+          Return='check' />
+
+    <Binary Id='BINValidateACADIntegrationDir' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <CustomAction Id='FindACADIntegrationDir'
+              BinaryKey='BINFindACADIntegrationDir'
+              DllEntry='FindACADIntegrationDir'
+              Execute='immediate'
+              Return='check' />
+
+    <Binary Id='BINFindACADIntegrationDir' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+
+    <!-- Edit creotk.dat file after installation. Change $CREO_RMX_ROOT to full path to CreoRMX folder 
+    <CustomAction Id="SetDirEditACADrx" Property="EditACADrx" Value="ACAC_DIR=[ACAD_DIR];INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomAction Id='EditACADrx'
+                  BinaryKey='BINEditACADrx'
+                  DllEntry='EditACADrx'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINEditACADrx' SourceFile='..\ACADRMXCA\bin\$(var.Configuration)\ACADRMXCA.CA.dll' />
+    -->
+
+    <!--Enable verbose logging and define custom action to save and view installation log-->
+    <!--Full command to save and open: "cmd /c copy [MsiLogFileLocation] C:\temp\log.txt &#38;&#38; notepad.exe [MsiLogFileLocation]"-->
+    <!--Only open for now-->
+    <Property Id="MsiLogging" Value="v!" />
+    <CustomAction Id="SaveAndViewLog" Execute="immediate"
+                  ExeCommand="notepad.exe [MsiLogFileLocation]"
+                  Directory="TARGETDIR"
+                  Return="asyncNoWait" />
+  </Fragment>
+</Wix>

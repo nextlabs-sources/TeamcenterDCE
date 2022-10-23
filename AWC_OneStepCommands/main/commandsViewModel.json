@@ -1,0 +1,101 @@
+{
+    "commands": {
+      "CmdDRMProtect": {
+        "iconId": "cmdDRMProtect",
+        "title": "{{i18n.CmdDRMProtectTitle}}"
+      },
+      "CmdDRMUnprotect": {
+        "iconId": "cmdDRMUnprotect",
+        "title": "{{i18n.CmdDRMUnprotectTitle}}"
+      }
+    },
+    "commandHandlers": {
+      "CmdDRMProtectHandler": {
+        "id": "CmdDRMProtect",
+        "action": "activateCmdDRMProtect",
+        "activeWhen": true,
+        "visibleWhen": {
+          "condition": "conditions.canApplyProtection"
+        }
+      },
+      "CmdDRMUnprotectHandler": {
+        "id": "CmdDRMUnprotect",
+        "action": "activateCmdDRMUnprotect",
+        "activeWhen": true,
+        "visibleWhen": {
+          "condition": "conditions.canRemoveProtection"
+        }
+      }
+    },
+    "commandPlacements": {
+      "CmdDRMProtectaw_oneStep": {
+        "id": "CmdDRMProtect",
+        "uiAnchor": "aw_rightWall",
+        "priority": 101
+      },
+      "CmdDRMUnprotectaw_oneStep": {
+        "id": "CmdDRMUnprotect",
+        "uiAnchor": "aw_rightWall",
+        "priority": 100
+      }
+    },
+    "actions": {
+      "activateCmdDRMProtect": {
+        "actionType": "JSFunction",
+        "method": "execute",
+        "deps": "js/CmdDRMService",
+        "inputData": {
+          "user": "{{ctx.user}}",
+          "drmCommand": "protect",
+          "selectedObjs": "{{ctx.mselected}}"
+        }
+      },
+      "activateCmdDRMUnprotect": {
+        "actionType": "JSFunction",
+        "method": "execute",
+        "deps": "js/CmdDRMService",
+        "inputData": {
+          "user": "{{ctx.user}}",
+          "drmCommand": "unprotect",
+          "selectedObjs": "{{ctx.mselected}}"
+        }
+      }
+    },
+    "conditions": {
+      "objectIsSelected": {
+        "expression": "ctx.selected"
+      },
+      "isItemRevision": {
+        "expression": "ctx.selected.type == 'ItemRevision' || ctx.selected.modelType.parentTypeName == 'ItemRevision'"
+      },
+      "isDataset": {
+        "expression": "ctx.selected.modelType.parentTypeName == 'Dataset'"
+      },
+      "ctxCellNxlProtected": {
+        "expression": "(ctx.selected.cellProperties && ctx.selected.cellProperties['Is NextLabs Protected'] && ctx.selected.cellProperties['Is NextLabs Protected'].value == 'True')"
+      },
+      "ctxCellNxlNotProtect": {
+        "expression": "(ctx.selected.cellProperties && (!ctx.selected.cellProperties['Is NextLabs Protected'] || ctx.selected.cellProperties['Is NextLabs Protected'].value == 'False'))"
+      },
+      "summaryCtxCellNxlProtected": {
+        "expression": "(!ctx.selected.cellProperties && ctx.xrtSummaryContextObject && ctx.xrtSummaryContextObject.cellProperties && ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'] && ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'].value == 'True')"
+      },
+      "summaryCtxCellNxlNotProtect": {
+        "expression": "(!ctx.selected.cellProperties && ctx.xrtSummaryContextObject && ctx.xrtSummaryContextObject.cellProperties && (!ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'] || ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'].value == 'False'))"
+      },
+      "canRemoveProtection": {
+        "expression": "ctx.selected && (ctx.selected.type == 'ItemRevision' || ctx.selected.modelType.parentTypeName == 'ItemRevision' || (ctx.selected.modelType.parentTypeName == 'Dataset' && ((!ctx.selected.cellProperties && ctx.xrtSummaryContextObject && ctx.xrtSummaryContextObject.cellProperties && ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'] && ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'].value == 'True') || (ctx.selected.cellProperties && ctx.selected.cellProperties['Is NextLabs Protected'] && ctx.selected.cellProperties['Is NextLabs Protected'].value == 'True'))))"
+      },
+      "canApplyProtection": {
+        "expression": "ctx.selected && (ctx.selected.type == 'ItemRevision' || ctx.selected.modelType.parentTypeName == 'ItemRevision' || (ctx.selected.modelType.parentTypeName == 'Dataset' && ((!ctx.selected.cellProperties && ctx.xrtSummaryContextObject && ctx.xrtSummaryContextObject.cellProperties && (!ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'] || ctx.xrtSummaryContextObject.cellProperties['Is NextLabs Protected'].value == 'False')) || (ctx.selected.cellProperties && (!ctx.selected.cellProperties['Is NextLabs Protected'] || ctx.selected.cellProperties['Is NextLabs Protected'].value == 'False')))))"
+      }
+    },
+    "i18n": {
+      "CmdDRMProtectTitle": [
+        "CmdDRMMessages"
+      ],
+      "CmdDRMUnprotectTitle": [
+        "CmdDRMMessages"
+      ]
+    }
+}

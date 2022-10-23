@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke PCV build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildPcv
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#	source setEnv
+#	./buildPcv
+#
+# DEBUG:
+#	To debug ANT problems, add -v option to an ANT command. For example:
+#		$ANT -v -f scripts/build_xlib.xml
+
+export ANT_HOME=$NLEXTERNALDIR/apache-ant/apache-ant-1.10.12
+
+source ../../version_control
+
+ANT=$ANT_HOME/bin/ant
+LOG_FILE=buildPcv.log
+BUILD_MANIFEST_FILE=build.manifest
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ -f ${WORKSPACE}/../config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${WORKSPACE}/../config.xml
+fi
+
+# Prepare environment
+./configure --type=pcv_smdc || exit $?
+source build.config
+
+# Prepare dependencies
+$ANT -f scripts/build_xlib.xml || exit $?
+#scripts/checkBuildLog.pl $LOG_FILE || exit $?
+
+# Compile code and build installers
+# export ANT_OPTS="-Xmx1024M -XX:PermSize=128m -XX:MaxPermSize=512m"
+export ANT_ARGS="-Dnlbuildroot=$NLBUILDROOT -Dnlexternaldir=$NLEXTERNALDIR -Dversion_str=$VERSION_STR -Dversion_build_short=$VERSION_BUILD_SHORT -Dbuild_date_long=$BUILD_DATE_LONG"
+$ANT -f scripts/build_compile.xml || exit $?
+
+# Publish intstallers and artifacts
+$ANT -f scripts/build_publish.xml || exit $?
+
+# Create and publish build manifest
+scripts/createBuildManifest.pl $LOG_FILE > $BUILD_MANIFEST_FILE || exit $?
+$ANT -f scripts/build_publish.xml manifest || exit $?
+set +x
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

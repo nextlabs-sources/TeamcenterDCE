@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<preferences version="10.0">
+  <category name="General">
+    <preference name="TC_customization_libraries" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="true">
+      <context name="Teamcenter">
+        <value>NxlAutoProtect</value>
+        <value>NxlSCFIntegration</value>
+      </context>
+    </preference>
+  </category>
+</preferences>

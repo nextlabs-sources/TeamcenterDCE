@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+
+      <ComponentRef Id="RegisterEnvironment" />
+	  <Component Id="RegisterDRMIntegration" Guid="{FBF9C849-87C8-4D63-8065-11D6203A8448}" Directory="NXDRMIntegration">
+		<CreateFolder />
+		<Environment Id="EnvDRMPREVIEW" Action="set" Name="UGII_DRM_ADAPTOR_PREVIEW" Permanent="no" System="yes" Value="1" />
+		<Environment Id="EnvDRMLIB" Action="set" Name="UGII_DRM_ADAPTOR_LIBRARY" Permanent="no" System="yes" Value="[!NXDRMIntegration[NX_MAJOR_VER].dll]" />
+		<Condition>
+		  <![CDATA[Installed OR (NX_MAJOR_VER>=2007)]]>
+		</Condition>
+	  </Component>
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="../../xlib/nx_rmx/NX_RMX_ROOT">
+        <Component Id="RegisterEnvironment" Guid="{D015345C-E849-457D-AB5B-C53FDA0C38A3}">
+          <RegistryValue Id="StoreInstallDir" Root="HKLM" Key="SOFTWARE\NextLabs\NXRMX" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string"/>
+          <!--<Environment Id="NXRMXRoot" Action="set" Name="NX_RMX_ROOT" Permanent="no" System="yes" Value="[INSTALLFOLDER]" />-->
+		  <Environment Id="UgiiTmpRpm" Action="set" Name="SET_UGII_TMP_DIR_AS_RPM" Permanent="no" System="no" Value="1" />
+		  <Environment Id="UgiiTmpDir" Action="set" Name="UGII_TMP_DIR" Permanent="no" System="no" Value="[NXRMX_RPMTEMP]" />
+		</Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

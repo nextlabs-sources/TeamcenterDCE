@@ -1,0 +1,18 @@
+#ifndef NX_RMX_PDM_SERVER_H_INCLUDED
+#define NX_RMX_PDM_SERVER_H_INCLUDED
+
+
+//PDM input code
+#define INPUT_CODE_PROTECT 0X8001
+
+
+//PDM output code for success
+#define OUTPUT_CODE_SUCCESS_BASE 0x8000
+#define OUTPUT_CODE_SUCCESS OUTPUT_CODE_SUCCESS_BASE
+
+//pdm OUTPUT CODE for error
+#define OUTPUT_CODE_ERROR_BASE 0x9000
+
+
+
+#endif

@@ -1,0 +1,1 @@
+java -Dlog4j.configurationFile=bin/log4j2.properties -cp ./bin/*;. com.nextlabs.teamcenter.fms.test.GenerateNxlFiles

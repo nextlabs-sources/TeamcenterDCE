@@ -1,0 +1,9 @@
+name RMX for Creo Parametric
+startup dll
+toolkit object
+exec_file $CREO_RMX_ROOT\Creo 4.0\CreoRMX_x64.dll
+text_dir $CREO_RMX_ROOT\Creo 4.0
+allow_stop false
+delay_start false
+fail_tol true
+end

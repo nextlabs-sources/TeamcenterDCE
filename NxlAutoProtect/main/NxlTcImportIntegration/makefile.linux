@@ -1,0 +1,41 @@
+UTILS_DIR=../NxlUtils
+NXROOT=$(NLEXTERNALDIR)/siemens/nx/$(NX_VERSION)
+
+SRCS := $(wildcard *.cpp)
+$(info $(PROJECTNAME).SRCS=$(SRCS))
+
+OBJS := ${SRCS:.cpp=.o}
+$(info $(PROJECTNAME).OBJS=$(OBJS))
+
+INCLUDE_DIRS :=.. . $(NXROOT)/ugopen $(UTILS_DIR)/include
+$(info $(PROJECTNAME).INCLUDE_DIRS=$(INCLUDE_DIRS))
+
+LIBRARY_DIRS := $(NXROOT)/nxbin $(UTILS_DIR)
+$(info $(PROJECTNAME).LIBRARY_DIRS=$(LIBRARY_DIRS))
+
+LIBRARIES :=NxlUtils nxopencpp nxopencpp_pdm ufun ufun_cae ugopenint ugopenint_cae
+$(info $(PROJECTNAME).LIBRARIES=$(LIBRARIES))
+
+PREPROCESSORS=__linux__ PROJECT_NAME=\"$(PROJECTNAME)\" TARGETFILENAME=\"$(OUTPUTFILE)\" POSIX _GLIBCXX_USE_CXX11_ABI=0
+PREPROCESSORS += IPLIB=NxlTcImportIntegration NXLTCIMPORTINTEGRATION_EXPORTS
+PREPROCESSORS += FILE_VER=\"$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_MAINTENANCE).$(VERSION_PATCH)-$(BUILD_NUMBER)\"
+PREPROCESSORS += ENV_PRODUCT_ROOT=\"NX_RMX_ROOT\"
+
+CPPFLAGS :=$(GCC_FLAGS) -fPIC -std=c++11 -Wno-attributes
+CPPFLAGS += $(foreach pp,$(PREPROCESSORS),-D $(pp))
+CPPFLAGS += $(foreach incdir,$(INCLUDE_DIRS),-I$(incdir))
+
+LDFLAGS :=-shared -o $(OUTPUTFILE) -Wl,--wrap=memcpy
+LDFLAGS += $(foreach libdir,$(LIBRARY_DIRS),-L$(libdir))
+LDFLAGS += $(foreach lib,$(LIBRARIES),-l$(lib))
+
+.PHONY: all clean distclean
+
+all:
+	gcc $(CPPFLAGS) $(SRCS) -S
+	mv *.s ../tmp -f
+	gcc $(CPPFLAGS) $(SRCS) $(LDFLAGS)
+
+clean:
+
+distclean: clean

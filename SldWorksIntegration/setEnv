@@ -1,0 +1,122 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	This script sets up environment to compile a custom application using Visual Studio 2008.
+#
+# INSTRUCTIONS
+#	For manual build:
+#		Change to root directory of source tree
+#		export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#		export VERSION_BUILD=10001
+#		source setEnv
+#		./buildIt
+#
+#	For Hudson build:
+#		Perforce workspace
+#		//depot/ProfessionalServices/SAPTagging/1.1_tyco_base_pc5.5.6_1109/... //hudson_nb14_profserv_saptagging_1.1_tyco_base_pc5.5.6_1109/...
+#		
+#		Script
+#		cd $WORKSPACE
+#		export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#		export VERSION_BUILD=${BUILD_NUMBER}
+#		source setEnv
+#		./buildIt
+
+
+echo "NextLabs Build Environment Preparation Script (setEnv.vs2008)"
+echo "Specify --help for more information"
+
+
+#
+# Process commandline parameters
+#
+
+# ------------------------------
+# printUsage()
+
+function printUsage
+{
+	echo "usage: setEnv.vs2008 [--nomapsdrive]"
+	echo "       setEnv.vs2008 -h|--help"
+	echo "  nomapsdrive   Disable S: drive mapping. This is needed in CDC or building in QA lab environment."
+}
+
+# Help
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	printUsage
+	return 0
+fi
+
+# Parse arguements
+
+while [ $# -gt 0 ]; do
+	if [ "$1" == "--nomapsdrive" ]; then
+		MAP_S_DRIVE=0
+	fi
+	
+	shift
+done
+MAP_S_DRIVE=0
+# Print arguements
+echo "INFO: Parameters:"
+echo "  MAP_S_DRIVE      = $MAP_S_DRIVE"
+
+
+#
+# Set common environment variables
+#
+
+if [ "$ProgramW6432" == "" ]; then
+	ENV_OS=x86
+	PROGRAM_FILES_X86="C:/Program Files"
+else
+	ENV_OS=x64
+	PROGRAM_FILES_X86="C:/Program Files (x86)"
+fi
+
+PROGRAM_FILES_X86_DOS=`cygpath -d "$PROGRAM_FILES_X86"`
+
+
+#
+# Map drives
+#
+# IMPORTANT: Drive mapping is used to deal with space in directory name such as "Program Files"
+# that Cygwin and other programs cannot handle readily.
+
+echo "Drive Mapping Before:"
+subst
+
+# Hard code drive mapping for source tree to deal with path length limitations in Cygwin and InstallShield.
+[ `subst | grep -ci P:` -ne 0 ] && subst P: /D
+[ `net use | grep -ci P:` -ne 0 ] && net use P: /D
+subst P: $(cygpath -aw $(pwd))
+
+[ `subst | grep -ci X:` -ne 0 ] && subst X: /D
+[ `net use | grep -ci X:` -ne 0 ] && net use X: /D
+subst x: "$PROGRAM_FILES_X86_DOS\\Microsoft Visual Studio 9.0"
+
+[ `subst | grep -ci O:` -ne 0 ] && subst O: /D
+[ `net use | grep -ci O:` -ne 0 ] && net use O: /D
+subst O: "C:\\Program Files\\Microsoft SDKs\\Windows\\v7.0"
+
+if [ $MAP_S_DRIVE = 1 ]; then
+	[ `subst | grep -ci S:` -ne 0 ] && subst S: /D
+	[ `net use | grep -ci S:` -ne 0 ] && net use S: /D
+	net use s: "\\\\nextlabs.com\\share\\data"
+fi
+
+echo "Drive Mapping After:"
+subst
+net use
+
+#
+# Set build environment variables
+#
+
+if [ "$NLEXTERNALDIR" == "" ]; then
+	export NLEXTERNALDIR=C:/P4/external
+fi
+
+export NLPROJECTROOT=$(cygpath -m $(pwd))
+
+alias dev='cd $NLPROJECTROOT'

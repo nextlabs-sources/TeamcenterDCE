@@ -1,0 +1,44 @@
+<config>
+	<jars>
+		<jar in="./../build/tonxlfile.jar" out="./../build/tonxlfile.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="./../xlib/jar/*.jar" />
+		<jar name="./../xlib/jar/openaz/*.jar" />
+		<jar name="./../xlib/jar/jaxb-ri/*.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.drm.tonxlfile.DatabaseOperation">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.tonxlfile.ModelObjectUtil">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.tonxlfile.NextLabsDataSetHelper">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.tonxlfile.TaskPrep">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.tonxlfile.dto.IntegrationDatasetDTO">
+			<method template="protected+ *(**)" parameters="keep" />
+			<field template="private+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.drm.tonxlfile.configuration.SimpleCrypto" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.drm.tonxlfile.configuration.SimpleCrypto" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

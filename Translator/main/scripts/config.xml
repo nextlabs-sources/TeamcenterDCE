@@ -1,0 +1,37 @@
+<config>
+	<jars>
+		<jar in="./../build/translator.jar" out="./../build/translator.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="./../xlib/jar/rmjavasdk/rmjavasdk.jar" />
+		<jar name="./../xlib/jar/jaxb-ri/*.jar" />
+		<jar name="./../xlib/jar/log4j/*.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.drm.rmx.translator.TranslatorApp">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.rmx.configuration.ConfigManagerUtil">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.drm.rmx.configuration.SecretUtil">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.drm.rmx.configuration.SimpleCrypto" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.drm.rmx.configuration.SimpleCrypto" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

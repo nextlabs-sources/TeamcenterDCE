@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--This is to set custom action data for deferred custom action ActionInstall can pickup related variable.-->
+    <CustomAction Id="SetDirInstall" Property="ActionInstall" Value="INSTALLFOLDER=[INSTALLFOLDER];SWIM=[SWIM]" />
+    
+    <CustomAction Id='ActionInstall' 
+                  BinaryKey='BINInstall'
+                  DllEntry='InstallSldWorksRMX'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINInstall' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionRepair' 
+                  BinaryKey='BINRepair' 
+                  DllEntry='RepairSldWorksRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINRepair' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionUninstall' 
+                  BinaryKey='BINUninstall' 
+                  DllEntry='UninstallSldWorksRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINUninstall' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateSldWorksDir' 
+                  BinaryKey='BINValSldWorksDir' 
+                  DllEntry='ValidateSldWorksDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINValSldWorksDir' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='FindSldWorksDir' 
+                  BinaryKey='BINFindSldWorksDir' 
+                  DllEntry='FindSldWorksDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINFindSldWorksDir' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateSwimDir'
+          BinaryKey='BINValSwimDir'
+          DllEntry='ValidateSwimDir'
+          Execute='immediate'
+          Return='check' />
+
+    <Binary Id='BINValSwimDir' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <CustomAction Id='FindSwimDir'
+              BinaryKey='BINFindSwimDir'
+              DllEntry='FindSwimDir'
+              Execute='immediate'
+              Return='check' />
+
+    <Binary Id='BINFindSwimDir' SourceFile='..\SldWorksRMXCA\bin\$(var.Configuration)\SldWorksRMXCA.CA.dll' />
+
+    <!--Enable verbose logging and define custom action to save and view installation log-->
+    <!--Full command to save and open: "cmd /c copy [MsiLogFileLocation] C:\temp\log.txt &amp;&amp; notepad.exe [MsiLogFileLocation]"-->
+    <!-- &amp;&amp; reg import "[INSTALLFOLDER]EnableSldWorksRMX.reg"-->
+    <!--Only open for now-->
+    <Property Id="MsiLogging" Value="v!" />
+    <CustomAction Id="SaveAndViewLog" Execute="immediate"
+                  ExeCommand="notepad.exe [MsiLogFileLocation]"
+                  Directory="TARGETDIR"
+                  Return="asyncNoWait" />
+
+    <CustomAction Id="SetDirPluginRegister" Property="SWPluginRegister" Value="INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomAction Id="SWPluginRegister" Execute='deferred'
+                  Impersonate='no'
+                  ExeCommand='regsvr32.exe /s "[INSTALLFOLDER]SldWorksRMX.dll"'
+                  Directory='TARGETDIR'
+                  Return='check' />
+
+    <CustomAction Id="SWEnableRMXPlugin" Execute='deferred'
+                  Impersonate='no'
+                  ExeCommand='reg import "[INSTALLFOLDER]EnableSldWorksRMX.reg"'
+                  Directory='TARGETDIR'
+                  Return='check' />
+    
+    <CustomAction Id="SetDirPluginUnregister" Property="SWPluginUnregister" Value="INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomAction Id="SWPluginUnregister" Execute='deferred'
+                  Impersonate='no'
+                  ExeCommand='regsvr32.exe /s /u "[INSTALLFOLDER]SldWorksRMX.dll"'
+                  Directory='TARGETDIR'
+                  Return='check' />
+
+  </Fragment>
+</Wix>

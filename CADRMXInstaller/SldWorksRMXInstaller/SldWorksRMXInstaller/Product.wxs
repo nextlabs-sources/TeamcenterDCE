@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Product Version -->
+  <!--<?define ProductVersion= "5.0.1.0"?>-->
+  <?define ProductVersion="!(bind.FileVersion.SldWorksRMX.dll)"  ?>
+  
+  <!-- Fixed upgrade code -->
+  <?define UpgradeCode= "{91C0D009-D099-48EE-AB1A-56F85C1A4941}"?>
+  
+  <!-- Provide Main Product -->
+	<Product Id="*" 
+           Name="!(loc.ProductName)" 
+           Language="!(loc.Language)" 
+           Version="$(var.ProductVersion)" 
+           Manufacturer="!(loc.Company)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+    <!-- Provide Package Details -->
+		<Package InstallerVersion="200" 
+             InstallPrivileges="elevated"
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             Platform="x64"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"
+             />
+    <!-- Downgrade Error Message -->
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Prefer include .cab file into .msi file -->
+		<MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="app.ico" SourceFile="$(var.ProjectDir)\Resources\app.ico"/>
+    <!-- This icon will show up in Add/Remove (Control Panel)-->
+    <Property Id="ARPPRODUCTICON">app.ico</Property>
+    <!-- Help support website in Add/Remove program -->
+    <Property Id="ARPURLINFOABOUT">https://www.nextlabs.com/services/support/</Property>
+
+    <!-- Add Installer UI -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="SLDWORKS_INSTALLDIR" Value="SLDWORKS_DIR"/>
+    <Property Id="SLDWORKS_SWIM" Value="SWIM"/>
+    
+    <UIRef Id="WixUI_CustomizeInstallDir"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Resources\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Resources\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Resources\Banner.bmp" />
+
+    <!-- Define components, files, ... -->
+		<Feature Id="ProductFeature" Title="SldWorksRMXInstaller" Level="1">
+      
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="AutoHarvestComponents" />
+		
+    </Feature>
+
+    <InstallExecuteSequence>
+      <!--<Custom Action="SetDirInstall" After='InstallInitialize' />-->
+      <Custom Action="SetDirInstall" After='InstallFiles' />
+      <Custom Action='ActionInstall' After='SetDirInstall'>NOT Installed</Custom>
+      <Custom Action='ActionRepair' After='InstallInitialize'>REINSTALL</Custom>
+      <Custom Action='ActionUninstall' After='InstallInitialize'>Installed and NOT REINSTALL</Custom>
+      <!-- Register SolidWorks plugin + Enable it -->
+      <Custom Action='SetDirPluginRegister' After='InstallFiles'>NOT Installed</Custom>
+      <Custom Action='SWPluginRegister' After='SetDirPluginRegister'>NOT Installed</Custom>
+      <Custom Action='SWEnableRMXPlugin' After='SWPluginRegister'>NOT Installed</Custom>
+      <!-- Unresgister SolidWorks plugin -->
+      <Custom Action='SetDirPluginUnregister' Before='RemoveFiles'>Installed</Custom>
+      <Custom Action='SWPluginUnregister' After='InstallInitialize'>Installed</Custom>
+    </InstallExecuteSequence>
+    
+    <InstallUISequence>
+      <Custom Action='FindSldWorksDir' After='LaunchConditions'>NOT Installed</Custom>
+      <Custom Action='FindSwimDir' After='LaunchConditions'>NOT Installed</Custom>
+    </InstallUISequence>  
+
+	</Product>
+</Wix>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Product Version -->
+  <!--<?define ProductVersion= "5.1.0.0"?>-->
+  <?define ProductVersion="!(bind.FileVersion.RPMUtils64.dll)"  ?> 
+
+  <!-- Fixed upgrade code -->
+  <?define UpgradeCode= "{1F33AF4F-3655-46B0-9C04-98530A2EF216}"?>
+
+  <!-- Provide Main Product -->
+  <Product Id="*"
+           Name="!(loc.ProductName)"
+           Language="!(loc.Language)"
+           Version="$(var.ProductVersion)"
+           Manufacturer="!(loc.Company)"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <!-- Provide Package Details -->
+    <Package InstallerVersion="200"
+             InstallPrivileges="elevated"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="x64"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"
+             />
+    <!-- Downgrade Error Message -->
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Prefer include .cab file into .msi file -->
+    <MediaTemplate EmbedCab="yes" />
+
+     <Icon Id="app.ico" SourceFile="$(var.ProjectDir)\Resources\app.ico"/> 
+    <!-- This icon will show up in Add/Remove (Control Panel)-->
+     <Property Id="ARPPRODUCTICON">app.ico</Property>
+    <!-- Help support website in Add/Remove program -->
+    <Property Id="ARPURLINFOABOUT">https://www.nextlabs.com/services/support/</Property>
+    
+    <!-- Add Installer UI -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_CustomizeInstallDir"/>
+
+    <!--<UIRef Id="WixUI_Minimal" />-->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Resources\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Resources\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Resources\Banner.bmp" />
+
+    <!-- Check UGII_BASE_DIR or UGII_ROOT_DIR exist -->
+    <Condition Message="Environment Variable UGII_BASE_DIR or UGII_ROOT_DIR is not set. Setup abort." >
+      (%UGII_BASE_DIR) OR (%UGII_ROOT_DIR)
+    </Condition>
+	<SetProperty Action="SetNXROOTFromUGIIBASE" Before="AppSearch" Id="NX_ROOT" Value="[%UGII_BASE_DIR]" Sequence="first">(%UGII_BASE_DIR)</SetProperty>
+	<SetProperty Action="SetNXROOTFromUGIIROOT" Before="AppSearch" Id="NX_ROOT" Value="[%UGII_ROOT_DIR]\..\" Sequence="first">(NOT (%UGII_BASE_DIR)) AND (%UGII_ROOT_DIR)</SetProperty>
+    <!-- Define components, files, ... -->
+	<Property Id="WHEREISNX12">
+	  <DirectorySearch Id="SearchNX12BIN" Path="[NX_ROOT]\NXBIN">
+		<FileSearch Name="ugraf.exe" MinVersion="12.0.0.0" MaxVersion="12.0.9.9"/>
+	  </DirectorySearch>
+	</Property>
+	<SetProperty Action="SetNXVER12" After="AppSearch" Id="NX_MAJOR_VER" Value="12" Sequence="first">WHEREISNX12</SetProperty>
+
+	<Property Id="WHEREISNX1953">
+	  <DirectorySearch Id="SearchNX1953BIN" Path="[NX_ROOT]\NXBIN">
+		<FileSearch Name="ugraf.exe" MinVersion="1953.0.0.0" MaxVersion="1979.9999.0.0"/>
+	  </DirectorySearch>
+	</Property>
+	<SetProperty Action="SetNXVER1953" After="AppSearch" Id="NX_MAJOR_VER" Value="1953" Sequence="first">WHEREISNX1953</SetProperty>
+
+	<Property Id="WHEREISNX1980">
+	  <DirectorySearch Id="SearchNX1980BIN" Path="[NX_ROOT]\NXBIN">
+		<FileSearch Name="ugraf.exe" MinVersion="1980.0.0.0" MaxVersion="2006.9999.0.0"/>
+	  </DirectorySearch>
+	</Property>
+	<SetProperty Action="SetNXVER1980" After="AppSearch" Id="NX_MAJOR_VER" Value="1980" Sequence="first">WHEREISNX1980</SetProperty>
+
+	<Property Id="WHEREISNX2007">
+	  <DirectorySearch Id="SearchNX2007BIN" Path="[NX_ROOT]\NXBIN">
+		<FileSearch Name="ugraf.exe" MinVersion="2007.0.0.0" MaxVersion="2007.9999.0.0"/>
+	  </DirectorySearch>
+	</Property>
+	<SetProperty Action="SetNXVER2007" After="AppSearch" Id="NX_MAJOR_VER" Value="2007" Sequence="first">WHEREISNX2007</SetProperty>
+
+
+	<Property Id="NXRMX_RPMTEMP" Value="%USERPROFILE%\AppData\Local\Temp\nx_rpm"/>
+
+	<!--Condition Message="NX 12/1980/2007 is not found in [NX_ROOT]">
+	  <![CDATA[Installed OR WHEREISNX2007 OR WHEREISNX1980 OR WHEREISNX12]]>
+	</Condition-->
+
+
+    <Feature Id="ProductFeature" Title="NXRMXInstaller" Level="1">
+
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="AutoHarvestComponents" />
+
+    </Feature>
+    
+    <InstallExecuteSequence>
+      <Custom Action="SetDir" After="InstallInitialize" />
+      <Custom Action='ActionInstall' After='SetDir'>NOT Installed or REINSTALL</Custom>
+      <Custom Action='ActionUninstall' Before='RemoveFiles'>Installed and NOT REINSTALL</Custom>
+    </InstallExecuteSequence>
+    
+  </Product>
+</Wix>

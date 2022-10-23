@@ -1,0 +1,127 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+	<property name="package_dir" value="${build_dir}/${package_name}" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<path id="compile.classpath">
+		<fileset dir="${xlib_dir}/jar/rmjavasdk">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_dir}/jar/openaz">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_dir}/jar/obfuscate">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_dir}/jar/jaxb">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile, obfuscate, package" />
+
+	<target name="compile" description="Compile the project" depends="">
+
+		<mkdir dir="${classes_dir}" />
+
+		<javac srcdir="${nlbuildroot}/src" destdir="${classes_dir}" verbose="true" source="1.8" target="1.8">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+
+		<copy todir="${classes_dir}" overwrite="true">
+			<fileset file="${nlbuildroot}/*.properties" />
+		</copy>
+
+		<jar destfile="${build_dir}/transrightschecker.jar" basedir="${classes_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+	</target>
+
+
+	<target name="package" description="Builds each plugin module">
+		<mkdir dir="${package_dir}" />
+
+		<copy todir="${package_dir}" overwrite="true">
+			<fileset file="${build_dir}/transrightschecker.obf.jar" />
+			<fileset file="${xlib_dir}/jar/rmjavasdk/*.jar" />
+			<fileset file="${xlib_dir}/jar/jaxb/*.jar" />
+		</copy>
+		
+		<move file="${package_dir}/transrightschecker.obf.jar" tofile="${package_dir}/transrightschecker.jar"/>
+
+		<copy todir="${package_dir}/" overwrite="true">
+			<fileset dir="${nlbuildroot}/conf/">
+			</fileset>
+		</copy>
+
+		<copy todir="${package_dir}/openaz" overwrite="true">
+			<fileset file="${xlib_dir}/jar/openaz/*.jar" />
+		</copy>
+
+		<zip destfile="${build_dir}/${dist_zip_file_name}" encoding="UTF-8">
+			<fileset dir="${build_dir}">
+				<include name="${package_name}/**" />
+			</fileset>
+		</zip>
+
+	</target>
+	
+	<target name="obfuscate" description="obfuscate the code">
+		<taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask">
+			<classpath>
+				<pathelement path="${xlib_dir}/jar/obfuscate/allatori.jar" />
+				<pathelement path="${xlib_dir}/jar/obfuscate/allatori-annotations.jar" />
+			</classpath>
+		</taskdef>
+		<allatori config="${nlbuildroot}/scripts/config.xml"/>
+	</target>
+
+</project>

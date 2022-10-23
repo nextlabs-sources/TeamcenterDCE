@@ -1,0 +1,81 @@
+<Action>
+	<Name>RIGHT_EXECUTE_WORKFLOW</Name>
+	<DisplayName>Execute Workflow Protection</DisplayName>
+	<ShortName>EW</ShortName>
+	<Category>Rights</Category>
+</Action>
+<Action>
+	<Name>RIGHT_EXECUTE_DOWNLOAD</Name>
+	<DisplayName>Execute Download</DisplayName>
+	<ShortName>ED</ShortName>
+	<Category>Rights</Category>
+</Action>
+<Action>
+	<Name>RIGHT_EXECUTE_REMOVEPROTECTION</Name>
+	<DisplayName>Execute Remove Protection</DisplayName>
+	<ShortName>RP</ShortName>
+	<Category>Rights</Category>
+</Action>
+<Action>
+	<Name>TCDRM_CONFIGURATION</Name>
+	<DisplayName>Query Configuration</DisplayName>
+	<ShortName>QC</ShortName>
+	<Category>TeamcenterDCE</Category>
+</Action>
+
+
+<Obligation>
+	<DisplayName>Teamcenter Integrated EDRM</DisplayName>
+	<RunAt>PEP</RunAt>
+	<Name>TCDRM</Name>
+	<Arguments>
+		<Argument usereditable="false">
+			<Name>Tagging</Name>
+			<!-- Obsoleted tagging mode from 3.0
+			<Value>User-Defined</Value>
+			<Value>Specific-Property</Value>
+			<Value default="true">System-Properties</Value>
+			-->
+			<Value default="true">Preference-Defined</Value>
+		</Argument>
+		<!-- Obsoleted in 3.0
+		<Argument usereditable="true">
+			<Name>Name</Name>
+		</Argument>
+		<Argument usereditable="true">
+			<Name>Value</Name>
+		</Argument>
+		<Argument usereditable="false" hidden="true">
+			<Name>Mode</Name>
+			<Value default="true">Overwrite</Value>
+		</Argument>
+		-->
+	</Arguments>
+</Obligation>
+<Obligation>
+	<DisplayName>Teamcenter Integrated EDRM – Tag Configuration</DisplayName>
+	<RunAt>PEP</RunAt>
+	<Name>TCDRM_TAGCONFIG</Name>
+	<Arguments>
+		<Argument usereditable="true">
+			<Name>TagKey</Name>
+		</Argument>
+		<!--
+			ValueList format is valName1;valName2
+			values are separated by semi-comma(;)
+		-->
+		<Argument usereditable="true">
+			<Name>ValueList</Name>
+		</Argument>
+	</Arguments>
+</Obligation>
+<Obligation>
+	<DisplayName>Teamcenter Integrated EDRM – Skip NextLabs Protection</DisplayName>
+	<RunAt>PEP</RunAt>
+	<Name>TCDRM_SKIP_PROTECTION</Name>
+</Obligation>
+<Obligation>
+	<DisplayName>Teamcenter Integrated EDRM - Remove Protection</DisplayName>
+	<RunAt>PEP</RunAt>
+	<Name>TCDRM_REMOVEPROTECTION</Name>
+</Obligation>

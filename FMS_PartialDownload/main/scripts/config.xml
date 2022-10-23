@@ -1,0 +1,39 @@
+<config>
+	<jars>
+		<jar in="./../build/com.nextlabs.teamcenter.fms.jar" out="./../build/com.nextlabs.teamcenter.fms.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="./../build/com.teamcenter.fms.jar" />
+		<jar name="./../xlib/jar/commonspool/commons-pool2-2.5.0.jar" />
+		<!-- <jar name="./../xlib/jar/log4j/log4j-1.2.17.jar" />  -->
+		<jar name="./../xlib/jar/rmjavasdk/*.jar" />
+		<jar name="./../xlib/jar/jaxb-ri/*.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.teamcenter.fms.decrypt.segment.AbstractNextLabsDecryptingInputStream">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.teamcenter.fms.decrypt.segment.client.NextLabsDecryptingInputStream">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.teamcenter.fms.decrypt.segment.server.NextLabsDecryptingInputStream">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.teamcenter.fms.configuration.NXLPropertiesFile" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.teamcenter.fms.configuration.NXLPropertiesFile" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<preferences version="10.0">
+  <category name="Active Workspace">
+    <category_description></category_description>
+    <preference name="AWC_StartupPreferences" type="String" array="true" disabled="false" protectionScope="Site" envEnabled="false">
+      <preference_description>Defines the list of preferences to be retrieved at startup by the Active Workspace client from the Teamcenter server.
+Each entry in the list is a valid Teamcenter preference name.</preference_description>
+      <context name="Teamcenter">
+        <value>NXL_Evaluation_Attributes</value>
+        <value>NXL_PDPHOST_SERVERAPP</value>
+        <value>NXL_PDP_DEFAULT_ACTION</value>
+        <value>NXL_PDP_DEFAULT_MESSAGE</value>
+		<value>NXL_Relation_Filter</value>
+      </context>
+    </preference>
+  </category>
+</preferences>

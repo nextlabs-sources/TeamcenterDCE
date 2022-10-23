@@ -1,0 +1,183 @@
+# Makefile to compile code and build installers.
+
+
+#
+# Check for errors
+#
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error NLEXTERNALDIR undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error NLEXTERNALDIR2 undefined.)
+endif
+
+ifeq ($(BUILDTYPE),)
+  $(error  BUILDTYPE undefined.)
+endif
+
+ifeq ($(SKYDRM_SDK_ROOT),)
+  $(error  SKYDRM_SDK_ROOT undefined.)
+endif
+
+#
+# Variables
+#
+REG_MSBuildToolsPath=$(shell reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\14.0" /v MSBuildToolsPath)
+MSBUILD_DIR=$(subst \,/,$(wordlist 4,$(words $(REG_MSBuildToolsPath)), $(REG_MSBuildToolsPath)))
+MSBUILD_EXE="$(MSBUILD_DIR)msbuild.exe"
+MSBUILD2019_EXE="C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/MSBuild/Current/Bin/MSBUILD.EXE"
+
+MSBUILD_FLAGS=/t:build /v:q /fl /flp:Verbosity=minimal /p:VER_MAJOR=$(VERSION_MAJOR) /p:VER_MINOR=$(VERSION_MINOR) /p:VER_MAINT=$(VERSION_MAINTENANCE) /p:VER_PATCH=$(VERSION_PATCH) /p:VER_BUILD=$(BUILD_NUMBER) /p:CONFIG_TYPE=$(CONFIG_TYPE) /p:VER_COPYRIGHT_YEAR=$(VERSION_COPYRIGHT_YEAR)
+BUILD_LOGFILE=msbuild.log
+
+
+
+$(info --------------------------------------------------------------------------)
+$(info NLPROJECTROOT=$(NLPROJECTROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info REG_MSBuildToolsPath=$(REG_MSBuildToolsPath))
+$(info MSBUILD_DIR=$(MSBUILD_DIR))
+$(info MSBUILD_EXE=$(MSBUILD_EXE))
+$(info MSBUILD2019_EXE=$(MSBUILD2019_EXE))
+$(info MSBUILD_FLAGS=$(MSBUILD_FLAGS))
+$(info VCINSTALLDIR=$(VCINSTALLDIR))
+$(info SKYDRM_SDK_ROOT=$(SKYDRM_SDK_ROOT))
+$(info ---------------------------------------------------------------------------)
+
+#define a multiple line variable as a function
+define compile_solution = 
+	@echo "================================================================================"
+	$(MSBUILD_EXE) /p:Configuration=$(2) /p:platform=$(3) /p:TC_VER=$(TC_VER) $(MSBUILD_FLAGS) $(1) ;	\
+	COMPILE_STATUS=$$? ;									\
+	if [ -f $(BUILD_LOGFILE) ] ; then						\
+		echo "[[DUMP BEGIN - $(BUILD_LOGFILE)]]" ;			\
+		cat $(BUILD_LOGFILE) ;								\
+		echo "[[DUMP END - $(BUILD_LOGFILE)]]" ;			\
+		rm -rf $(BUILD_LOGFILE);							\
+	else													\
+		echo "WARNING: Cannot find $(BUILD_LOGFILE)" ;		\
+	fi
+endef
+
+define compile_solution_2019 = 
+	@echo "================================================================================"
+	$(MSBUILD2019_EXE) /p:Configuration=$(2) /p:platform=$(3) /p:TC_VER=$(TC_VER) $(MSBUILD_FLAGS) $(1) ;	\
+	COMPILE_STATUS=$$? ;									\
+	if [ -f $(BUILD_LOGFILE) ] ; then						\
+		echo "[[DUMP BEGIN - $(BUILD_LOGFILE)]]" ;			\
+		cat $(BUILD_LOGFILE) ;								\
+		echo "[[DUMP END - $(BUILD_LOGFILE)]]" ;			\
+		rm -rf $(BUILD_LOGFILE);							\
+	else													\
+		echo "WARNING: Cannot find $(BUILD_LOGFILE)" ;		\
+	fi
+endef
+
+#
+# Targets
+#
+
+.PHONY: all
+all:compile
+
+.PHONY: compile
+ifeq ($(CADRMX_REPOSITORY),)
+compile:clean compile_rac11 compile_rac12 compile_rac13 compile_runners compile_nx64 sign_dlls
+else
+compile:clean compile_runners compile_nx64 sign_dlls
+endif
+	@echo "================================================================================"
+	ls -lR $(BUILDTYPE)
+
+.PHONY: compile_utils32
+compile_utils32:
+	$(call compile_solution,$(NLPROJECTROOT)/NxlUtils.sln,$(BUILDTYPE),Win32);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_utils64
+compile_utils64:
+	$(call compile_solution,$(NLPROJECTROOT)/NxlUtils.sln,$(BUILDTYPE),x64);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_rac10
+compile_rac10:TC_VER=10
+compile_rac10:compile_utils64
+	-rm -rf NxlAutoProtect/$(BUILDTYPE)/x64
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.RAC.sln,$(BUILDTYPE),x64);	\
+	mkdir -p $(BUILDTYPE)/x64/tc10;	\
+	mv -f $(BUILDTYPE)/x64/NxlAutoProtect.* $(BUILDTYPE)/x64/tc10;	\
+	mv -f $(BUILDTYPE)/x64/NxlSCFIntegration.* $(BUILDTYPE)/x64/tc10;	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_rac11
+compile_rac11:TC_VER=11
+compile_rac11:compile_utils64
+	-rm -rf NxlAutoProtect/$(BUILDTYPE)/x64
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.RAC.sln,$(BUILDTYPE),x64);	\
+	mkdir -p $(BUILDTYPE)/x64/tc11;	\
+	mv -f $(BUILDTYPE)/x64/NxlAutoProtect.* $(BUILDTYPE)/x64/tc11;	\
+	mv -f $(BUILDTYPE)/x64/NxlSCFIntegration.* $(BUILDTYPE)/x64/tc11;	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_rac12
+compile_rac12:TC_VER=12.1
+compile_rac12:compile_utils64
+	-rm -rf NxlAutoProtect/$(BUILDTYPE)/x64
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.RAC.sln,$(BUILDTYPE),x64);	\
+	mkdir -p $(BUILDTYPE)/x64/tc12;	\
+	mv -f $(BUILDTYPE)/x64/NxlAutoProtect.* $(BUILDTYPE)/x64/tc12;	\
+	mv -f $(BUILDTYPE)/x64/NxlSCFIntegration.* $(BUILDTYPE)/x64/tc12;	\
+	exit $$COMPILE_STATUS
+	
+.PHONY: compile_rac13
+compile_rac13:TC_VER=13.2
+compile_rac13:compile_utils64
+	-rm -rf NxlAutoProtect/$(BUILDTYPE)/x64
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.RAC.sln,$(BUILDTYPE),x64);	\
+	mkdir -p $(BUILDTYPE)/x64/tc13;	\
+	mv -f $(BUILDTYPE)/x64/NxlAutoProtect.* $(BUILDTYPE)/x64/tc13;	\
+	mv -f $(BUILDTYPE)/x64/NxlSCFIntegration.* $(BUILDTYPE)/x64/tc13;	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_fcc32
+compile_fcc32:compile_utils32
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.FCC.sln,$(BUILDTYPE),Win32);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_fcc64
+compile_fcc64:compile_utils64
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.FCC.sln,$(BUILDTYPE),x64);		\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_runners
+compile_runners:compile_utils32
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.Runners.sln,$(BUILDTYPE),Win32);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_nx32
+compile_nx32:compile_utils32
+	$(call compile_solution,$(NLPROJECTROOT)/Teamcenter.NX.sln,$(BUILDTYPE),Win32);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: compile_nx64
+compile_nx64:compile_utils64
+	$(call compile_solution_2019,$(NLPROJECTROOT)/Teamcenter.NX.sln,$(BUILDTYPE),x64);	\
+	exit $$COMPILE_STATUS;
+
+.PHONY: sign_dlls
+sign_dlls:compile_runners
+	@echo "Signing nxlrunner.exe for RPM with NextLabs cert...."
+	cd "$(NLPROJECTROOT)/Release/Win32" && "$(CADRMX_COMMON_DIR)/Build/signModulesByServer256Only.bat"
+
+
+.PHONY: clean
+clean:
+	-rm -rf Release Debug
+

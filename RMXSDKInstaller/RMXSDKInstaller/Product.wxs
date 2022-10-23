@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Product Version -->
+  <?define ProductVersion="!(bind.FileVersion.CADRMXLib.dll)"  ?> 
+
+  <!-- Fixed upgrade code -->
+  <?define UpgradeCode= "{CEA565F3-A258-4534-A275-23B5CB6DABCB}"?>
+
+  <!-- Provide Main Product -->
+  <Product Id="*"
+           Name="!(loc.ProductName)"
+           Language="!(loc.Language)"
+           Version="$(var.ProductVersion)"
+           Manufacturer="!(loc.Company)"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <!-- Provide Package Details -->
+    <Package InstallerVersion="200"
+             InstallPrivileges="elevated"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="x64"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"
+             />
+    <!-- Downgrade Error Message -->
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Prefer include .cab file into .msi file -->
+    <MediaTemplate EmbedCab="yes" />
+
+     <Icon Id="app.ico" SourceFile="$(var.ProjectDir)\Resources\app.ico"/> 
+    <!-- This icon will show up in Add/Remove (Control Panel)-->
+     <Property Id="ARPPRODUCTICON">app.ico</Property>
+    <!-- Help support website in Add/Remove program -->
+    <Property Id="ARPURLINFOABOUT">https://www.nextlabs.com/services/support/</Property>
+    
+    <!-- Add Installer UI -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_CustomizeInstallDir"/>
+
+    <!--<UIRef Id="WixUI_Minimal" />-->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Resources\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Resources\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Resources\Banner.bmp" />
+    
+    <!-- Define components, files, ... -->
+    <Feature Id="ProductFeature" Title="CADRMXSDK" Level="1">
+
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="AutoHarvestComponents" />
+
+    </Feature>
+    
+  </Product>
+</Wix>

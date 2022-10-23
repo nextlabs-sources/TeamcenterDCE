@@ -1,0 +1,6 @@
+~ Command `ProCmdModelEraseNotDisp`;
+~ Command `ProCmdMirrorPart`;
+~ Move `main_dlg_cur` `proe_win` 9 1374 536 16777216 0 1564 834 1920 1080 505050;
+~ Update `mirror` `NewNameInput` `MIrrorP1`;
+~ Activate `mirror` `OkBtn`;
+~ Command `XTest_EndCase`;

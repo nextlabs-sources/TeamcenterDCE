@@ -1,0 +1,81 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build_xlib.properties" />
+	
+	<!-- Global properties -->
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+
+  <fail message="skydrmsdk_dir is not set" unless="skydrmsdk_dir" />
+	<fail message="skydrmsdk_dir is empty">
+		<condition>
+			<equals arg1="${skydrmsdk_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+  
+	<fail message="skydrm_sdk_zip_file is not set" unless="skydrm_sdk_zip_file" />
+	<fail message="skydrm_sdk_zip_file is empty">
+		<condition>
+			<equals arg1="${skydrm_sdk_zip_file}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${skydrm_sdk_zip_file}" type="file" property="local.skydrm_sdk_zip_file_exists" />
+	<fail message="skydrm_sdk_zip_file directory does not exist - ${skydrm_sdk_zip_file}" unless="local.skydrm_sdk_zip_file_exists" />
+	
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_skydrm_sdk" />
+
+	<target name="prepare_skydrm_sdk" depends="check_overwrite" if="overwrite_required" description="Unzip and grab skydrm sdk">
+		<mkdir dir="${skydrmsdk_dir}" />
+		
+		<!--SkyDRM SDK-->
+		<unzip src="${skydrm_sdk_zip_file}" dest="${skydrmsdk_dir}" overwrite="yes">
+			<patternset>
+        <include name="install/build/data/bin/"/>
+        <include name="install/build/data/include/"/>
+        <include name="install/build/data/redist/"/>
+			</patternset>
+		</unzip>
+    <unzip src="${skydrmsdk_dir}/install/build/data/redist/SDKLib_redist_x64.zip" dest="${skydrmsdk_dir}/install/build/data/redist/SDKLib_redist_x64" overwrite="yes" />
+    <unzip src="${skydrmsdk_dir}/install/build/data/redist/SDKLib_redist_x86.zip" dest="${skydrmsdk_dir}/install/build/data/redist/SDKLib_redist_x86" overwrite="yes" />
+	</target>
+	
+  <target name="check_overwrite" description="Check if we need to unzip skydrm sdk">
+	<condition property="overwrite_required">
+		<and>
+			<!-- Checks if Downloadstatusvariable variable is true -->
+			<istrue value="${skydrm_sdk_overwrite}"/>
+		</and>
+	</condition>
+  </target>
+  
+	<target name="clean">
+		<delete dir="${skydrmsdk_dir}" />
+	</target>
+</project>

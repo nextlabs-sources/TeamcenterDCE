@@ -1,0 +1,25 @@
+Prerequisites
+================
+1. Install Creo Parametric(Optional)
+2. Install SkyDRM Desktop and client SDK(Optional)
+3. Install Visual Studio 2012 and 2015
+
+Build
+================
+1. Set environment variables 
+* SKYDRM_SDK_ROOT: <SkyRMC Client SDK Install Dir>
+
+2. Build CreoIntegration.sln in Visual Studio 2015
+* CreoRMX.vcxproj: A Creo plugin for Creo 3 based on otk cpp toolkit.  Compiles with Visual Studio 2012.
+* CreoRMX4.vcxproj: A Creo plugin for Creo 4 based on otk cpp toolkit.  Compiles with Visual Studio 2015.
+* LibRMX.vcxproj: A wrapper library for SkyDRM Client SDK. Exposes C-syle interfaces for binary compatibility support bewteen different compiler. Compiles with Visual Studio 2015.
+* CreoRMXUnitTest.vcxproj: Unit test project for LibRMX interfaces. 
+* rmxutility.vcxproj: A command line utility to access and manage the SkyDRM.
+* CreoRMXTestFwk3.vcxproj: Automation framework for RMX in Creo 3
+* CreoRMXTestFwk4.vcxproj: Automation framework for RMX in Creo 4
+
+How to use
+================
+1. Open the <creo_loadpoint>\<datecode>\Common Files\text\config.pro and add below line
+creotkdat $CREO_RMX_ROOT\Creo 3.0\creotk.dat
+2. Launch Creo Parametric, Check Tools->Auxiliary Application->RMX for Creo Parametric

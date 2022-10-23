@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\CreoRMX\OtkXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFwkInitializer.cpp" />
+    <ClCompile Include="TestFwk.cpp" />
+    <ClCompile Include="Test_Save.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CADRMXCommon\RMXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CADRMXCommon\PathEx.cpp" />
+    <ClCompile Include="Test_Export.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_Misc.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CreoRMX\OtkXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TestFwk.h" />
+    <ClInclude Include="TestCaseInitializer.h" />
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXLogger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\SysErrorMessage.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\PathEx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\app\creotk_3.dat" />
+    <None Include="..\app\creotk_4.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="..\app\text\msg_user.txt" />
+    <Text Include="..\app\scripts\Test_MirrorPart.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_2D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_Image.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_3D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SaveAs.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_Save.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_Backup.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_Export_CreoView.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportDrw.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SaveAsAsm.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SelNonRPMDir.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SelRPMDir.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{700ad147-9935-4a75-90e5-f2326a0b56b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestCase">
+      <UniqueIdentifier>{3a0c9699-7b60-4ffa-af98-f31ec9ac3939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{401d3a0d-5e84-477f-b1f3-68f30bb934ee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

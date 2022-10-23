@@ -1,0 +1,10 @@
+~ Command `ProCmdModelSaveAs`; 
+~ Command `XTest_SelNonRPMDir`;
+~ Update `file_saveas` `Inputname` `saveas_nonrpm`;
+~ Activate `file_saveas` `OK`;
+~ Command `ProCmdModelSaveAs`; 
+~ Command `XTest_SelRPMDir`;
+~ Update `file_saveas` `Inputname` `saveas_rpm`;
+~ Activate `file_saveas` `OK`;
+~ Activate `UI Message Dialog` `ok`;
+~ Command `XTest_EndCase`;

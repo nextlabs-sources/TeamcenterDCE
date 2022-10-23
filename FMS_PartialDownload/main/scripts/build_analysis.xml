@@ -1,0 +1,61 @@
+<project name="build_analysis" 
+	default="analyse" 
+	basedir="." 
+	xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors"
+	xmlns:sonar="antlib:org.sonar.ant">
+		
+	<property file="build.properties" />
+
+	<!-- Define the SonarQube global properties (the most usual way is to pass these properties via the command line) -->
+	<!-- <property name="sonar.host.url" value="http://sgvdi-5.nextlabs.com:9000" /> -->
+	<property name="sonar.host.url" value="http://nxt-build10.nextlabs.com:9000/" />
+	
+	<!-- Define the SonarQube project properties -->
+	<property name="sonar.projectKey" value="TC-FMS_PartialDownload" />
+	<property name="sonar.projectName" value="TC-FMS_PartialDownload" />
+	<property name="sonar.projectVersion" value="13.3" />
+	<property name="sonar.projectBaseDir" value="${nlbuildroot}" />
+	<property name="sonar.sources" value="${nlbuildroot}/src" />
+	<property name="sonar.java.binaries" value="${nlbuildroot}/build" />
+	<property name="sonar.java.libraries" value="${nlbuildroot}/xlib/jar/**.jar" />
+	<!--<property name="sonar.login" value="51375b1e8ed94973bfdc0cee1bf06c6363c44e96" />-->
+	<property name="sonar.login" value="4fea37f835291b2746103835936cb2afd6614765" />
+	<property name="sonar.dependencyCheck.htmlReportPath" value="${nlbuildroot}/reports/dependency-check-report.html" />
+	<property name="sonar.dependencyCheck.jsonReportPath" value="${nlbuildroot}/reports/dependency-check-report.json" />
+	
+	<!-- Set the value to the installation directory's path -->
+	<!--<property name="dependency-check.home" value="C:/build_libs/dependency_check_ant"/>-->
+	<property name="dependency-check.home" value="${nlexternaldir}/sonarqube-ant-dep-checker"/>
+	<path id="dependency-check.path">
+	   <pathelement location="${dependency-check.home}/dependency-check-ant.jar"/>
+	    <fileset dir="${dependency-check.home}/lib">
+	        <include name="*.jar"/>
+	    </fileset>
+	</path>
+	
+	<taskdef resource="dependency-check-taskdefs.properties">
+	   <classpath refid="dependency-check.path" />
+	</taskdef>
+	
+	<!--  Target -->
+	<target name="analyse" description="Project Code/Dependencies Analysis" depends="dependency-check, sonar" />
+	
+	<target name="dependency-check" description="Dependency-Check Analysis" if="${execute_dependency_checker}">
+	    <dependency-check projectname="TC-FMS_PartialDownload" reportoutputdirectory="${nlbuildroot}/reports" reportformat="ALL">
+	        <fileset dir="${nlbuildroot}/xlib/jar">
+	            <include name="**/**.jar"/>
+	        </fileset>
+	    </dependency-check>
+	</target>
+	
+	<!-- Define SonarScanner for Ant Target -->
+	<target name="sonar" depends="dependency-check" if="${execute_static_code_analysis}">
+	    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+	        <classpath path="${ant.library.dir}" />
+	    </taskdef>
+	 
+	    <!-- Execute SonarScanner for Ant Analysis -->
+	    <sonar:sonar />
+	</target>
+	
+</project>

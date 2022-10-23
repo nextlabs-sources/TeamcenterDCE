@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke custom application build script
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export NLPROFSERVDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildDev
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildDev
+
+#
+# Compile
+#
+
+LOG_FILE=buildDev.log
+source ../../CADRMXCommon/setRPMSDKEnv
+
+(
+# Prepare environment
+./configure || exit $?
+source build.config
+
+OSVERSION=`uname`
+
+# Compile code and build installers
+if [ "$OSVERSION" == "Linux" ]; then
+	make -f Build/Makefile.compile.linux || exit $?
+else
+	$ANT -f Build/build_xlib.xml || exit $?
+	make -f Build/Makefile.compile || exit $?
+fi
+
+# Publish intstallers and artifacts
+make -f Build/Makefile.publish all
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

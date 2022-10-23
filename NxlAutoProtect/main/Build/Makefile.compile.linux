@@ -1,0 +1,125 @@
+# Makefile to compile code and build installers.
+
+
+#
+# Check for errors
+#
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error NLEXTERNALDIR undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error NLEXTERNALDIR2 undefined.)
+endif
+
+ifeq ($(BUILDTYPE),)
+  $(error  BUILDTYPE undefined.)
+endif
+
+#
+# Variables
+#
+
+JSDK_LINUX=$(NLEXTERNALDIR2)/j2sdk/jdk1.7.0_80/linux-x64
+
+
+
+$(info --------------------------------------------------------------------------)
+$(info NLPROJECTROOT=$(NLPROJECTROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info JSDK_LINUX=$(JSDK_LINUX))
+$(info ---------------------------------------------------------------------------)
+
+#
+# Targets
+#
+
+.PHONY: all
+all:compile
+
+.PHONY: compile
+compile:clean compile_nxlutils compile_tclib compile_test compile_scf_tcserver compile_scf_nx
+	@echo "============================COMPILE LINUX DONE!================================="
+	ls -l $(BUILDTYPE)/linux/* NxlUtils.Test/*.exe
+
+.PHONY: compile_mkdir
+compile_mkdir:
+	@if [ ! -d $(BUILDTYPE)/linux ]; then	\
+		mkdir -p $(BUILDTYPE)/linux ;		\
+	fi
+	-rm $(BUILDTYPE)/linux/*
+
+.PHONY: compile_tclib
+compile_tclib:compile_mkdir compile_nxlutils
+	@echo "============================Compiling NxlAutoProtect============================"
+	$(eval PROJECTNAME:=NxlAutoProtect)
+	$(eval OUTPUTFILE=$(PROJECTNAME).so)
+	export PROJECTNAME=$(PROJECTNAME);export OUTPUTFILE=$(OUTPUTFILE);export JNISDK=$(JSDK_LINUX);	\
+	cd $(NLPROJECTROOT)/$(PROJECTNAME);	\
+	export TC_VER=11;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)11.so;	\
+	export TC_VER=12.2;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)12.so;	\
+	export TC_VER=13.2;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)13.so;	\
+
+.PHONY: compile_scf_tcserver
+compile_scf_tcserver:compile_tclib
+	@echo "============================Compiling NxlSCFIntegration============================"
+	$(eval PROJECTNAME:=NxlSCFIntegration)
+	$(eval OUTPUTFILE=$(PROJECTNAME).so)
+	export PROJECTNAME=$(PROJECTNAME);export OUTPUTFILE=$(OUTPUTFILE);export JNISDK=$(JSDK_LINUX);	\
+	cd $(NLPROJECTROOT)/$(PROJECTNAME);	\
+	export TC_VER=11;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)11.so;	\
+	export TC_VER=12.2;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)12.so;	\
+	export TC_VER=13.2;make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/$(PROJECTNAME)13.so;	\
+	
+.PHONY: compile_scf_nx
+compile_scf_nx:compile_mkdir compile_nxlutils
+	@echo "============================Compiling NxlTcImportIntegration============================"
+	$(eval PROJECTNAME:=NxlTcImportIntegration)
+	$(eval OUTPUTFILE=$(PROJECTNAME).so)
+	export PROJECTNAME=$(PROJECTNAME);export OUTPUTFILE=$(OUTPUTFILE);export JNISDK=$(JSDK_LINUX); export NX_VERSION=1953;	\
+	cd $(NLPROJECTROOT)/$(PROJECTNAME);make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/;	\
+
+.PHONY: compile_nxlutils
+compile_nxlutils:compile_mkdir
+	@echo "============================Compiling NxlUtils=================================="
+	$(eval PROJECTNAME:=NxlUtils)
+	$(eval OUTPUTFILE=lib$(PROJECTNAME).so)
+	export PROJECTNAME=$(PROJECTNAME);export OUTPUTFILE=$(OUTPUTFILE);export JNISDK=$(JSDK_LINUX);	\
+	cd $(NLPROJECTROOT)/$(PROJECTNAME);make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/;	\
+	
+
+.PHONY: compile_test
+compile_test:compile_nxlutils
+	@echo "============================Compiling NxlUtils.Test============================="
+	$(eval PROJECTNAME:=NxlUtils.Test)
+	$(eval OUTPUTFILE=$(PROJECTNAME).exe)
+	export PROJECTNAME=$(PROJECTNAME);export OUTPUTFILE=$(OUTPUTFILE);export JNISDK=$(JSDK_LINUX);	\
+	cd $(NLPROJECTROOT)/$(PROJECTNAME);make -f makefile.linux;cp -pf $(OUTPUTFILE) ../$(BUILDTYPE)/linux/
+
+.PHONY: deploy
+deploy:compile_tclib
+	@if [ ! -d "/usr/lib/nextlabs/TeamcenterDCE" ]; then	\
+		mkdir -p /usr/lib/nextlabs/TeamcenterDCE;		\
+	fi
+	cp -pfv $(BUILDTYPE)/linux/libNxlUtils.so /usr/Siemens/Teamcenter10/lib/
+	cp -pfv $(BUILDTYPE)/linux/NxlAutoProtect10.so /usr/Siemens/Teamcenter10/lib/NxlAutoProtect.so
+	cp -pfv /usr/lib/nextlabs/PolicyAdapterSDK/jar/nlJavaSDK2.jar /usr/Siemens/Teamcenter10/lib/
+	ls -l /usr/Siemens/Teamcenter10/lib/*Nxl* /usr/Siemens/Teamcenter10/lib/*.jar
+
+.PHONY: test
+test:compile_test
+	-rm $(NLPROJECTROOT)/NxlUtils.Test/*.log
+	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(JSDK_LINUX)/jre/lib/amd64/server:$(BUILDTYPE)/linux;	\
+	$(NLPROJECTROOT)/NxlUtils.Test/NxlUtils.Test.exe
+
+.PHONY: clean
+clean:
+	-mkdir tmp
+	-rm -rf NxlUtils/*.so NxlAutoProtect/*.so
+

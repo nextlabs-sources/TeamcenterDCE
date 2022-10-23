@@ -1,0 +1,143 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_SWDOCUMENT          REGISTRY                "SwDocument.rgs"
+
+IDR_DOCVIEW             REGISTRY                "DocView.rgs"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TOOLBAR_CMD         BITMAP                  "Resources\\icons\\toolbar_32.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_CMD_GROUP_TITLE     "NextLabs RMX"
+    IDS_CMD_GROUP_HINT      "NextLabs Rights Management eXtension"
+    IDS_ABOUT_TEXT          "NexLabs Rights Management eXtension for SolidWorks\nVersion %s (Build %s)\n\n@%s NextLabs Inc. All rights reserved."
+    IDS_DIALOG_TITLE        "NextLabs RMX"
+    IDS_ERROR_DENY_PROTECT_NEW "Save New "
+    IDS_STRING231           "Do you want to save modified documents and continue?"
+    IDS_CMD_PROTECT_TIP     "Protect"
+    IDS_CMD_PROTECTREFS_TIP "Protect with Refs"
+    IDS_CMD_VIEWINFO_TIP    "View Info"
+    IDS_CMD_ABOUT_TIP       "About"
+    IDS_CMD_PROTECT_HINT    "Protect current document"
+    IDS_CMD_PROTECTREFS_HINT "Protect with references"
+    IDS_CMD_VIEWINFO_HINT   "View protect information"
+    IDS_CMD_ABOUT_HINT      "About RMX"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERROR_CANNOT_PROTECT 
+                            "Cannot open the protected file %s\nYou need to set the folder as secured folder before opening the file."
+    IDS_WARN_SAVE_CHANGE_BEFORE_PROTECT 
+                            "Document(s) modified. Do you want to save all changes and continue?"
+    IDS_ERROR_DENY_EDIT_READONLY 
+                            "You don't have Edit permission to perform this action. Changes made to the following read-only file cannot be saved:\r\n"
+    IDS_ERROR_DENY_EDIT     "Operation Denied.\r\nYou do not have 'Edit' permission to perform this action on the following file(s):\r\n"
+    IDS_ERROR_DENY_EDIT_ON_MODIFIED 
+                            "Operation Denied.\r\nYou are not allowed to perform this action because the following files(s) with no 'EDIT' permission were modified :\r\n"
+    IDS_ERROR_DENY_ADDIN    "Operation Denied. \nOne or more protected document(or references) opened in SolidWorks session memory. Please close them and try again."
+    IDS_ERROR_DENY_EMAIL    "Operation Denied.\nYou are not allowed to directly send the object if it is protected or any dependent object is protected.\nPlease Save a Copy of object with RMX and attach to email."
+    IDS_ERROR_DENY_PUBLISH_EDWG 
+                            "Operation Denied.\nYou are not allowed to perform ""Publish to eDrawings"" operation if a file or any of its references are protected.\n"
+    IDS_ERROR_DENY_SAVEAS   "Operation Denied.\r\nYou do not have 'Save As' permission to perform this action on the following file(s):\r\n"
+    IDS_ERROR_DENY_PRINT    "Operation Denied.\r\nYou do not have 'Print' permission to perform this action on the following file(s):\r\n"
+    IDS_ERROR_DENY_VIEW     "Operation Denied.\r\nYou do not have 'View' permission to perform this action on the following file(s):\r\n"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_SldWorksRMX         REGISTRY                "SldWorksRMX.rgs"
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""SldWorksRMX.tlb""\r\n"
+    "#include ""versioninfo.rc""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "SldWorksRMX.tlb"
+#include "versioninfo.rc"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

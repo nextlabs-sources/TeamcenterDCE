@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke release build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildRelease
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#	source setEnv
+#	./buildRelease
+#
+# DEBUG:
+#	To debug ANT problems, add -v option to an ANT command. For example:
+#		$ANT -v -f scripts/build_xlib.xml
+
+export ANT_HOME=$NLEXTERNALDIR/apache-ant/apache-ant-1.9.4
+
+source ../../version_control
+
+ANT=$ANT_HOME/bin/ant
+LOG_FILE=buildRelease.log
+BUILD_MANIFEST_FILE=${WORKSPACE}/build.manifest
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ "X${JENKINS_HOME}" != "X" -a -f ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml
+fi
+
+# Prepare environment
+./configure --type=release || exit $?
+source build.config
+
+# Prepare dependencies
+$ANT -f build/build_xlib.xml || exit $?
+
+# Compile code and build installers
+# export ANT_OPTS="-Xmx1024M -XX:PermSize=128m -XX:MaxPermSize=512m"
+export ANT_ARGS="-Dnlbuildroot=$NLBUILDROOT -Dnlexternaldir=$NLEXTERNALDIR -Dversion_str=$VERSION_STR -Dversion_build_short=$VERSION_BUILD_SHORT -Dbuild_date_long=$BUILD_DATE_LONG"
+$ANT -f build/build_compile.xml || exit $?
+
+# Create and publish build manifest
+build/createBuildManifest.pl $LOG_FILE > ${BUILD_MANIFEST_FILE} || exit $?
+$ANT -f build/build_publish.xml manifest || exit $?
+
+set +x
+
+echo
+echo
+echo "####################### BUILD MANIFEST CONTENTS ########################"
+cat ${BUILD_MANIFEST_FILE}
+echo "########################################################################"
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

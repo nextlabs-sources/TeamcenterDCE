@@ -1,0 +1,27 @@
+HKCR
+{
+	SldWorksRMX.SwDocument.1 = s 'SwDocument Class'
+	{
+		CLSID = s '{37C23E37-01C3-415B-8943-C92E68EE2361}'
+	}
+	SldWorksRMX.SwDocument = s 'SwDocument Class'
+	{
+		CLSID = s '{37C23E37-01C3-415B-8943-C92E68EE2361}'
+		CurVer = s 'SldWorksRMX.SwDocument.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {37C23E37-01C3-415B-8943-C92E68EE2361} = s 'SwDocument Class'
+		{
+			ProgID = s 'SldWorksRMX.SwDocument.1'
+			VersionIndependentProgID = s 'SldWorksRMX.SwDocument'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FB5E55C3-E5AB-4BE6-BCEB-A50BD9B8B555}'
+		}
+	}
+}

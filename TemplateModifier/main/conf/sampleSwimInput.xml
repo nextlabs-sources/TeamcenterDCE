@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NextLabsTemplateModifier>
+	<TcDataset typeName="SWAsm">
+		<TcDatasetReference name="AsmFile" />
+		<TcDatasetReference name="PNG" />
+	</TcDataset>
+	<TcDataset typeName="SWDrw">
+		<TcDatasetReference name="DrwFile" />
+		<TcDatasetReference name="PNG" />
+	</TcDataset>
+	<TcDataset typeName="SWPrt">
+		<TcDatasetReference name="PrtFile" />
+		<TcDatasetReference name="PNG" />
+	</TcDataset>
+</NextLabsTemplateModifier>

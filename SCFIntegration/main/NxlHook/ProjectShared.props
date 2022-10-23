@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <MADHOOK_API>$(NLEXTERNALDIR2)\mch\3.1.12\</MADHOOK_API>
+    <TC_API>$(NLEXTERNALDIR)\siemens\teamcenter11</TC_API>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MADHOOK_API)inc;$(TC_API)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <PreprocessorDefinitions>IPLIB=NxlHook;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MADHOOK_API)lib\free;$(TC_API)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;libbase_utils.lib;libsa.lib;libtc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libsa.dll;libbase_utils.dll;libtc.dll</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="MADHOOK_API">
+      <Value>$(MADHOOK_API)</Value>
+    </BuildMacro>
+    <BuildMacro Include="TC_API">
+      <Value>$(TC_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

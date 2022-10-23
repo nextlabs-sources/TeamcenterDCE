@@ -1,0 +1,84 @@
+# Makefile to compile code and build installers.
+
+
+#
+# Check for errors
+#
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error NLEXTERNALDIR undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error NLEXTERNALDIR2 undefined.)
+endif
+
+ifeq ($(BUILDTYPE),)
+  $(error  BUILDTYPE undefined.)
+endif
+
+#
+# Variables
+#
+REG_MSBuildToolsPath=$(shell reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /v MSBuildToolsPath)
+MSBUILD_DIR=$(subst \,/,$(word 4, $(REG_MSBuildToolsPath)))
+MSBUILD_EXE=$(MSBUILD_DIR)msbuild.exe
+
+MSBUILD_FLAGS=/t:build /v:q /fl /flp:Verbosity=minimal /p:VER_MAJOR=$(VERSION_MAJOR) /p:VER_MINOR=$(VERSION_MINOR) /p:VER_MAINT=$(VERSION_MAINTENANCE) /p:VER_PATCH=$(VERSION_PATCH) /p:VER_BUILD=$(BUILD_NUMBER) /p:CONFIG_TYPE=$(CONFIG_TYPE)
+BUILD_LOGFILE=msbuild.log
+
+
+
+$(info --------------------------------------------------------------------------)
+$(info NLPROJECTROOT=$(NLPROJECTROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info REG_MSBuildToolsPath=$(REG_MSBuildToolsPath))
+$(info MSBUILD_DIR=$(MSBUILD_DIR))
+$(info MSBUILD_EXE=$(MSBUILD_EXE))
+$(info MSBUILD_FLAGS=$(MSBUILD_FLAGS))
+$(info ---------------------------------------------------------------------------)
+
+#define a multiple line variable as a function
+define compile_solution = 
+	@echo "================================================================================"
+	$(MSBUILD_EXE) /p:Configuration=$(2) /p:platform=$(3) /p:TC_VER=$(TC_VER) $(MSBUILD_FLAGS) $(1) ;	\
+	COMPILE_STATUS=$$? ;									\
+	if [ -f $(BUILD_LOGFILE) ] ; then						\
+		echo "[[DUMP BEGIN - $(BUILD_LOGFILE)]]" ;			\
+		cat $(BUILD_LOGFILE) ;								\
+		echo "[[DUMP END - $(BUILD_LOGFILE)]]" ;			\
+		rm -rf $(BUILD_LOGFILE);							\
+	else													\
+		echo "WARNING: Cannot find $(BUILD_LOGFILE)" ;		\
+	fi
+endef
+
+#
+# Targets
+#
+
+.PHONY: all
+all:compile
+
+.PHONY: compile
+compile:clean compile_tc11
+	@echo "================================================================================"
+	ls -lR $(BUILDTYPE)
+
+.PHONY: compile_tc11
+compile_tc11:TC_VER=11
+compile_tc11:
+	$(call compile_solution,$(NLPROJECTROOT)/SCFIntegration.All.sln,$(BUILDTYPE),x64);	\
+	mkdir -p $(BUILDTYPE)/x64/tc11;	\
+	mv -f $(BUILDTYPE)/x64/*.* $(BUILDTYPE)/x64/tc11;	\
+	exit $$COMPILE_STATUS
+
+.PHONY: clean
+clean:
+	-rm -rf Release Debug
+

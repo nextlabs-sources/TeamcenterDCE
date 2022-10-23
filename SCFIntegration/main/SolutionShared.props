@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <JNISDK>$(NLEXTERNALDIR2)\j2sdk\jdk1.7.0_75</JNISDK>
+    <IS_64BITS>64</IS_64BITS>
+    <VER_MAJOR>4</VER_MAJOR>
+    <VER_MINOR>5</VER_MINOR>
+    <VER_MAINT>0</VER_MAINT>
+    <VER_PATCH>0</VER_PATCH>
+    <VER_BUILD>999</VER_BUILD>
+    <BuildType>Release</BuildType>
+    <CONFIG_TYPE>Debug</CONFIG_TYPE>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)\$(Platform)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(ProjectDir)$(Configuration)\$(Platform)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <CompileAs>CompileAsC</CompileAs>
+      <PreprocessorDefinitions>WIN$(PlatformArchitecture);WNT;TARGETFILENAME="$(TargetFileName)";FILE_VER="$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)-$(VER_BUILD)";PROJECT_NAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>VER_FILE=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_FILE_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";VER_PRODUCT=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_PRODUCT_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";STR_EN_COMPANY_NAME=\"Nextlabs, Inc.\";STR_EN_COPYRIGHT=\"Copyright (C) 2017\";STR_EN_ORIGINAL_NAME=\"$(TargetFileName)\";STR_EN_PRODUCT_NAME=\"Nextlabs DCE for Teamcenter\";STR_EN_FILE_DESCRIPTION=\"$(ProjectName) $(CONFIG_TYPE) build $(VER_BUILD)\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowProgress>true</ShowProgress>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="JNISDK">
+      <Value>$(JNISDK)</Value>
+    </BuildMacro>
+    <BuildMacro Include="IS_64BITS">
+      <Value>$(IS_64BITS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MAJOR">
+      <Value>$(VER_MAJOR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MINOR">
+      <Value>$(VER_MINOR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_MAINT">
+      <Value>$(VER_MAINT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_PATCH">
+      <Value>$(VER_PATCH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VER_BUILD">
+      <Value>$(VER_BUILD)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BuildType">
+      <Value>$(BuildType)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CONFIG_TYPE">
+      <Value>$(CONFIG_TYPE)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

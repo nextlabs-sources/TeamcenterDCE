@@ -1,0 +1,8 @@
+{
+    "name": "NXLOverlayKit",
+    "level": 5,
+    "modules": ["NXLOverlay"],
+    "gwtModuleDeps": [
+        "com.nextlabs.NXLOverlay.NXLOverlay"
+    ]
+}

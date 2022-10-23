@@ -1,0 +1,38 @@
+%CIRMXFileLoaded
+Rights-protected file opened: %0s.
+#
+#
+%CWRMXFileReload
+Warning: Need to retrieve the newly protected model from the disk: %0s.
+#
+#
+Protect
+Protect
+#
+#
+Protect current file
+Protect current file
+#
+#
+Protect With Dependencies
+Protect With Dependencies
+#
+#
+Protect current file and its dependencies
+Protect current file and its dependencies
+#
+#
+File Info
+File Info
+#
+#
+View infomation on protected file
+View infomation on protected file
+#
+#
+About
+About
+#
+#
+About NextLabs RMX for Creo
+About NextLabs RMX for Creo

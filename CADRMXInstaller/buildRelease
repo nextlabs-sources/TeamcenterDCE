@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke release build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildRelease
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#	source setEnv
+#	./buildRelease
+#
+# DEBUG:
+#	To debug ANT problems, add -v option to an ANT command. For example:
+#		$ANT -v -f scripts/build_xlib.xml
+
+LOG_FILE=buildRelease.log
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ "X${JENKINS_HOME}" != "X" -a -f ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml
+fi
+
+# Prepare environment
+./configure --type=release || exit $?
+source build.config
+
+OSVERSION=`uname`
+
+# Prepare dependencies
+$ANT -f Build/build_xlib.xml || exit $?
+
+# Compile code and build installers
+make -f Build/Makefile.compile || exit $?
+
+# Publish installers and artifacts
+$ANT -f Build/build_publish.xml || exit $?
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

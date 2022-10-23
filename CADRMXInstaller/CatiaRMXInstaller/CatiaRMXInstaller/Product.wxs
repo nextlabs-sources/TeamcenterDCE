@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Product Version -->
+  <?define ProductVersion="!(bind.FileVersion.CatiaRMX_x64.dll)"  ?>
+
+  <!-- Fixed upgrade code -->
+  <?define UpgradeCode= "{5DAD5988-6E4F-4172-B2C0-137C77FD1475}"?>
+
+  <!-- Provide Main Product -->
+  <Product Id="*"
+           Name="!(loc.ProductName)"
+           Language="!(loc.Language)"
+           Version="$(var.ProductVersion)"
+           Manufacturer="!(loc.Company)"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <!-- Provide Package Details -->
+    <Package InstallerVersion="200"
+             InstallPrivileges="elevated"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Platform="x64"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"
+             />
+    <!-- Downgrade Error Message -->
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Prefer include .cab file into .msi file -->
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="app.ico" SourceFile="$(var.ProjectDir)\Resources\app.ico"/>
+    <!-- This icon will show up in Add/Remove (Control Panel)-->
+    <Property Id="ARPPRODUCTICON">app.ico</Property>
+    <!-- Help support website in Add/Remove program -->
+    <Property Id="ARPURLINFOABOUT">https://www.nextlabs.com/services/support/</Property>
+
+    <!-- Add Installer UI -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="CATIA_INSTALLDIR" Value="CATIA_DIR" />
+    <Property Id="CATIA_INTEGRATION" Value="CATIA_INTEGRATION_DIR" />
+    
+    <UIRef Id="WixUI_CustomizeInstallDir"/>
+
+    <!--<UIRef Id="WixUI_Minimal" />-->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Resources\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Resources\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Resources\Banner.bmp" />
+
+	<!-- Evaluate registry if RMD is installed -->
+	<Property Id="ISRMDINSTALL">
+	  <RegistrySearch Id="SearchRMDReg" Root="HKLM" Key="SOFTWARE\NextLabs\SkyDRM" Type="raw" Name="InstallPath">
+	  </RegistrySearch>
+	</Property>
+
+	<Condition Message="This setup required NextLabs Rights Management Desktop (RMD) to be installed." >
+	  (ISRMDINSTALL) OR Installed
+	</Condition>
+
+    <!-- Define components, files, ... -->
+    <Feature Id="ProductFeature" Title="CatiaRMXInstaller" Level="1">
+
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="AutoHarvestComponents" />
+
+    </Feature>
+
+    <InstallExecuteSequence>
+      <Custom Action="SetDirInstall" After="InstallInitialize" />
+      <Custom Action='ActionInstall' After='InstallFiles'>NOT Installed</Custom>
+      <Custom Action='ActionRepair' After='InstallInitialize'>REINSTALL</Custom>
+      <Custom Action='ActionUninstall' After='InstallInitialize'>Installed and NOT REINSTALL</Custom>
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <Custom Action='FindCatiaDir' After='LaunchConditions'>NOT Installed</Custom>
+      <Custom Action='FindCatiaIntegrationDir' After='LaunchConditions'>NOT Installed</Custom>
+    </InstallUISequence>
+
+  </Product>
+</Wix>

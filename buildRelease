@@ -1,0 +1,151 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke release build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildRelease
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#	source setEnv
+#	./buildRelease
+#
+# DEBUG:
+#	To debug ANT problems, add -v option to an ANT command. For example:
+#		$ANT -v -f scripts/build_xlib.xml
+
+LOG_FILE=buildRelease.log
+
+source version_control
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ "X${JENKINS_HOME}" != "X" -a -f ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml
+fi
+
+# set -e to exit 1 if any command below return non-zero code
+set -e
+echo "Workspace Folder: ${WORKSPACE}"
+
+echo "Building Project : CADRMXCommon Project"
+cd ${WORKSPACE}/CADRMXCommon
+source setEnv
+./buildRelease
+
+echo "Building Project : AWC_OneStepCommands Project"
+cd ${WORKSPACE}/AWC_OneStepCommands/main
+source setEnv
+./buildRelease
+
+echo "Building Project : BatchProtect Project"
+cd ${WORKSPACE}/BatchProtect/main
+source setEnv
+./buildRelease
+
+echo "Building Project : Translator Project"
+cd ${WORKSPACE}/Translator/main
+source setEnv
+./buildRelease
+
+echo "Building Project : BBIntegration Project"
+cd ${WORKSPACE}/BBIntegration
+source setEnv
+./buildRelease
+
+echo "Building Project : BBPlugin Project"
+cd ${WORKSPACE}/BBPlugin
+source setEnv
+./buildRelease
+
+echo "Building Project : com.nextlabs.menuitem Project"
+cd ${WORKSPACE}/com.nextlabs.menuitem/main
+source setEnv
+./buildRelease
+
+echo "Building Project : FMSRMX Project"
+cd ${WORKSPACE}/FMSRMX/main
+source setEnv
+./buildRelease
+
+echo "Building Project : FMS_PartialDownload Project"
+cd ${WORKSPACE}/FMS_PartialDownload/main
+source setEnv
+./buildRelease
+
+echo "Building Project : RACRMX Project"
+cd ${WORKSPACE}/racrmx/main
+source setEnv
+./buildRelease
+
+echo "Building Project : NXLOverlay Project"
+cd ${WORKSPACE}/NXLOverlay
+source setEnv
+./buildRelease
+
+echo "Building Project : SCFIntegration Project"
+cd ${WORKSPACE}/SCFIntegration/main
+source setEnv
+./buildRelease
+
+echo "Building Project : TCLdifGenerator Project"
+cd ${WORKSPACE}/TCLdifGenerator
+source setEnv
+./buildRelease
+
+echo "Building Project : TemplateModifier Project"
+cd ${WORKSPACE}/TemplateModifier/main
+source setEnv
+./buildRelease
+
+echo "Building Project : ToNxlFile Project"
+cd ${WORKSPACE}/ToNxlFile/main
+source setEnv
+./buildRelease
+
+echo "Building Project : TranslatorRightsChecker Project"
+cd ${WORKSPACE}/TranslatorRightsChecker
+source setEnv
+./buildRelease
+
+# echo "Building Project : SldWorksIntegration Project"
+# cd ${WORKSPACE}/SldWorksIntegration
+# source setEnv
+# ./buildRelease 
+
+# echo "Building Project : CreoIntegration Project"
+# cd ${WORKSPACE}/CreoIntegration
+# source setEnv
+# ./buildRelease
+
+# echo "Building Project : AutoCADIntegration Project"
+# cd ${WORKSPACE}/AutoCADIntegration
+# source setEnv
+# ./buildRelease
+
+echo "Building Project : NxlAutoProtect Project"
+cd ${WORKSPACE}/NxlAutoProtect/main
+source setEnv
+./buildRelease
+
+# echo "Building Project : CADRMXInstaller Project"
+# cd ${WORKSPACE}/CADRMXInstaller
+# source setEnv
+# ./buildRelease
+
+echo "Building Project : RightsManagementExtension Project"
+cd ${WORKSPACE}/RightsManagementExtension/main
+source setEnv
+./buildRelease
+
+set +x
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

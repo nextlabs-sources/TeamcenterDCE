@@ -1,0 +1,32 @@
+{
+	"installation_mode": "install",
+	"install_dir": {
+		"windows": "C:\\PROGRA~1\\Nextlabs",
+		"linux": "/usr/Nextlabs"
+	},
+	"tc_root": "",
+	"tc_data": "",
+	"disp_root": "",
+	"creo_dir": "",
+	"ipem_dir": "",
+	"solidworks_dir": "",
+	"swim_dir": "",
+	"autocad_dir": "",
+	"catia_dir": "",
+	"bb_dir": "",
+	"solution_type":"Protection in Teamcenter volume",
+	"skydrm_router_url": "",
+	"skydrm_app_id": "",
+	"cc_host": "",
+	"cc_port": "443",
+	"cc_oauth2_https": true,
+	"cc_apiuser": "",
+	"cc_ignore_https_cert": true,
+	"jpc_remote_ip":"",
+	"jpc_eva_port": "58080",
+	"jpc_https": false,
+	"tc_user": "tcadmin",
+	"tcsoa_hostname": "http://localhost:8080/tc",
+	"certify_rmd": "1190",
+	"feature_list": []
+}

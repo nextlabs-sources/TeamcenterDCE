@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <NX_OPEN>$(NLEXTERNALDIR)\siemens\nx\ugopen</NX_OPEN>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(NX_OPEN);$(IncludePath)</IncludePath>
+    <LibraryPath>$(NX_OPEN);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>libufun.lib;libufun_cae.lib;libugopenint.lib;libugopenint_cae.lib;libnxopencpp.lib;libnxopencpp_pdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="NX_OPEN">
+      <Value>$(NX_OPEN)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

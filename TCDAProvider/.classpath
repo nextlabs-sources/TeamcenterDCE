@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaCommon_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaClient_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaCoreLoose_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaQueryLoose_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaStrongModel_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaCoreStrong_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/TcSoaQueryStrong_12000.1.0.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/httpclient-4.5.2.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/httpcore-4.4.4.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/commons-httpclient-contrib-3.1.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/commons-codec.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/resolver.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/xercesImpl.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/xml-apis.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/fscclient.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/fccclient.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/tcserverjavabinding.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/tcmemjavabinding.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/activation.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/jaxb-api.jar"/>
+    <classpathentry kind="var" path="TEAMCENTER_SERVICES_HOME/java/libs/jaxb-impl.jar"/>
+    <classpathentry kind="var" path="xlib/test_jar/*.jar"/>
+        <classpathentry kind="output" path="bin"/>
+ </classpath>
+        

@@ -1,0 +1,18 @@
+# Get the current dir of this batch file
+PROJROOT=$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+PROJROOT=`cygpath -m "$PROJROOT"`
+export CADRMX_COMMON_DIR=$PROJROOT
+export SKYDRM_SDK_ROOT=$PROJROOT/tmp_xlibs/skydrmsdk
+
+export SKYDRM_SDK_MAJOR_VER=10
+export SKYDRM_SDK_MINOR_VER=10
+export SKYDRM_SDK_BUILD_NUMBER=2234
+
+#RC or release
+export SKYDRM_SDK_RELEASE_TYPE=release
+
+#when SKYDRM_SDK_RELEASE_TYPE=release
+#SKYDRM_SDK_ZIP_FILE=${REPO_ROOT}/build/release_artifacts/Doom/SDK/${SKYDRM_SDK_MAJOR_VER}.${SKYDRM_SDK_MINOR_VER}/Windows/${SKYDRM_SDK_BUILD_NUMBER}/doom-SDK-${SKYDRM_SDK_MAJOR_VER}.${SKYDRM_SDK_MINOR_VER}.${SKYDRM_SDK_BUILD_NUMBER}-release-install.zip
+
+#when SKYDRM_SDK_RELEASE_TYPE=RC
+#SKYDRM_SDK_ZIP_FILE=${REPO_ROOT}/build/release_candidate/artifacts/Doom/SDK/${SKYDRM_SDK_MAJOR_VER}.${SKYDRM_SDK_MINOR_VER}/Windows/${SKYDRM_SDK_BUILD_NUMBER}/doom-SDK-${SKYDRM_SDK_MAJOR_VER}.${SKYDRM_SDK_MINOR_VER}.${SKYDRM_SDK_BUILD_NUMBER}-release-install.zip

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(SKYDRM_SDK_ROOT)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SKYDRM_SDK_ROOT)bin\SDWL\$(Platform)_$(BuildType);$(SKYDRM_SDK_ROOT)bin\boost\$(PlatformTarget)\$(BuildType);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>SDWRmcLib.lib;Version.lib;Iphlpapi.lib;libeay32.lib;Secur32.lib;Wtsapi32.lib;Crypt32.lib;Mpr.lib;Ws2_32.lib;Bcrypt.lib;Winhttp.lib;Urlmon.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

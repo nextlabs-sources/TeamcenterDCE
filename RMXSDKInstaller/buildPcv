@@ -1,0 +1,51 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke PCV build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildPcv
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildPcv
+#
+# Compile
+#
+
+LOG_FILE=buildPcv.log
+
+source ../version_control
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ "X${JENKINS_HOME}" != "X" -a -f ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml
+fi
+
+# Trigger CADRMXLib build from here
+# set -e to exit 1 if any command below return non-zero code
+set -e
+echo "Workspace Folder: ${WORKSPACE}"
+
+echo "Building Project : CADRMXLib Project"
+cd ${WORKSPACE}/CADRMXLib
+source setEnv
+./buildPcv
+
+echo "Building Project : RMXSDK Installer Project"
+cd ${WORKSPACE}/RMXSDKInstaller
+source setEnv
+./buildPcv_inner
+
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

@@ -1,0 +1,57 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'SldWorksRMX'
+		'SldWorksRMX.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+
+HKCR
+{
+	SldWorksRMX.SwAddin.1 = s 'SwAddin Class'
+	{
+		CLSID = s '{02FFD837-BC19-4752-A4E7-720958040E1E}'
+	}
+	SldWorksRMX.SwAddin = s 'SwAddin Class'
+	{
+		CLSID = s '{02FFD837-BC19-4752-A4E7-720958040E1E}'
+		CurVer = s 'SldWorksRMX.SwAddin.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {02FFD837-BC19-4752-A4E7-720958040E1E} = s 'SwAddin Class'
+		{
+			ProgID = s 'SldWorksRMX.SwAddin.1'
+			VersionIndependentProgID = s 'SldWorksRMX.SwAddin'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Both'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FB5E55C3-E5AB-4BE6-BCEB-A50BD9B8B555}'
+		}
+	}
+}
+
+HKLM
+{
+	NoRemove SOFTWARE
+	{
+		NoRemove SolidWorks
+		{
+			NoRemove AddIns
+			{
+				ForceRemove {02FFD837-BC19-4752-A4E7-720958040E1E} = d '0'
+				{
+					val Description = s 'NextLabs Rights Management Extension for SolidWorks'
+					val Title = s 'SolidWorks RMX'
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="menus">
+      <UniqueIdentifier>{bc468d9c-017d-4a16-9e9f-1310cb06c3cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2007Hooks">
+      <UniqueIdentifier>{deeb6a27-f008-4b40-9b0e-962c0d061ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks">
+      <UniqueIdentifier>{6ab7445e-95d9-4aaf-9bd1-196780b12a28}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\NXRMX\menus\nx_rmx_app.men">
+      <Filter>menus</Filter>
+    </None>
+    <None Include="..\NXRMX\menus\nx_rmx_app_button.men">
+      <Filter>menus</Filter>
+    </None>
+    <None Include="..\NXRMX\menus\nx_rmx_usage_control.men">
+      <Filter>menus</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\DllInfo.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="hook\libjadex.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libjafreeformsurfaces.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libpart.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libpartdisp.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libsyss.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libugmr.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libugui.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hook\hook_file_closed.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\NxlUtils\Windows\ntdll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\NxlUtils\Windows\handle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hook\hook_injector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\hook\rpm_fix_deletefile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\nx_contexts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\nx_utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\NXIntegration_Register.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\nxl_app_actions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\NXOverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\NXUsageControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\SpawnContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_fcc_proxy.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libjadex.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libjafreeformsurfaces.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_liblwks.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libpart.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libpartdisp.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libpartutils.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libsyss.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libugmr.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libugui.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_libugutilsint.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_save_bookmark.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\hook_save_jt_data.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\hook\install_nx_hook.c">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\NXSigningResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hook\libdisp.c">
+      <Filter>2007Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportImage2007.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nxrmx2007_install.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\NXRMX\RMXUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libassy.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libhidl.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libjadex.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libjafreeformsurfaces.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\liblwks.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libpart.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libpartdisp.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libpartutils.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libpdmservices.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libsyss.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libugmr.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libugui.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libugutilsint.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\nx_contexts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\nx_hook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\nx_integration_exports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\nx_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\nxl_app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\NXUsageControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\PartContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\NXRMX\SpawnContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook\libdisp.h">
+      <Filter>2007Hooks</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

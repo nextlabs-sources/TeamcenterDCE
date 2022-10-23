@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F38C3623-2A3B-49C6-976F-53942906DE55}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CreoIntegration</RootNamespace>
+    <ProjectName>CreoRMXTestFwk3</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\log4cplus_vc11_env.props" />
+    <Import Project="otk3_env.props" />
+    <Import Project="rmx_env.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\log4cplus_vc11_env.props" />
+    <Import Project="otk3_env.props" />
+    <Import Project="rmx_env.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_x64</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)_x64</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;_WINDOWS;_USRDLL;TESTFWK_INSTALL_ROOT="$(SolutionDir)CreoRMXTestFwk\app\scripts.";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\..\CADRMXCommon;$(SKYDRM_SDK_ROOT)\include;$(SKYDRM_SDK_ROOT)\include\SDWL;$(SolutionDir)LibRMX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <AdditionalOptions>/ignore:4049 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent />
+    <PreBuildEvent />
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>..\..\..\CADRMXCommon;$(SolutionDir)LibRMX;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="..\app\scripts\Test_Backup.txt" />
+    <Text Include="..\app\scripts\Test_ExportDrw.txt" />
+    <Text Include="..\app\scripts\Test_ExportPart_3D.txt" />
+    <Text Include="..\app\scripts\Test_Export_CreoView.txt" />
+    <Text Include="..\app\scripts\Test_ExportPart_2D.txt" />
+    <Text Include="..\app\scripts\Test_ExportPart_Image.txt" />
+    <Text Include="..\app\scripts\Test_MirrorPart.txt" />
+    <Text Include="..\app\scripts\Test_Save.txt" />
+    <Text Include="..\app\scripts\Test_SaveAs.txt" />
+    <Text Include="..\app\scripts\Test_SaveAsAsm.txt" />
+    <Text Include="..\app\scripts\Test_SelNonRPMDir.txt" />
+    <Text Include="..\app\scripts\Test_SelRPMDir.txt" />
+    <Text Include="..\app\text\msg_user.txt" />
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\CADRMXCommon\PathEx.cpp" />
+    <ClCompile Include="..\..\..\CADRMXCommon\RMXUtils.cpp" />
+    <ClCompile Include="..\..\CreoRMX\OtkXUtils.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Test_Export.cpp" />
+    <ClCompile Include="Test_Misc.cpp" />
+    <ClCompile Include="Test_Save.cpp" />
+    <ClCompile Include="TestFwk.cpp" />
+    <ClCompile Include="TestFwkInitializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\CADRMXCommon\PathEx.h" />
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXLogger.h" />
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXUtils.h" />
+    <ClInclude Include="..\..\..\CADRMXCommon\SysErrorMessage.h" />
+    <ClInclude Include="..\..\CreoRMX\OtkXUtils.h" />
+    <ClInclude Include="TestCaseInitializer.h" />
+    <ClInclude Include="TestFwk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\app\creotk_3.dat" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

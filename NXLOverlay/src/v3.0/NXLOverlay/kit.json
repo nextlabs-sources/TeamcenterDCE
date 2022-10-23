@@ -1,0 +1,10 @@
+{
+    "name": "NXLOverlayKit",
+    "modules": [
+        "NXLOverlayIcon"
+    ],
+    "gwtModuleDeps": ["com.nextlabs.NXLOverlay.NXLOverlayIcon"],
+    "kitDeps": [
+        "base"
+    ]
+}

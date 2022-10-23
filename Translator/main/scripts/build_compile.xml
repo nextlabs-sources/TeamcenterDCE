@@ -1,0 +1,170 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_compile" default="all" basedir=".">
+	
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+	<property name="package_dir" value="${build_dir}/${package_name}" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+	
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+	
+	<echo message="INFO: Sanity check completed (no error)" />
+	
+	<path id="compile.classpath">
+		<fileset dir="${xlib_jar_dir}/junit">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/rmjavasdk">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/slf4j">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/obfuscate">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/log4j">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/jaxb-ri">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile, obfuscate, package" />
+
+    <target name="compile" description="Compile the project" depends="">
+		
+		<mkdir dir="${classes_dir}" />
+		
+    	<javac srcdir="${nlbuildroot}/src/com/nextlabs/drm/rmx/configuration" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath" />
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac srcdir="${nlbuildroot}/src/com/nextlabs/drm/rmx/translator" destdir="${classes_dir}" source="1.8" target="1.8" verbose="true">
+			<classpath refid="compile.classpath" />
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac srcdir="${nlbuildroot}/testsrc" destdir="${classes_dir}" verbose="true">
+    		<classpath refid="compile.classpath" />
+    		<include name="**/*.java" />
+    	</javac>
+    	
+    	<copy todir="${classes_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+        <jar destfile="${build_dir}/translator.jar">
+			<fileset dir="${classes_dir}">
+        		<include name="com/nextlabs/drm/rmx/translator/Translator.class" />
+        		<include name="com/nextlabs/drm/rmx/translator/TranslatorApp.class" />
+				<include name="com/nextlabs/drm/rmx/configuration/ConfigManager*.class" />
+    			<include name="com/nextlabs/drm/rmx/configuration/ConfigPropertiesDTO.class" />
+    			<include name="com/nextlabs/drm/rmx/configuration/SecretPropertiesDTO.class" />
+    			<include name="com/nextlabs/drm/rmx/configuration/SecretUtil.class" />
+    			<include name="com/nextlabs/drm/rmx/configuration/SimpleCrypto.class" />
+				<include name="com/nextlabs/drm/rmx/configuration/exception/ConfigException.class" />
+        	</fileset>
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/com.nextlabs.drm.rmx.test.jar">
+    		<fileset dir="${classes_dir}">
+    			<include name="com/nextlabs/drm/rmx/test/ConfigManagerTest.class" />
+    			<include name="com/nextlabs/drm/rmx/test/JUnitTestSuite.class" />
+    			<include name="com/nextlabs/drm/rmx/test/SimpleCryptoTest.class" />
+    			<include name="com/nextlabs/drm/rmx/test/TestRunner.class" />
+    		</fileset>
+    		<manifest>
+    			<attribute name="Java-Version" value="${java.version}" />
+    			<attribute name="Implementation-Vendor" value="NextLabs, Inc." />
+    			<attribute name="Implementation-Title" value="${product_name}" />
+    			<attribute name="Implementation-Version" value="${version_str} (${build_number})" />
+    			<attribute name="Implementation-Time" value="${local.now}" />
+    		</manifest>
+    	</jar>
+	</target>
+	
+	
+	<target name="package" description="builds each plugin module">		
+		<mkdir dir="${package_dir}" />
+				
+		<copy todir="${package_dir}" overwrite="true">
+			<fileset file="${build_dir}/translator.obf.jar" />
+			<fileset file="${xlib_jar_dir}/rmjavasdk/*.jar" />
+			<fileset file="${xlib_jar_dir}/slf4j/*.jar" />
+			<!--<fileset file="${xlib_jar_dir}/junit/*.jar" />-->
+			<fileset file="${xlib_jar_dir}/log4j/*.jar" />
+			<fileset file="${xlib_jar_dir}/jaxb-ri/*.jar" />
+		</copy>
+		
+		<move file="${package_dir}/translator.obf.jar" tofile="${package_dir}/translator.jar"/>
+		
+		<copy todir="${package_dir}/" overwrite="true">
+			<fileset dir="${nlbuildroot}/conf/">
+				<exclude name="TestTranslator.bat"/>
+			</fileset>
+		</copy>
+		
+		<zip destfile="${build_dir}/${dist_zip_file_name}" encoding="UTF-8"> 
+			<fileset dir="${build_dir}"> 
+				<include name="${package_name}/**" />
+			</fileset>				
+		</zip>
+	</target>
+	
+	<target name="obfuscate" description="obfuscate the code">
+		<taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask">
+			<classpath>
+				<pathelement path="${xlib_dir}/jar/obfuscate/allatori.jar" />
+				<pathelement path="${xlib_dir}/jar/obfuscate/allatori-annotations.jar" />
+			</classpath>
+		</taskdef>
+		<allatori config="${nlbuildroot}/scripts/config.xml"/>
+	</target>
+
+</project>
+

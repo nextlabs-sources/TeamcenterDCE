@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Test_Export.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_Misc.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="Test_Save.cpp">
+      <Filter>TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CADRMXCommon\PathEx.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CADRMXCommon\RMXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CreoRMX\OtkXUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="TestFwkHlp.cpp" />
+    <ClCompile Include="TestFwk.cpp" />
+    <ClCompile Include="..\..\CreoRMX\OtkXModel.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\CADRMXCommon\RMXTagHlp.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestCaseInitializer.h" />
+    <ClInclude Include="..\..\..\CADRMXCommon\PathEx.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXLogger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\SysErrorMessage.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CreoRMX\OtkXUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TestFwkHlp.h" />
+    <ClInclude Include="TestFwk.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="XTestLogger.h" />
+    <ClInclude Include="..\..\CreoRMX\OtkXModel.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CADRMXCommon\RMXTagHlp.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="XTestAPI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\app\log4cplus.properties">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\app\creotk_7.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\app\scripts\Test_Export_CreoView.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportDrw.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_2D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_3D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportPart_Image.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_MirrorPart.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_Backup.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_Save.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SaveAs.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SaveAsAsm.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SelNonRPMDir.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_SelRPMDir.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\text\msg_user.txt">
+      <Filter>Config</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportAsm_2D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+    <Text Include="..\app\scripts\Test_ExportAsm_3D.txt">
+      <Filter>Scripts</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{407738bc-ba6c-41bb-b684-04c456dc77e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestCase">
+      <UniqueIdentifier>{cac90942-17a2-47f2-871c-85371dbe8ed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{a6bcdc8b-80db-4457-8ba0-3b1dc8f7aa6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{7936d83d-a608-448b-bbdb-7b02da6768fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="versioninfo.rc" />
+  </ItemGroup>
+</Project>

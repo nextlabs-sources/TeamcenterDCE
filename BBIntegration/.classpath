@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre"/>
+	<classpathentry kind="lib" path="xlib/jar/bcpkix-jdk15on-1.57.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/bcprov-jdk15on-1.57.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.nextlabs.drm.rmx.configuration.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.teamcenter.bce.cad_11000.2.0.10_20151116_11-16-2015.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.teamcenter.bce.cad.nx_11000.2.0.10_20151116_11-16-2015.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.teamcenter.bce.core_11000.2.0.10_20151116_11-16-2015.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.teamcenter.bce.editor_11000.2.0.10_20151116_11-16-2015.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/com.teamcenter.bce.model_11000.2.0.10_20151116_11-16-2015.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/common-framework.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/crypt.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/gson-2.3.1.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/log4j-api-2.10.0.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/log4j-core-2.10.0.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/rmjavasdk-ng.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/shared.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

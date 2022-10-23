@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ArxAppType>arx</ArxAppType>
+    <RDS>
+    </RDS>
+    <AcVer>2022</AcVer>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <!-- <UseOfAtl>false</UseOfAtl> -->
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Label="Globals">
+    <TargetName Condition="'$(AcVer)'!=''">$(ProjectName)$(AcVer)</TargetName>
+    <ProjectGuid>{F87873B0-2B5D-4D52-8FD5-BE1CDC50B2E3}</ProjectGuid>
+    <!--For Visual Studio 2019, you can specify the most recent version of the Windows 10 SDK by using a value of 10.0-->
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="librmx.props" />
+    <Import Project="..\common\log4cplus_vc142.props" />
+    <Import Project="..\common\versionInfo.props" />
+    <Import Project="..\common\CADCommonShared.props" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Autodesk.arx-2022.props" />
+    <Import Project="madcHook_vc142.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="librmx.props" />
+    <Import Project="..\common\log4cplus_vc142.props" />
+    <Import Project="..\common\versionInfo.props" />
+    <Import Project="..\common\CADCommonShared.props" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Autodesk.arx-2022.props" />
+    <Import Project="madcHook_vc142.props" />
+  </ImportGroup>
+  <PropertyGroup Label="Configuration">
+    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v141'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v142'">v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;_ALLOW_RTCc_IN_STL;AutoCADRMX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- Added to avoid Narrow conversion warnings introduced in VS2015 /Wv:xx[.yy[.zzzzz],  is CL version -->
+      <AdditionalOptions>$(ClOptions) /Wv:17.00.61030 %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+    </Link>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">xcopy /s /y $(SolutionDir)common\log4cplus.properties $(outdir)
+xcopy /s /y $(ProjectDir)Resources\en-US\autocadrmx.cuix $(outdir)Resources\en-US
+</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Copying log4cplus.properties and cui files...</Message>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">xcopy /s /y $(SolutionDir)common\log4cplus.properties $(outdir)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Copying log4cplus.properties and cui files...</Message>
+    </PostBuildEvent>
+    <Link />
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CADRMXCommon\PathEx.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RegKeyEntry.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RMXUtils.cpp" />
+    <ClCompile Include="..\common\DelayLoadDllHlp.cpp" />
+    <ClCompile Include="AcRMXAccessControl.cpp" />
+    <ClCompile Include="AcRMXApDocReactor.cpp" />
+    <ClCompile Include="AcRMXEditorReactor.cpp" />
+    <ClCompile Include="AcRMXHooks.cpp" />
+    <ClCompile Include="AcRMXLib.cpp" />
+    <ClCompile Include="AcRMXPublishReactor.cpp" />
+    <ClCompile Include="AcRMXRPMDirMgr.cpp" />
+    <ClCompile Include="AcRMXSessionCacheMgr.cpp" />
+    <ClCompile Include="AcRMXUtils.cpp" />
+    <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="AcRXMProtectControl.cpp" />
+    <ClCompile Include="AutoCADRMX.cpp" />
+    <ClCompile Include="AcRMXWatermarkControl.cpp" />
+    <ClCompile Include="DocData.cpp" />
+    <ClCompile Include="ProtectJob.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CADRMXCommon\PathEx.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RegKeyEntry.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXUtils.h" />
+    <ClInclude Include="..\common\CommonTypes.h" />
+    <ClInclude Include="..\common\DelayLoadDllHlp.h" />
+    <ClInclude Include="..\common\RMXLogInc.h" />
+    <ClInclude Include="AcRMXAccessControl.h" />
+    <ClInclude Include="AcInc.h" />
+    <ClInclude Include="AcRMXApDocReactor.h" />
+    <ClInclude Include="AcRMXEditorReactor.h" />
+    <ClInclude Include="AcRMXHooks.h" />
+    <ClInclude Include="AcRMXLib.h" />
+    <ClInclude Include="AcRMXPublishReactor.h" />
+    <ClInclude Include="AcRMXRPMDirMgr.h" />
+    <ClInclude Include="AcRMXSessionCacheMgr.h" />
+    <ClInclude Include="AcRMXTypes.h" />
+    <ClInclude Include="AcRMXUtils.h" />
+    <ClInclude Include="AcRMXWatermarkControl.h" />
+    <ClInclude Include="AcRXMProtectControl.h" />
+    <ClInclude Include="DocData.h" />
+    <ClInclude Include="HookDefs.h" />
+    <ClInclude Include="ProtectJob.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AutoCADRMX.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Language)'=='C++'">
+    <CAExcludePath>$(ArxSdkIncs);$(CAExcludePath)</CAExcludePath>
+  </PropertyGroup>
+</Project>

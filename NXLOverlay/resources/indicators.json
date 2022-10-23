@@ -1,0 +1,19 @@
+{
+	"nxloverlay":{
+		"iconName":"NXLOverlay",
+		"tooltip":{
+			"showPropDisplayName": true,
+			"propNames":[
+				"nxl3_is_nxl_protected"
+			]
+		},
+		"modelTypes":[
+			"Dataset"
+		],
+		"conditions":{
+			"nxl3_is_nxl_protected":{
+				"$eq":true
+			}
+		}
+	}
+}

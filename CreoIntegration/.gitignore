@@ -1,0 +1,11 @@
+# ignore exceptions
+!log4cplusSU_vc11.lib
+!log4cplusSU_vc14.lib
+!libeay32.dll
+*.class
+x64/
+build.config*
+build.properties
+.classpath
+.project
+

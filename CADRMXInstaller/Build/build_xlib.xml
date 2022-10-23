@@ -1,0 +1,107 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+    <property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="nx_rmx_lib" location="${xlib_dir}/nx_rmx" />
+    <property name="creo_rmx_lib" location="${xlib_dir}/creo_rmx" />
+    <property name="sldworks_rmx_lib" location="${xlib_dir}/sldworks_rmx" />
+    <property name="acad_rmx_lib" location="${xlib_dir}/acad_rmx" />
+    <property name="catia_rmx_lib" location="${xlib_dir}/catia_rmx" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+  <fail message="xlib_dir is not set" unless="xlib_dir" />
+	<fail message="xlib_dir is empty">
+		<condition>
+			<equals arg1="${xlib_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	
+	<echo message="INFO: Sanity check completed (no error)" />
+
+    <!-- Targets -->
+    <target name="all" depends="clean, prepare_nx_rmx_lib, prepare_sldworks_rmx_lib, prepare_creo_rmx_lib, prepare_acad_rmx_lib, prepare_catia_rmx_lib" />
+
+    <target name="clean">
+        <delete dir="${xlib_dir}" />
+        <mkdir dir="${xlib_dir}" />
+        <mkdir dir="${nx_rmx_lib}" />
+        <mkdir dir="${creo_rmx_lib}" />
+        <mkdir dir="${sldworks_rmx_lib}" />
+        <mkdir dir="${acad_rmx_lib}" />
+        <mkdir dir="${catia_rmx_lib}" />
+    </target>
+
+    <target name="prepare_nx_rmx_lib">
+        <unzip src="${xlib_NxlAutoProtect_build_artifacts_zip_file}" dest="${nx_rmx_lib}" overwrite="yes" />
+    </target>
+
+    <target name="prepare_sldworks_rmx_lib">
+        <unzip src="${xlib_SldWorksIntegration_build_artifacts_zip_file}" dest="${sldworks_rmx_lib}" overwrite="yes" />
+    </target>
+
+    <target name="prepare_creo_rmx_lib">
+        <unzip src="${xlib_CreoIntegration_build_artifacts_zip_file}" dest="${creo_rmx_lib}" overwrite="yes" />
+
+        <mkdir dir="${creo_rmx_lib}/CreoIntegration/tools" />
+        <copy file="${nx_rmx_lib}/NX_RMX_ROOT/bin/NxlHelper.exe" todir="${creo_rmx_lib}/CreoIntegration/tools" />
+        <copy file="${nx_rmx_lib}/NX_RMX_ROOT/bin/NxlHelper.exe.config" todir="${creo_rmx_lib}/CreoIntegration/tools" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/rmxutility.exe" todir="${creo_rmx_lib}/CreoIntegration/tools" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/libeay32.dll" todir="${creo_rmx_lib}/CreoIntegration/tools" />
+
+        <mkdir dir="${nx_rmx_lib}/NX_RMX_ROOT/bin" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/rmxutility.exe" todir="${nx_rmx_lib}/NX_RMX_ROOT/bin" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/libeay32.dll" todir="${nx_rmx_lib}/NX_RMX_ROOT/bin" />
+
+        <mkdir dir="${sldworks_rmx_lib}/SldWorksIntegration/tools" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/rmxutility.exe" todir="${sldworks_rmx_lib}/SldWorksIntegration/tools" />
+        <copy file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/libeay32.dll" todir="${sldworks_rmx_lib}/SldWorksIntegration/tools" />
+
+        <!-- <delete file="${creo_rmx_lib}/CreoIntegration/Creo 3.0/rmxutility.exe" /> -->
+        <delete file="${creo_rmx_lib}/CreoIntegration/Creo 4.0/rmxutility.exe" />
+        <!-- Not support Creo 3.0 in 5.2 release -->
+        <delete dir="${creo_rmx_lib}/CreoIntegration/Creo 3.0" />
+    </target>
+
+    <target name="prepare_acad_rmx_lib">
+        <unzip src="${xlib_AutoCADIntegration_build_artifacts_zip_file}" dest="${acad_rmx_lib}" overwrite="yes" />
+    </target>
+
+    <target name="prepare_catia_rmx_lib">
+        <unzip src="${xlib_CatiaIntegration_build_artifacts_zip_file}" dest="${catia_rmx_lib}" overwrite="yes" />
+    </target>
+</project>

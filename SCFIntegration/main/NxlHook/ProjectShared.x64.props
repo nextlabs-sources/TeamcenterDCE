@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="ProjectShared.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <TCAPI>$(NLEXTERNALDIR)\siemens\teamcenter$(TC_VER)</TCAPI>
+    <TC_VER>10</TC_VER>
+    <MADHOOK_API>$(NLEXTERNALDIR2)\mch\3.1.12</MADHOOK_API>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(MADHOOK_API)\inc;$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MADHOOK_API)\lib\free;$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile />
+    <Link>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="TCAPI">
+      <Value>$(TCAPI)</Value>
+    </BuildMacro>
+    <BuildMacro Include="TC_VER">
+      <Value>$(TC_VER)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MADHOOK_API">
+      <Value>$(MADHOOK_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

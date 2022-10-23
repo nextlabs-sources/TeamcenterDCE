@@ -1,0 +1,11 @@
+{
+	"typeProperties" :{
+		"Dataset" :{
+			"additionalProperties" :[
+				{
+					"name" :"nxl3_is_nxl_protected"
+				}
+			]
+		}
+	}
+}

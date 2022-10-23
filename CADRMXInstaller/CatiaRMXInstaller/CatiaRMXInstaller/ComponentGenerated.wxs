@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="CatiaRMX_x64.dll" Guid="{7196B16B-7885-4884-994E-5251722E696E}">
+                <File Id="CatiaRMX_x64.dll" KeyPath="yes" Source="$(var.CatiaRMXROOT)\CatiaRMX_x64.dll" />
+            </Component>
+            <Component Id="LibRMX_x64.dll" Guid="{20C8CB94-06BB-489E-AC3B-BAEC2CB0A114}">
+                <File Id="LibRMX_x64.dll" KeyPath="yes" Source="$(var.CatiaRMXROOT)\LibRMX_x64.dll" />
+            </Component>
+            <Component Id="log4cplus.properties" Guid="{C15E1D5B-2D01-4E5F-93A0-9E5EB072E464}">
+                <File Id="log4cplus.properties" KeyPath="yes" Source="$(var.CatiaRMXROOT)\log4cplus.properties" />
+            </Component>
+            <Directory Id="tools" Name="tools">
+                <Component Id="libeay32.dll" Guid="{747C93A6-C8EC-4039-9E03-E38EAB5B5650}">
+                    <File Id="libeay32.dll" KeyPath="yes" Source="$(var.CatiaRMXROOT)\tools\libeay32.dll" />
+                </Component>
+                <Component Id="rmxutility.exe" Guid="{8EAE44A9-7495-45D2-9803-F5AEB11611B6}">
+                    <File Id="rmxutility.exe" KeyPath="yes" Source="$(var.CatiaRMXROOT)\tools\rmxutility.exe" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="CatiaRMX_x64.dll" />
+            <ComponentRef Id="LibRMX_x64.dll" />
+            <ComponentRef Id="log4cplus.properties" />
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="rmxutility.exe" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

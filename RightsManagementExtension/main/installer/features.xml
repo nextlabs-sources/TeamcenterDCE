@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<features count="21" fullVersion="13.3.0.0">
+	<deployment name="server_component" count="8">
+		<feature name= "nxl_template">
+			<teamcenter_dependency count = "2">
+				<tc_feature id="301F12B06B3EAAB18DC0C2B9444F3B20" name="Translation Service Database Module" />
+				<tc_feature id="8C061DD51E13E0CB9DC4687B1A3348BE" name="Teamcenter Foundation" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "foundation_customization">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="8C061DD51E13E0CB9DC4687B1A3348BE" name="Teamcenter Foundation" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "batch_protection">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="8C061DD51E13E0CB9DC4687B1A3348BE" name="Teamcenter Foundation" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "workflow_initial_protection">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="8C061DD51E13E0CB9DC4687B1A3348BE || E2564104E1B964BB23D78078DBA34EEA" name="Teamcenter Foundation OR 2-tier RAC" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "active_workspace_support">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="5BDF14A4256BDB326A57477D6BF3E2AD" name="Active Workspace Client (Java EE)" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+		
+		<feature name= "scf_integration">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="U73JQSX2SQ3O15LQRL8IFVRR8ALSWHBT" name="Supplier Collaboration" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+		
+		<feature name= "nxl_ipem_template">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="4C679E5C5C9C34609D29FC4C41644C10" name="Integration for Creo" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "nxl_swim_template">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="D4CFB69C1AA618C2DF44D1B7C73DD643" name="Integration for SolidWorks" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+	</deployment>
+
+	<deployment name="dispatcher" count="3">
+		<feature name= "dispatcher_module">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="C1F107F376D71271DE7B88D14CDC01AB" name="Dispatcher Server" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+		<feature name= "dispatcher_client_extension">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="301F12B06B3EAAB18DC0C2B9444F3B18 || 56VW6HKTQOQTZNFV4KBB51OQDU2YA3RY" name="Dispatcher Client" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+		<feature name= "translator_rights_checker">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="C1F107F376D71271DE7B88D14CDC01AB" name="Dispatcher Server" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+	</deployment>
+
+
+	<deployment name="rac_extension" count="11">
+		<feature name= "user_initial_protection">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="E2564104E1B964BB23D78078DBA34EEA || FF18D25DA73019F880BCFFBC0029CA28" name="Teamcenter Rich Client" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "rac_rmx">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="E2564104E1B964BB23D78078DBA34EEA || FF18D25DA73019F880BCFFBC0029CA28" name="Teamcenter Rich Client" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "proxy_runner">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="E2564104E1B964BB23D78078DBA34EEA || FF18D25DA73019F880BCFFBC0029CA28" name="Teamcenter Rich Client" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume &amp; Protection on Download</available_solution>
+		</feature>
+
+		<feature name= "partialdownload">
+			<teamcenter_dependency count = "1">
+				<tc_feature id="E2564104E1B964BB23D78078DBA34EEA || FF18D25DA73019F880BCFFBC0029CA28" name="Teamcenter Rich Client" />
+			</teamcenter_dependency>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name="bb_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "nx_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "creo_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "solidworks_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "autocad_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "catia_integration">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+
+		<feature name= "rights_management_desktop">
+			<teamcenter_dependency count = "0"/>
+			<available_solution>Protection in Teamcenter volume</available_solution>
+		</feature>
+		
+	</deployment>
+</features>

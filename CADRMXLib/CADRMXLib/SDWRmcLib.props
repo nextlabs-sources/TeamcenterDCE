@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <SKYDRM_SDK_ROOT>$(SolutionDir)tmp_xlibs\skydrmsdk\</SKYDRM_SDK_ROOT>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SKYDRM_SDK_ROOT)include;$(SKYDRM_SDK_ROOT)include\SDWL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SKYDRM_SDK_ROOT)bin\boost\$(PlatformTarget)\$(Configuration);$(SKYDRM_SDK_ROOT)bin\SDWL\$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libeay32.lib;urlmon.lib;bcrypt.lib;Crypt32.lib;winhttp.lib;shlwapi.lib;Ws2_32.lib;Mpr.lib;Wtsapi32.lib;Secur32.lib;Version.lib;Iphlpapi.lib;Gdiplus.lib;SDWRmcLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="SKYDRM_SDK_ROOT">
+      <Value>$(SKYDRM_SDK_ROOT)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

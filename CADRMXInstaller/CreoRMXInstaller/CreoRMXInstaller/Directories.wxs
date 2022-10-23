@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Only care about 64 bit application for now -->
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="CompanyFolderName" Name="!(loc.CompanyFolderName)">
+          <Directory Id="INSTALLFOLDER" Name="!(loc.ProductFolderName)" />
+          <!-- 
+            Register CREO_DIR and IPEM property in Directory Table. 
+            Remove this two lines below causing msi error 2727 when using Browse Dialog to change directory input 
+          -->
+          <Directory Id="CREO_DIR" Name="!(loc.ProductFolderName)" />
+          <Directory Id="CREO_COMMON_DIR" Name="!(loc.ProductFolderName)" />
+          <Directory Id="IPEM" Name="!(loc.ProductFolderName)" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+</Wix>

@@ -1,0 +1,22 @@
+<aspectj>
+	<aspects>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.SOAItemIDHelperAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.UserExitValidatorAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.CheckinDialogAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.CSOperationHandlerImplAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.SOAPropertiesPanelAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.CurrentWorkspaceExportCommandAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.CurrentWorkspaceImportCommandAspect"/>
+		<aspect name="com.nextlabs.cadrmx.sw.aspect.FileUtilAspect"/>
+	</aspects>
+	<weaver options="-showWeaveInfo" >
+		<include within="com.transcendata.cadpdm.soa.gui.SOAItemIDHelper"/>
+		<include within="com.transcendata.cadpdm.soa.UserExitValidator"/>
+		<include within="com.transcendata.swimsoa.gui.CheckInDialog" />
+		<include within="com.transcendata.cadpdm.cs.CSOperationHandlerImpl" />
+		<include within="com.transcendata.cadpdm.soa.gui.SOAPropertiesPanel" />
+		<include within="com.transcendata.cadpdm.soa.CurrentWorkspaceExportCommand" />
+		<include within="com.transcendata.cadpdm.soa.CurrentWorkspaceImportCommand" />
+		<include within="com.transcendata.util.FileUtil" />
+	</weaver>
+</aspectj>

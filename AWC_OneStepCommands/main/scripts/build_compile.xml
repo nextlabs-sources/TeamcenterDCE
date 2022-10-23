@@ -1,0 +1,102 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="package_dir" value="${build_dir}/" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Compile and Package Project" depends="package" />
+
+	<target name="package" description="Package different AWC folder per version">
+		<mkdir dir="${package_dir}" />
+		<mkdir dir="${package_dir}/nextlabs.drm_4.3" />
+		<mkdir dir="${package_dir}/nextlabs.drm_4.3/src" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.0" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.0/src" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.1" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.1/src" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.2" />
+		<mkdir dir="${package_dir}/nextlabs.drm_5.2/src" />
+		<mkdir dir="${package_dir}/nextlabs.drm_6.0" />
+		<mkdir dir="${package_dir}/nextlabs.drm_6.0/src" />
+
+		<copy file="${nlbuildroot}/module.json" tofile="${package_dir}/nextlabs.drm_4.3/module.json" overwrite="true" />
+		<copy file="${nlbuildroot}/commandsViewModel.json" tofile="${package_dir}/nextlabs.drm_4.3/commandsViewModel.json" overwrite="true" />
+
+		<copy todir="${package_dir}/nextlabs.drm_4.3/src" overwrite="true">
+			<fileset dir="${nlbuildroot}/resources" />
+		</copy>
+
+		<copy file="${nlbuildroot}/module.json" tofile="${package_dir}/nextlabs.drm_5.0/module.json" overwrite="true" />
+		<copy file="${nlbuildroot}/commandsViewModel.json" tofile="${package_dir}/nextlabs.drm_5.0/commandsViewModel.json" overwrite="true" />
+
+		<copy todir="${package_dir}/nextlabs.drm_5.0/src" overwrite="true">
+			<fileset dir="${nlbuildroot}/resources" />
+		</copy>
+
+		<copy file="${nlbuildroot}/module.json" tofile="${package_dir}/nextlabs.drm_5.1/module.json" overwrite="true" />
+		<copy file="${nlbuildroot}/commandsViewModel.json" tofile="${package_dir}/nextlabs.drm_5.1/commandsViewModel.json" overwrite="true" />
+
+		<copy todir="${package_dir}/nextlabs.drm_5.1/src" overwrite="true">
+			<fileset dir="${nlbuildroot}/resources" />
+		</copy>
+
+		<copy file="${nlbuildroot}/module.json" tofile="${package_dir}/nextlabs.drm_5.2/module.json" overwrite="true" />
+		<copy file="${nlbuildroot}/commandsViewModel.json" tofile="${package_dir}/nextlabs.drm_5.2/commandsViewModel.json" overwrite="true" />
+
+		<copy todir="${package_dir}/nextlabs.drm_5.2/src" overwrite="true">
+			<fileset dir="${nlbuildroot}/resources" />
+		</copy>
+
+		<copy file="${nlbuildroot}/module.json" tofile="${package_dir}/nextlabs.drm_6.0/module.json" overwrite="true" />
+		<copy file="${nlbuildroot}/commandsViewModel.json" tofile="${package_dir}/nextlabs.drm_6.0/commandsViewModel.json" overwrite="true" />
+
+		<copy todir="${package_dir}/nextlabs.drm_6.0/src" overwrite="true">
+			<fileset dir="${nlbuildroot}/resources" />
+		</copy>
+
+		<zip destfile="${package_dir}/${dist_zip_file_name}" encoding="UTF-8">
+			<fileset dir="${package_dir}/">
+				<include name="**" />
+			</fileset>
+		</zip>
+	</target>
+</project>

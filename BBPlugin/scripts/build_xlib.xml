@@ -1,0 +1,67 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_bb_jar" />
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+		<mkdir dir="${xlib_dir}" />
+	</target>
+
+	<target name="prepare_bb_jar">
+		<copy file="${nlexternaldir}/siemens/briefcase/11.6/com.teamcenter.bce.cad.nx_11000.2.0.70_20181203_12-03-2018.jar" todir="${xlib_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/briefcase/11.6/com.teamcenter.bce.core_11000.2.0.70_20181203_12-03-2018.jar" todir="${xlib_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/briefcase/11.6/com.teamcenter.bce.editor_11000.2.0.70_20181203_12-03-2018.jar" todir="${xlib_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir}/siemens/briefcase/11.6/com.teamcenter.bce.model_11000.2.0.70_20181203_12-03-2018.jar" todir="${xlib_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+</project>

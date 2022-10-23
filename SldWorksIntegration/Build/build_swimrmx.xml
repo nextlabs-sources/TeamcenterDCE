@@ -1,0 +1,154 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_swimrmx" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!--  required directories  -->
+	<property name="build_dir" location="${nlprojectroot}/x64/java" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="aspectj_lib_dir" location="${xlib_jar_dir}/aspectj/1.8.14" />
+	<property name="swimrmx_src_dir" location="${nlprojectroot}/swimrmx/src/com/nextlabs/cadrmx" />
+	
+	<!--  build.compiler value to pick up our CompilerAdapter for javac  -->
+	<property name="ajc.adapter" value="org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter"/>
+	
+	<!--  required libraries  -->
+	<property name="aspectjrt.jar" location="${aspectj_lib_dir}/aspectjrt.jar"/>
+	<property name="aspectjtools.jar" location="${aspectj_lib_dir}/aspectjtools.jar"/>
+	<property name="aspectjweaver.jar" location="${aspectj_lib_dir}/aspectjweaver.jar"/>
+	<property name="log4j.jar" location="${xlib_jar_dir}/log4j-1.2.17.jar" />
+	
+	<property name="swimrmx.jar" location="${build_dir}/swimrmx.jar" />
+	
+	<!--  checking required libraries  -->
+	<available file="${aspectjtools.jar}" property="aspectjtools.jar.available"/>
+	<available file="${aspectjrt.jar}" property="aspectjrt.jar.available"/>
+		
+		<!-- Dump properties -->
+	<echoproperties />
+	<!-- Sanity checks -->
+	<fail message="nlprojectroot is not set" unless="nlprojectroot" />
+	<fail message="nlprojectroot is empty">
+		<condition>
+			<equals arg1="${nlprojectroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlprojectroot}" type="dir" property="local.nlprojectroot_exists" />
+	<fail message="nlprojectroot directory does not exist - ${nlprojectroot}" unless="local.nlprojectroot_exists" />
+
+	<fail message="swim_sdk_dir is not set" unless="swim_sdk_dir" />
+	<fail message="swim_sdk_dir is empty">
+		<condition>
+			<equals arg1="${swim_sdk_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+	<fail message="xlib_dir is not set" unless="xlib_dir" />
+	<fail message="xlib_dir is empty">
+		<condition>
+			<equals arg1="${xlib_dir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<path id="compile.classpath">
+		<pathelement path="${log4j.jar}"/>
+		<fileset dir="${aspectj_lib_dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${swim_sdk_dir}">
+			<include name="swim.jar" />
+			<include name="soa_client12.3/*.jar" />
+			<include name="soa_client12.3/external/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="clean" depends="init" description="Clean and create dir">
+		<delete quiet="on" dir="${build_dir}"/>
+		<mkdir dir="${build_dir}"/>
+	</target>
+	<target name="init" depends="init.taskdefs"/>
+
+	<target name="init.taskdefs" depends="aspectjtools.jar.available, aspectjrt.jar.available" unless="taskdefs.init">
+		<!--  sets name of new task to iajc, old task to ajc  -->
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+				<pathelement path="${aspectjtools.jar}"/>
+			</classpath>
+		</taskdef>
+		<property name="taskdefs.init" value="true"/>
+	</target>
+	<target name="aspectjrt.jar.available" unless="aspectjrt.jar.available">
+		<fail message="expecting aspectjrt.jar at ${aspectjrt.jar}"/>
+	</target>
+	<target name="aspectjtools.jar.available" unless="aspectjtools.jar.available">
+		<fail message="expecting aspectjtools.jar at ${aspectjtools.jar}"/>
+	</target>
+	
+	<target name="all" description="Default for all" depends="clean, init, compile, package" />
+
+	<target name="compile" description="Compile the project with load-time weaving" depends="init">
+		<antcall target="clean" />
+		<iajc version="true" />
+		<iajc outjar="${swimrmx.jar}" classpathRef="compile.classpath" fork="true" forkclasspath="${aspectjtools.jar}" verbose="true" source="1.8" target="1.8">
+			<src path="${swimrmx_src_dir}"/>
+			<include name="**/*.java" />
+		</iajc>
+
+		<jar destfile="${swimrmx.jar}" update="true" >
+			<manifest>
+				<attribute name="Java-Version" value="${ant.java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+			<fileset dir="${swimrmx_src_dir}/resources"/>
+		</jar>
+	</target>
+
+	<target name="package" description="builds each plugin module">
+		<copy todir="${build_dir}" overwrite="true">
+			<fileset file="${aspectjrt.jar}" />
+			<fileset file="${aspectjweaver.jar}" />
+		</copy>
+		
+		<copy todir="${build_dir}" overwrite="true">
+			<fileset file="${log4j.jar}" />
+		</copy>
+		
+		<copy todir="${build_dir}" overwrite="true">
+			<fileset file="${swimrmx_src_dir}/util/*.properties" />
+		</copy>
+		
+	</target>
+	
+</project>
+

@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\visview.exe]
+"WaitForChildProcess"="visview_ng.exe" 
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Nextlabs\TeamcenterRMX\nxlrunner\visview_ng.exe]
+"MaxTryOfHandleSearch"=dword:00000014
+"RetryIfProcesIsAlive"=dword:00000001

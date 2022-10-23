@@ -1,0 +1,131 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+	<property name="package_dir" value="${build_dir}/${package_name}" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+		
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<path id="compile.classpath.tc12">
+		<fileset dir="${xlib_dir}/jar/tc12">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile.classpath.tc13">
+		<fileset dir="${xlib_dir}/jar/tc13">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile12, compile13, package" />
+
+	<target name="compile12" description="Compile the project" depends="">
+		<mkdir dir="${build_dir}/tc12" />
+		<mkdir dir="${classes_dir}/tc12" />
+
+		<javac srcdir="${nlbuildroot}/src" destdir="${classes_dir}/tc12" verbose="true" source="1.8" target="1.8">
+			<classpath refid="compile.classpath.tc12"/>
+			<include name="**/*.java" />
+		</javac>
+
+		<jar destfile="${build_dir}/tc12/TCLdifGenerator.jar" basedir="${classes_dir}/tc12" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+	</target>
+
+    <target name="compile13" description="Compile the project" depends="">
+		<mkdir dir="${build_dir}/tc13" />
+		<mkdir dir="${classes_dir}/tc13" />
+		  
+		<javac srcdir="${nlbuildroot}/src" destdir="${classes_dir}/tc13" verbose="true" source="1.8" target="1.8">
+			<classpath refid="compile.classpath.tc13"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+        <jar destfile="${build_dir}/tc13/TCLdifGenerator.jar" basedir="${classes_dir}/tc13" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="package" description="builds each plugin module">		
+		<mkdir dir="${package_dir}" />
+
+		<copy todir="${package_dir}/tc12" overwrite="true">
+			<fileset file="${build_dir}/tc12/*.jar" />
+			<fileset file="${nlbuildroot}/*.properties" />
+			<fileset file="${xlib_dir}/jar/tc12/*.jar" />
+		</copy>
+
+		<copy todir="${package_dir}/tc12/" overwrite="true">
+			<fileset dir="${nlbuildroot}/conf/" />
+		</copy>
+
+		<copy todir="${package_dir}/tc13" overwrite="true">
+			<fileset file="${build_dir}/tc13/*.jar" />
+			<fileset file="${nlbuildroot}/*.properties" />
+			<fileset file="${xlib_dir}/jar/tc13/*.jar" />
+		</copy>
+		
+		<copy todir="${package_dir}/tc13/" overwrite="true">
+			<fileset dir="${nlbuildroot}/conf/" />
+		</copy>
+	
+		<zip destfile="${build_dir}/${dist_zip_file_name}" encoding="UTF-8"> 
+			<fileset dir="${build_dir}"> 
+				<include name="${package_name}/**" />
+			</fileset>				
+		</zip>
+	</target>
+</project>
+

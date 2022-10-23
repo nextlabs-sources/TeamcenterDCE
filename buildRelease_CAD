@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke release build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildRelease
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/source_main_external/workspace
+#	source setEnv
+#	./buildRelease
+#
+# DEBUG:
+#	To debug ANT problems, add -v option to an ANT command. For example:
+#		$ANT -v -f scripts/build_xlib.xml
+
+LOG_FILE=buildRelease.log
+
+source cadrmx_build
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ "X${JENKINS_HOME}" != "X" -a -f ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml
+fi
+
+set -e
+echo "Workspace Folder: ${WORKSPACE}"
+
+echo "Building Project : CADRMXCommon Project"
+cd ${WORKSPACE}/CADRMXCommon
+source setEnv
+./buildRelease
+
+echo "Building Project : SldWorksIntegration Project"
+cd ${WORKSPACE}/SldWorksIntegration
+source setEnv
+./buildRelease 
+
+echo "Building Project : CreoIntegration Project"
+cd ${WORKSPACE}/CreoIntegration
+source setEnv
+./buildRelease
+
+echo "Building Project : AutoCADIntegration Project"
+cd ${WORKSPACE}/AutoCADIntegration
+source setEnv
+./buildRelease
+
+echo "Building Project : NxlAutoProtect Project"
+cd ${WORKSPACE}/NxlAutoProtect/main
+source setEnv
+./buildRelease
+
+echo "Building Project : CatiaIntegration Project"
+cd ${WORKSPACE}/CatiaIntegration
+source setEnv
+./buildRelease
+
+echo "Building Project : CADRMXInstaller Project"
+cd ${WORKSPACE}/CADRMXInstaller
+source setEnv
+./buildRelease
+
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

@@ -1,0 +1,37 @@
+
+SRCS := $(wildcard src/*.c)
+$(info $(PROJECTNAME).SRCS=$(SRCS))
+
+OBJS := ${SRCS:.c=.o}
+$(info $(PROJECTNAME).OBJS=$(OBJS))
+
+INCLUDE_DIRS :=include include_internal $(JNISDK)/include $(JNISDK)/include/linux
+$(info $(PROJECTNAME).INCLUDE_DIRS=$(INCLUDE_DIRS))
+
+LIBRARY_DIRS :=$(JNISDK)/jre/lib/amd64/server
+$(info $(PROJECTNAME).LIBRARY_DIRS=$(LIBRARY_DIRS))
+
+LIBRARIES :=jvm
+$(info $(PROJECTNAME).LIBRARIES=$(LIBRARIES))
+
+PREPROCESSORS=__linux__ PROJECT_NAME=\"$(PROJECTNAME)\" TARGETFILENAME=\"$(OUTPUTFILE)\" _GNU_SOURCE
+PREPROCESSORS += FILE_VER=\"$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_MAINTENANCE).$(VERSION_PATCH)-$(BUILD_NUMBER)\"
+
+CPPFLAGS :=$(GCC_FLAGS) -fPIC
+CPPFLAGS += $(foreach pp,$(PREPROCESSORS),-D $(pp))
+CPPFLAGS += $(foreach incdir,$(INCLUDE_DIRS),-I$(incdir))
+
+LDFLAGS :=-shared -o $(OUTPUTFILE) -Wl,--wrap=memcpy
+LDFLAGS += $(foreach libdir,$(LIBRARY_DIRS),-L$(libdir))
+LDFLAGS += $(foreach lib,$(LIBRARIES),-l$(lib))
+
+.PHONY: all clean distclean
+
+all:
+	gcc $(CPPFLAGS) $(SRCS) -S
+	mv *.s ../tmp -f
+	gcc $(CPPFLAGS) $(SRCS) $(LDFLAGS)
+
+clean:
+
+distclean: clean

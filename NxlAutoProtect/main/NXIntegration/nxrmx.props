@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="..\RefNxlUtils.props" />
+    <Import Project="..\RefRPMUtils140.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <NX_MAJOR_VER>12</NX_MAJOR_VER>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(SolutionDir)\NXIntegration\;$(IncludePath)</IncludePath>
+    <IntDir>$(SolutionDir)$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <DelayLoadDLLs>NxlUtils$(PlatformArchitecture).dll;RPMUtils$(PlatformArchitecture).dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;REG_PRODUCT="SOFTWARE\\NextLabs\\NXRMX";ENV_PRODUCT_ROOT="NX_RMX_ROOT";NX_MAJOR_VER=$(NX_MAJOR_VER);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/Zc:strictStrings- %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>26812;4996</DisableSpecificWarnings>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>STR_EN_PRODUCT_NAME=\"Nextlabs Rights Management eXtension for Siemens NX $(NX_MAJOR_VER)\";VER_FILE=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_FILE_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";VER_PRODUCT=$(VER_MAJOR),$(VER_MINOR),$(VER_MAINT),$(VER_PATCH);STR_EN_PRODUCT_VERSION=\"$(VER_MAJOR).$(VER_MINOR).$(VER_MAINT).$(VER_PATCH)\";STR_EN_COMPANY_NAME=\"Nextlabs, Inc.\";STR_EN_COPYRIGHT=\"Copyright (C) 2021\";STR_EN_ORIGINAL_NAME=\"$(TargetFileName)\";STR_EN_FILE_DESCRIPTION=\"$(ProjectName) $(PlatformToolset) $(CONFIG_TYPE) build $(VER_BUILD) \"</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="NX_MAJOR_VER">
+      <Value>$(NX_MAJOR_VER)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

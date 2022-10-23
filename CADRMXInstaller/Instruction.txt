@@ -1,0 +1,17 @@
+You can Double Click to start UI install.
+
+Pop Command Line in folder contains CreoRMXInstaller.msi:
+
+(*) UI Install + Log (From Cmd)
+msiexec /i CreoRMXInstaller.msi /L*V install_log.txt
+
+(*) UI Uninstall + Log (From Cmd)
+msiexec /i CreoRMXInstaller.msi /L*V uninstall_log.txt
+
+(*) Silent Install + Passing Params + Log (From Admin Cmd)
+msiexec /qn /i "NextLabs Rights Management For Creo.msi" INSTALLFOLDER="C:\\Program Files\\NextLabs\\CreoRMX" CREO_DIR="C:\\Program Files\\PTC\\Creo 3.0\\M170\\Parametric" /L*V install_log.txt
+msiexec /qn /i "NextLabs Rights Management For NX.msi" INSTALLFOLDER="C:\\Program Files\\NextLabs\\NXRMX" /L*V install_log.txt
+
+(*) Silent Uninstall + Log (From Admin Cmd)
+msiexec /qn /x "NextLabs Rights Management For Creo.msi" /L*V uninstall_log.txt
+msiexec /qn /x "NextLabs Rights Management For NX.msi" /L*V uninstall_log.txt

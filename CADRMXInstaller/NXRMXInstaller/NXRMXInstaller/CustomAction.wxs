@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <CustomAction Id="SetDir" Property="ActionInstall" Value="NXRMXFolder=[NXIntegration[NX_MAJOR_VER]];NXRPMTEMP=[NXRMX_RPMTEMP];NX_ROOT=[NX_ROOT]" />
+    
+    <CustomAction Id='ActionInstall' 
+                  BinaryKey='BINInstall' 
+                  DllEntry='InstallNXRMX' 
+                  Execute='deferred' 
+                  Impersonate='no'
+                  Return='check' />
+
+    <Binary Id='BINInstall' SourceFile='..\NXRMXCA\bin\$(var.Configuration)\NXRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionUninstall' 
+                  BinaryKey='BINUninstall' 
+                  DllEntry='UninstallNXRMX' 
+                  Execute='deferred' 
+                  Impersonate='no'
+                  Return='check' />
+
+    <Binary Id='BINUninstall' SourceFile='..\NXRMXCA\bin\$(var.Configuration)\NXRMXCA.CA.dll' />
+
+    <Property Id="MsiLogging" Value="v!" />
+    <CustomAction Id="SaveAndViewLog" Execute="immediate"
+                  ExeCommand="notepad.exe [MsiLogFileLocation]"
+                  Directory="TARGETDIR"
+                  Return="asyncNoWait" />
+  </Fragment>
+</Wix>

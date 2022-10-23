@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+PWD=`pwd`
+echo CurrentDirectory=$(PWD)
+export NLPROJECTROOT=`cygpath -m $PWD`
+echo NLPROJECTROOT=$NLPROJECTROOT
+
+export BUILDTYPE=Release
+echo BUILDTYPE=$BUILDTYPE
+
+export CONFIG_TYPE=DEBUG
+echo CONFIG_TYPE=$CONFIG_TYPE
+
+export PROJECT_NAME="TeamcenterDCE"
+export VERSION_MAJOR=3
+export VERSION_MINOR=1
+export VERSION_MAINTENANCE=2
+export VERSION_PATCH=8
+export BUILD_NUMBER=999
+export VERSION_STR="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MAINTENANCE.$VERSION_PATCH"
+export VERSION_BUILD_SHORT="$BUILD_NUMBER"
+export BUILD_DATE=$(date +"%Y%m%d")
+export BUILD_DATE_LONG=$(date +"%Y%m%d%H%M")
+export REPOSITORY_ROOT="$NLPROJECTROOT/build/output"
+
+export XLIB_DIR="$NLPROJECTROOT/build/xlibs"
+export XLIB_JAVA_PC_SDK_ZIP_FILE="$XLIB_DIR/PolicyAdapterSDK-7.6.0.0-28-20150428.zip"
+export XLIB_NX_TEMPLATE_LEGACY_LIBS="$XLIB_DIR/DocumentControlExtension-2.7.0.0-16-201701200207.zip"
+#`make -f Makefile.compile`

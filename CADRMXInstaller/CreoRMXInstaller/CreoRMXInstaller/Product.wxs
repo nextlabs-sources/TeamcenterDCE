@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Define Product Version -->
+  <!--<?define ProductVersion= "5.0.1.0"?>-->
+  <?define ProductVersion="!(bind.FileVersion.rmxutility.exe)"  ?>
+  
+  <!-- Fixed upgrade code -->
+  <?define UpgradeCode= "{3998F263-B0CB-484E-BFAA-7CE0943CC953}"?>
+  
+  <!-- Provide Main Product -->
+	<Product Id="*" 
+           Name="!(loc.ProductName)" 
+           Language="!(loc.Language)" 
+           Version="$(var.ProductVersion)" 
+           Manufacturer="!(loc.Company)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+    <!-- Provide Package Details -->
+		<Package InstallerVersion="200" 
+             InstallPrivileges="elevated"
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             Platform="x64"
+             Manufacturer="!(loc.Company)"
+             Description="!(loc.Description)"
+             Keywords="!(loc.Keywords)"
+             Comments="!(loc.Comments)"
+             Languages="!(loc.Language)"
+             />
+    <!-- Downgrade Error Message -->
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+
+    <!-- Prefer include .cab file into .msi file -->
+		<MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="app.ico" SourceFile="$(var.ProjectDir)\Resources\app.ico"/>
+    <!-- This icon will show up in Add/Remove (Control Panel)-->
+    <Property Id="ARPPRODUCTICON">app.ico</Property>
+    <!-- Help support website in Add/Remove program -->
+    <Property Id="ARPURLINFOABOUT">https://www.nextlabs.com/services/support/</Property>
+
+    <!-- Add Installer UI -->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="CREO_INSTALLDIR" Value="CREO_DIR" />
+    <Property Id="CREO_IPEM" Value="IPEM" />
+    
+    <UIRef Id="WixUI_CustomizeInstallDir"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Resources\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Resources\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Resources\Banner.bmp" />
+
+    <!-- Define components, files, ... -->
+		<Feature Id="ProductFeature" Title="CreoRMXInstaller" Level="1">
+      
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="AutoHarvestComponents" />
+		
+    </Feature>
+
+    <InstallExecuteSequence>
+      <Custom Action="SetDirInstall" After="InstallInitialize" />
+      <Custom Action='ActionInstall' After='InstallFiles'>NOT Installed</Custom>
+      <Custom Action='SetDirEditCreoTkDat' After='InstallFiles'>NOT Installed</Custom>
+      <Custom Action='EditCreoTkDat' After='SetDirEditCreoTkDat'>NOT Installed</Custom>
+      <Custom Action='ActionRepair' After='InstallInitialize'>REINSTALL</Custom>
+      <Custom Action='ActionUninstall' After='InstallInitialize'>Installed and NOT REINSTALL</Custom>
+    </InstallExecuteSequence>
+    
+    <InstallUISequence>
+      <Custom Action='FindCreoDir' After='LaunchConditions'>NOT Installed</Custom>
+      <Custom Action='FindIpemDir' After='LaunchConditions'>NOT Installed</Custom>
+    </InstallUISequence>  
+
+	</Product>
+</Wix>

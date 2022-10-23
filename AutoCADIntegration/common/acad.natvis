@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <!-- Version 1.1d 4jan15 -->
+  <!-- for acad/arx types -->
+
+  <Type Name="AcArray&lt;*&gt;">
+    <DisplayString>{{Len = {mLogicalLen}}}</DisplayString>
+    <Expand>
+      <Item Name="Len">mLogicalLen</Item>
+      <Item Name="Buf Siz">mPhysicalLen</Item>
+      <ArrayItems>
+        <Size>mLogicalLen</Size>
+        <ValuePointer>mpArray</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+
+  <Type Name="AcRxClass">
+    <DisplayString Condition="m_pImp!=0">{*(((wchar_t **)m_pImp)+1),su}</DisplayString>
+  </Type>
+
+  <Type Name="AcString">
+    <DisplayString Condition="mnFlags==0">""</DisplayString>
+    <DisplayString Condition="mnFlags==1">{mszStr,s}</DisplayString>
+    <DisplayString Condition="mnFlags==2">{mchr.mwszStr,su}</DisplayString>
+    <DisplayString Condition="mnFlags==3">{mptr.mpszData,s}</DisplayString>
+    <DisplayString Condition="mnFlags==4">{mptr.mpwszData,su}</DisplayString>
+    <DisplayString Condition="mnFlags==5">{*(wchar_t **)(mptr.mpPtrAndData),su}</DisplayString>
+    <StringView Condition="mnFlags==0">""</StringView>
+    <StringView Condition="mnFlags==1">mszStr,s</StringView>
+    <StringView Condition="mnFlags==2">mchr.mwszStr,su</StringView>
+    <StringView Condition="mnFlags==3">mptr.mpszData,s</StringView>
+    <StringView Condition="mnFlags==4">mptr.mpwszData,su</StringView>
+    <StringView>mptr.mpPtrAndData</StringView>
+  </Type>
+
+  <Type Name="CAdUiPathname">
+    <DisplayString Condition="m_pathbuffer!=0">{*m_pathbuffer,su}</DisplayString>
+    <DisplayString Condition="m_this_type==0">NO_PATH</DisplayString>
+    <StringView Condition="m_pathbuffer!=0">*m_pathbuffer</StringView>
+  </Type>
+
+  <Type Name="CAdUiVolumeDescriptor">
+    <DisplayString Condition="m_vol_localname!=0">{*m_vol_localname}</DisplayString>
+    <StringView Condition="m_vol_localname!=0">*m_vol_localname</StringView>
+  </Type>
+
+  <Type Name="resbuf">
+    <!--ARX/Lisp Function arg-->
+    <DisplayString Condition="restype==5000">rtnone</DisplayString>
+    <DisplayString Condition="restype==5001">{resval.rreal} rreal</DisplayString>
+    <DisplayString Condition="restype==5002">{resval.rpoint[0]},{resval.rpoint[1]}</DisplayString>
+    <DisplayString Condition="restype==5003">{resval.rint} rint</DisplayString>
+    <DisplayString Condition="restype==5004">{resval.rreal} rreal</DisplayString>
+    <DisplayString Condition="restype==5005">{resval.rstring}</DisplayString>
+    <DisplayString Condition="restype==5006">soft pointer id</DisplayString>
+    <DisplayString Condition="restype==5007">pick set</DisplayString>
+    <DisplayString Condition="restype==5008">orientation</DisplayString>
+    <DisplayString Condition="restype==5009">{resval.rpoint[0]},{resval.rpoint[1]},{resval.rpoint[2]}</DisplayString>
+    <DisplayString Condition="restype==5010">{resval.rlong} rlong</DisplayString>
+    <DisplayString Condition="restype==5016">list-begin</DisplayString>
+    <DisplayString Condition="restype==5017">list-end</DisplayString>
+    <DisplayString Condition="restype==5018">dotted pair</DisplayString>
+    <DisplayString Condition="restype==5031">{resval.mnInt64} int64</DisplayString>
+
+    <!--DXF/XData String-->
+    <DisplayString Condition="(restype&gt;=1) &amp;&amp; (restype&lt;=9)">{resval.rstring}</DisplayString>
+    <DisplayString Condition="(restype&gt;=100) &amp;&amp; (restype&lt;=103)">{resval.rstring}</DisplayString>
+    <DisplayString Condition="restype==105">{resval.rstring}</DisplayString>
+    <DisplayString Condition="(restype&gt;=300) &amp;&amp; (restype&lt;=309)">{resval.rstring}</DisplayString>
+    <DisplayString Condition="restype==410">{resval.rstring}</DisplayString>
+    <DisplayString Condition="(restype&gt;=430) &amp;&amp; (restype&lt;=439)">{resval.rstring}</DisplayString>
+    <DisplayString Condition="(restype&gt;=470) &amp;&amp; (restype&lt;=479)">{resval.rstring}</DisplayString>
+    <DisplayString Condition="(restype&gt;=999) &amp;&amp; (restype&lt;=1003)">{resval.rstring}</DisplayString>
+
+    <!--DXF/XData Double-->
+    <DisplayString Condition="(restype&gt;=38) &amp;&amp; (restype&lt;=59)">{resval.rreal} rreal</DisplayString>
+    <DisplayString Condition="(restype&gt;=140) &amp;&amp; (restype&lt;=149)">{resval.rreal} rreal</DisplayString>
+    <DisplayString Condition="(restype&gt;=460) &amp;&amp; (restype&lt;=469)">{resval.rreal} rreal</DisplayString>
+    <DisplayString Condition="(restype&gt;=1040) &amp;&amp; (restype&lt;=1042)">{resval.rreal} rreal</DisplayString>
+
+    <!--DXF/XData Point-->
+    <DisplayString Condition="(restype&gt;=10) &amp;&amp; (restype&lt;=17)">
+                                {resval.rpoint[0]},{resval.rpoint[1]},{resval.rpoint[2]}</DisplayString>
+    <DisplayString Condition="(restype&gt;=110) &amp;&amp; (restype&lt;=112)">
+                                {resval.rpoint[0]},{resval.rpoint[1]},{resval.rpoint[2]}</DisplayString>
+    <DisplayString Condition="(restype&gt;=210) &amp;&amp; (restype&lt;=219)">
+                                {resval.rpoint[0]},{resval.rpoint[1]},{resval.rpoint[2]}</DisplayString>
+    <DisplayString Condition="(restype&gt;=1010) &amp;&amp; (restype&lt;=1013)">
+                                {resval.rpoint[0]},{resval.rpoint[1]},{resval.rpoint[2]}</DisplayString>
+
+    <!--DXF/XData Int16-->
+    <DisplayString Condition="(restype&gt;=60) &amp;&amp; (restype&lt;=79)">{resval.rint} rint</DisplayString>
+    <DisplayString Condition="(restype&gt;=270) &amp;&amp; (restype&lt;=279)">{resval.rint} rint</DisplayString>
+    <DisplayString Condition="(restype&gt;=370) &amp;&amp; (restype&lt;=389)">{resval.rint} rint</DisplayString>
+    <DisplayString Condition="(restype&gt;=400) &amp;&amp; (restype&lt;=409)">{resval.rint} rint</DisplayString>
+    <DisplayString Condition="restype==1070">{resval.rint} rint</DisplayString>
+
+    <!--DXF/XData Int32-->
+    <DisplayString Condition="(restype&gt;=90) &amp;&amp; (restype&lt;=99)">{resval.rlong} rlong</DisplayString>
+    <DisplayString Condition="(restype&gt;=420) &amp;&amp; (restype&lt;=429)">{resval.rlong} rlong</DisplayString>
+    <DisplayString Condition="(restype&gt;=440) &amp;&amp; (restype&lt;=459)">{resval.rlong} rlong</DisplayString>
+    <DisplayString Condition="restype==1071">{resval.rlong} rlong</DisplayString>
+
+    <!--DXF/XData ObjectId-->
+    <DisplayString Condition="(restype&gt;=330) &amp;&amp; (restype&lt;=339)">soft pointer id</DisplayString>
+    <DisplayString Condition="(restype&gt;=340) &amp;&amp; (restype&lt;=349)">hard pointer id</DisplayString>
+    <DisplayString Condition="(restype&gt;=350) &amp;&amp; (restype&lt;=359)">soft owner id</DisplayString>
+    <DisplayString Condition="(restype&gt;=360) &amp;&amp; (restype&lt;=369)">hard owner id</DisplayString>
+    <DisplayString Condition="(restype&gt;=390) &amp;&amp; (restype&lt;=399)">hard pointer id</DisplayString>
+
+    <!--DXF/XData 8bit int-->
+    <DisplayString Condition="(restype&gt;=280) &amp;&amp; (restype&lt;=289)">{resval.rint} 8-bit rint</DisplayString>
+    <DisplayString Condition="(restype&gt;=290) &amp;&amp; (restype&lt;=299)">{resval.rint} bool rint</DisplayString>
+
+    <!--DXF/XData Binary Chunk -->
+    <DisplayString Condition="(restype&gt;=310) &amp;&amp; (restype&lt;=319)">binary size={resval.rbinary.clen}</DisplayString>
+    <DisplayString Condition="restype==1004">binary size={resval.rbinary.clen}</DisplayString>
+
+    <!--DXF/XData Int64 -->
+    <DisplayString Condition="(restype&gt;=160) &amp;&amp; (restype&lt;=169)">{resval.mnInt64} int64</DisplayString>
+
+    <Expand>
+      <Item Name="rbnext">rbnext</Item>
+      <Item Name="restype">restype</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="AcValue">
+      <DisplayString Condition="mpImpObj==0">"imp==0?"</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==0">(uninitialized)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==1">
+                {*(int *)(((void **)mpImpObj)+3)} (long)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==2">
+                {*(double *)(((void **)mpImpObj)+3)} (double)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==4">
+                {*(wchar_t **)(((void **)mpImpObj)+3)} (string)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==8 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null date)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==8">
+              {*((*(short **)(((void **)mpImpObj)+3))+4),d}:{
+               *((*(short **)(((void **)mpImpObj)+3))+5),d}:{
+               *((*(short **)(((void **)mpImpObj)+3))+6),d} {
+               *((*(short **)(((void **)mpImpObj)+3))+1),d}/{
+               *((*(short **)(((void **)mpImpObj)+3))+3),d}/{
+               *((*(short **)(((void **)mpImpObj)+3))+0),d} (date)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==16 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null point)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==16">
+              {*((*(double **)(((void **)mpImpObj)+3))+0)},{
+               *((*(double **)(((void **)mpImpObj)+3))+1)} (point)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==32 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null 3dpoint)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==32">
+              {*((*(double **)(((void **)mpImpObj)+3))+0)},{
+               *((*(double **)(((void **)mpImpObj)+3))+1)},{
+               *((*(double **)(((void **)mpImpObj)+3))+2)} (3dpoint)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==64 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null objectId)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==64">
+              {**(((void ***)mpImpObj)+3)} (objectId)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==128">(buffer len = {
+              *((int *)(((void **)mpImpObj)+4))})</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==256 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null resbuf)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==256">
+              {**(((resbuf ***)mpImpObj)+3)} (resbuf)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==512">
+                {*(wchar_t **)(((void **)mpImpObj)+3)} (general)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==1024 &amp;&amp; *(((void **)mpImpObj)+3) == 0">(null color)</DisplayString>
+      <DisplayString Condition="*((int *)(((void **)mpImpObj)+2))==1024">(color len = {
+              *((int *)(((void **)mpImpObj)+4))})</DisplayString>
+      <DisplayString Condition="1">Unknown type {*((int *)(((void **)mpImpObj)+2))}</DisplayString>
+  </Type>
+
+  <!-- 3d AcGe classes -->
+  <Type Name="AcGeLinearEnt3d">
+    <DisplayString Condition="mpImpEnt!=0">{{start={*(AcGePoint3d*)(((char*)mpImpEnt)+4*sizeof(void*))} dir={*(AcGeVector3d*)(((char*)mpImpEnt)+4*sizeof(void*)+1*sizeof(AcGePoint3d))}}}</DisplayString>
+    <Expand>
+			<Item Condition="mpImpEnt!=0" Name="[StartPoint]"> *(AcGePoint3d*)(((char*)mpImpEnt)+4*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[Direction]" >*(AcGeVector3d*)(((char*)mpImpEnt)+4*sizeof(void*)+1*sizeof(AcGePoint3d))</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="AcGePlanarEnt">
+		<DisplayString Condition="mpImpEnt!=0">{{origin={*(AcGePoint3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32)} u={*(AcGeVector3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32+sizeof(AcGePoint3d)+sizeof(AcGeVector3d))} v={*(AcGeVector3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32+sizeof(AcGePoint3d))}}}</DisplayString>
+		<Expand>
+      <Item Condition="mpImpEnt!=0" Name="[Origin]"> *(AcGePoint3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32)</Item>
+			<Item Condition="mpImpEnt!=0" Name="[uAxis]" >*(AcGeVector3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32+sizeof(AcGePoint3d)+sizeof(AcGeVector3d))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[vAxis]" >*(AcGeVector3d*)(((char*)mpImpEnt)+6*sizeof(void*)+32+sizeof(AcGePoint3d))</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="AcGeBoundBlock3d">
+    <DisplayString>{{is box={*(int*)(((char*)mpImpEnt)+4*sizeof(void*))} base={*(AcGePoint3d*)(((char*)mpImpEnt)+5*sizeof(void*))} xdir={*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d))} ydir={*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+1*sizeof(AcGeVector3d))} zdir={*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+2*sizeof(AcGeVector3d))}}}</DisplayString>
+    <Expand>
+			<Item Condition="mpImpEnt!=0" Name="[is Box]">*(int*)(((char*)mpImpEnt)+4*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[Base]"  > *(AcGePoint3d*)(((char*)mpImpEnt)+5*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[xDir]"  >*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[yDir]"  >*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+1*sizeof(AcGeVector3d))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[zDir]"  >*(AcGeVector3d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+2*sizeof(AcGeVector3d))</Item>
+    </Expand>
+  </Type>
+
+  <!-- 2d AcGe classes -->
+  <Type Name="AcGeLinearEnt2d">
+		<DisplayString Condition="mpImpEnt!=0">{{start={*(AcGePoint2d*)(((char*)mpImpEnt)+4*sizeof(void*))} dir={*(AcGeVector2d*)(((char*)mpImpEnt)+4*sizeof(void*)+1*sizeof(AcGePoint3d))}}}</DisplayString>
+		<Expand>
+			<Item Condition="mpImpEnt!=0" Name="[StartPoint]"> *(AcGePoint2d*)(((char*)mpImpEnt)+4*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[Direction]" >*(AcGeVector2d*)(((char*)mpImpEnt)+4*sizeof(void*)+1*sizeof(AcGePoint3d))</Item>
+		</Expand>
+	</Type>
+
+  <Type Name="AcGeBoundBlock2d">
+    <DisplayString>{{is box={*(int*)(((char*)mpImpEnt)+4*sizeof(void*))} base={*(AcGePoint2d*)(((char*)mpImpEnt)+5*sizeof(void*))} xdir={*(AcGePoint2d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d))} ydir={*(AcGePoint2d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+1*sizeof(AcGeVector3d))}}}</DisplayString>
+    <Expand>
+			<Item Condition="mpImpEnt!=0" Name="[is Box]">*(int*)(((char*)mpImpEnt)+4*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[Base]"  > *(AcGePoint2d*)(((char*)mpImpEnt)+5*sizeof(void*))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[xDir]"  >*(AcGeVector2d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d))</Item>
+			<Item Condition="mpImpEnt!=0" Name="[yDir]"  >*(AcGeVector2d*)(((char*)mpImpEnt)+5*sizeof(void*)+1*sizeof(AcGePoint3d)+1*sizeof(AcGeVector3d))</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="AcGeInterval">
+    <DisplayString Condition="mpImpInt!=0">{{lower={*((double*)mpImpInt)} upper={*((double*)mpImpInt+1)} toleranz={*((double*)mpImpInt+2)}}}</DisplayString>
+    <Expand>
+			<Item Condition="mpImpInt!=0" Name="[LowerBound]">*((double*)mpImpInt)</Item>
+			<Item Condition="mpImpInt!=0" Name="[UpperBound]">*((double*)mpImpInt+1)</Item>
+			<Item Condition="mpImpInt!=0" Name="[Tolerance]" >*((double*)mpImpInt+2)</Item>
+       <!-- ExcludeView not supported in VS2012, so commenting this out for now.. 
+			<Item Condition="mpImpInt!=0" Name="[BoundedAbove]" ExcludeView="simple">!!((*(long*)((double*)mpImpInt+3)) &amp; 1)</Item>
+			<Item Condition="mpImpInt!=0" Name="[BoundedBelow]" ExcludeView="simple">!!((*(long*)((double*)mpImpInt+3)) &amp; 2)</Item>
+        -->
+    </Expand>
+  </Type>
+
+</AutoVisualizer>

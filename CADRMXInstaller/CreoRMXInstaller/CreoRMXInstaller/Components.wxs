@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+
+      <ComponentRef Id="RegistryValue"/>
+
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="../../xlib/creo_rmx/CreoIntegration">
+        <Component Id="RegistryValue" Guid="{F313EC04-57D8-43B2-8D87-1418EF6E16A0}">
+          <RegistryValue Id="StoreInstallDir" Root="HKLM" Key="SOFTWARE\NextLabs\CreoRMX" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string"/>
+          <RegistryValue Id="StoreCreoDir" Root="HKLM" Key="SOFTWARE\NextLabs\CreoRMX" Name="CreoDir" Value="[CREO_DIR]" Type="string" />
+          <RegistryValue Id="StoreCreoCommonDir" Root="HKLM" Key="SOFTWARE\NextLabs\CreoRMX" Name="CreoCommonDir" Value="[CREO_COMMON_DIR]" Type="string" />
+          <RegistryValue Id="StoreIpemDir" Root="HKLM" Key="SOFTWARE\NextLabs\CreoRMX" Name="IpemDir" Value="[IPEM]" Type="string" />
+        </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

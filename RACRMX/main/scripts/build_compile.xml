@@ -1,0 +1,1769 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes11_dir" value="${build_dir}/classes11" />
+	<property name="classes12_dir" value="${build_dir}/classes12" />
+	<property name="classes12.3_dir" value="${build_dir}/classes12.3" />
+	<property name="classes12.4_dir" value="${build_dir}/classes12.4" />
+	<property name="classes13_dir" value="${build_dir}/classes13" />
+	<property name="classes13.1_dir" value="${build_dir}/classes13.1" />
+	<property name="classes13.2_dir" value="${build_dir}/classes13.2" />
+	<property name="classes13.3_dir" value="${build_dir}/classes13.3" />
+	<property name="package_dir" value="${build_dir}/${package_name}" />
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+	
+	<property name="ajc.adapter" value="org.aspectj.tools.ant.taskdefs.Ajc11CompilerAdapter"/>
+	<property name="aspectjrt_1.7.jar" location="${xlib_jar_dir}/aspectj/1.7.4/aspectjrt.jar"/>
+	<property name="aspectjtools_1.7.jar" location="${xlib_jar_dir}/aspectj/1.7.4/aspectjtools.jar"/>
+	<property name="aspectjweaver_1.7.jar" location="${xlib_jar_dir}/aspectj/1.7.4/aspectjweaver.jar"/>
+	
+	<property name="aspectjrt_1.8.jar" location="${xlib_jar_dir}/aspectj/1.8.14/aspectjrt.jar"/>
+	<property name="aspectjtools_1.8.jar" location="${xlib_jar_dir}/aspectj/1.8.14/aspectjtools.jar"/>
+	<property name="aspectjweaver_1.8.jar" location="${xlib_jar_dir}/aspectj/1.8.14/aspectjweaver.jar"/>
+	
+	<property name="libeay32.dll" location="${xlib_jar_dir}/jni/libeay32.dll"/>
+	<property name="RACRMX.dll" location="${xlib_jar_dir}/jni/RACRMX.dll"/>
+	<property name="viewwatermark64.dll" location="${xlib_jar_dir}/jni/viewwatermark64.dll"/>
+	
+	<!-- Weaving properties -->
+	<property name="racrmx11_jar" value="racrmx11.jar" />
+	<property name="racrmx12_jar" value="racrmx12.jar" />
+	<property name="racrmx12.3_jar" value="racrmx12.3.jar" />
+	<property name="racrmx12.4_jar" value="racrmx12.4.jar" />
+	<property name="racrmx13_jar" value="racrmx13.jar" />
+	<property name="racrmx13.1_jar" value="racrmx13.1.jar" />
+	<property name="racrmx13.2_jar" value="racrmx13.2.jar" />
+	<property name="racrmx13.3_jar" value="racrmx13.3.jar" />
+	
+	<!-- tc11 -->
+	<property name="tc_common_11000.2.0_jar" value="com.teamcenter.rac.common_11000.2.0.jar" />
+	<property name="tc_viewer_win32_11000.2.0_jar" value="com.teamcenter.rac.viewer.win32_11000.2.0.jar" />
+	<property name="tc_viewer_11000.2.0_jar" value="com.teamcenter.rac.viewer_11000.2.0.jar" />
+	
+	<property name="tc_common_11000.2.0_dir" location="${build_dir}/com.teamcenter.rac.common_11000.2.0" />
+	<property name="tc_viewer_win32_11000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_11000.2.0" />
+	<property name="tc_viewer_11000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_11000.2.0" />
+	
+	<!-- tc12 -->
+	<property name="tc_common_12000.2.0_jar" value="com.teamcenter.rac.common_12000.2.0.jar" />
+	<property name="tc_viewer_win32_12000.2.0_jar" value="com.teamcenter.rac.viewer.win32_12000.2.0.jar" />
+	<property name="tc_viewer_12000.2.0_jar" value="com.teamcenter.rac.viewer_12000.2.0.jar" />
+	
+	<property name="tc_common_12000.2.0_dir" location="${build_dir}/com.teamcenter.rac.common_12000.2.0" />
+	<property name="tc_viewer_win32_12000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_12000.2.0" />
+	<property name="tc_viewer_12000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_12000.2.0" />
+	
+	<!-- tc12.3 -->
+	<property name="tc_common_12000.3.0_jar" value="com.teamcenter.rac.common_12000.3.0.jar" />
+	<property name="tc_viewer_win32_12000.3.0_jar" value="com.teamcenter.rac.viewer.win32_12000.3.0.jar" />
+	<property name="tc_viewer_12000.3.0_jar" value="com.teamcenter.rac.viewer_12000.3.0.jar" />
+	
+	<property name="tc_common_12000.3.0_dir" location="${build_dir}/com.teamcenter.rac.common_12000.3.0" />
+	<property name="tc_viewer_win32_12000.3.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_12000.3.0" />
+	<property name="tc_viewer_12000.3.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_12000.3.0" />
+	
+	<!-- tc12.4 -->
+	<property name="tc_common_12000.4.0_jar" value="com.teamcenter.rac.common_12000.4.0.jar" />
+	<property name="tc_viewer_win32_12000.4.0_jar" value="com.teamcenter.rac.viewer.win32_12000.4.0.jar" />
+	<property name="tc_viewer_12000.4.0_jar" value="com.teamcenter.rac.viewer_12000.4.0.jar" />
+	
+	<property name="tc_common_12000.4.0_dir" location="${build_dir}/com.teamcenter.rac.common_12000.4.0" />
+	<property name="tc_viewer_win32_12000.4.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_12000.4.0" />
+	<property name="tc_viewer_12000.4.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_12000.4.0" />
+	
+	<!-- tc13 -->
+	<property name="tc_common_13000.0.0_jar" value="com.teamcenter.rac.common_13000.0.0.jar" />
+	<property name="tc_viewer_win32_13000.0.0_jar" value="com.teamcenter.rac.viewer.win32_13000.0.0.jar" />
+	<property name="tc_viewer_13000.0.0_jar" value="com.teamcenter.rac.viewer_13000.0.0.jar" />
+	
+	<property name="tc_common_13000.0.0_dir" location="${build_dir}/com.teamcenter.rac.common_13000.0.0" />
+	<property name="tc_viewer_win32_13000.0.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_13000.0.0" />
+	<property name="tc_viewer_13000.0.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_13000.0.0" />
+	
+	<!-- tc13.1 -->
+	<property name="tc_common_13000.1.0_jar" value="com.teamcenter.rac.common_13000.1.0.jar" />
+	<property name="tc_viewer_win32_13000.1.0_jar" value="com.teamcenter.rac.viewer.win32_13000.1.0.jar" />
+	<property name="tc_viewer_13000.1.0_jar" value="com.teamcenter.rac.viewer_13000.1.0.jar" />
+	
+	<property name="tc_common_13000.1.0_dir" location="${build_dir}/com.teamcenter.rac.common_13000.1.0" />
+	<property name="tc_viewer_win32_13000.1.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_13000.1.0" />
+	<property name="tc_viewer_13000.1.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_13000.1.0" />
+	
+	<!-- tc13.2 -->
+	<property name="tc_common_13000.2.0_jar" value="com.teamcenter.rac.common_13000.2.0.jar" />
+	<property name="tc_viewer_win32_13000.2.0_jar" value="com.teamcenter.rac.viewer.win32_13000.2.0.jar" />
+	<property name="tc_viewer_13000.2.0_jar" value="com.teamcenter.rac.viewer_13000.2.0.jar" />
+	
+	<property name="tc_common_13000.2.0_dir" location="${build_dir}/com.teamcenter.rac.common_13000.2.0" />
+	<property name="tc_viewer_win32_13000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_13000.2.0" />
+	<property name="tc_viewer_13000.2.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_13000.2.0" />
+	
+	<!-- tc13.3 -->
+	<property name="tc_common_13000.3.0_jar" value="com.teamcenter.rac.common_13000.3.0.jar" />
+	<property name="tc_viewer_win32_13000.3.0_jar" value="com.teamcenter.rac.viewer.win32_13000.3.0.jar" />
+	<property name="tc_viewer_13000.3.0_jar" value="com.teamcenter.rac.viewer_13000.3.0.jar" />
+	
+	<property name="tc_common_13000.3.0_dir" location="${build_dir}/com.teamcenter.rac.common_13000.3.0" />
+	<property name="tc_viewer_win32_13000.3.0_dir" location="${build_dir}/com.teamcenter.rac.viewer.win32_13000.3.0" />
+	<property name="tc_viewer_13000.3.0_dir" location="${build_dir}/com.teamcenter.rac.viewer_13000.3.0" />
+			
+	<property name="tobeWeave1_dir" location="${build_dir}/tobeWeave1" />
+	<property name="tobeWeave2_dir" location="${build_dir}/tobeWeave2" />
+	<property name="tobeWeave3_dir" location="${build_dir}/tobeWeave3" />
+	
+	<property name="tobeWeave11_dir" location="${build_dir}/tobeWeave11" />
+	<property name="tobeWeave12_dir" location="${build_dir}/tobeWeave12" />
+	<property name="tobeWeave13_dir" location="${build_dir}/tobeWeave13" />
+	
+	<property name="tobeWeave21_dir" location="${build_dir}/tobeWeave21" />
+	<property name="tobeWeave22_dir" location="${build_dir}/tobeWeave22" />
+	<property name="tobeWeave23_dir" location="${build_dir}/tobeWeave23" />
+	
+	<property name="tobeWeave31_dir" location="${build_dir}/tobeWeave31" />
+	<property name="tobeWeave32_dir" location="${build_dir}/tobeWeave32" />
+	<property name="tobeWeave33_dir" location="${build_dir}/tobeWeave33" />
+	
+	<property name="tobeWeave41_dir" location="${build_dir}/tobeWeave41" />
+	<property name="tobeWeave42_dir" location="${build_dir}/tobeWeave42" />
+	<property name="tobeWeave43_dir" location="${build_dir}/tobeWeave43" />
+	
+	<property name="tobeWeave51_dir" location="${build_dir}/tobeWeave51" />
+	<property name="tobeWeave52_dir" location="${build_dir}/tobeWeave52" />
+	<property name="tobeWeave53_dir" location="${build_dir}/tobeWeave53" />
+	
+	<property name="tobeWeave61_dir" location="${build_dir}/tobeWeave61" />
+	<property name="tobeWeave62_dir" location="${build_dir}/tobeWeave62" />
+	<property name="tobeWeave63_dir" location="${build_dir}/tobeWeave63" />
+	
+	<property name="tobeWeave71_dir" location="${build_dir}/tobeWeave71" />
+	<property name="tobeWeave72_dir" location="${build_dir}/tobeWeave72" />
+	<property name="tobeWeave73_dir" location="${build_dir}/tobeWeave73" />
+	
+	<property name="weaved_dir" location="${build_dir}/weaved" />
+	<property name="weaved_racrmx11_dir" location="${weaved_dir}/racrmx11" />
+	<property name="weaved_racrmx12_dir" location="${weaved_dir}/racrmx12" />
+	<property name="weaved_racrmx12.3_dir" location="${weaved_dir}/racrmx12.3" />
+	<property name="weaved_racrmx12.4_dir" location="${weaved_dir}/racrmx12.4" />
+	<property name="weaved_racrmx13_dir" location="${weaved_dir}/racrmx13" />
+	<property name="weaved_racrmx13.1_dir" location="${weaved_dir}/racrmx13.1" />
+	<property name="weaved_racrmx13.2_dir" location="${weaved_dir}/racrmx13.2" />
+	<property name="weaved_racrmx13.3_dir" location="${weaved_dir}/racrmx13.3" />
+	
+	
+	<property name="weaved_tc_common_11000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_11000.2.0" />
+	<property name="weaved_tc_viewer_win32_11000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_11000.2.0" />
+	<property name="weaved_tc_viewer_11000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_11000.2.0" />
+	
+	<property name="weaved_tc_common_12000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_12000.2.0" />
+	<property name="weaved_tc_viewer_win32_12000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_12000.2.0" />
+	<property name="weaved_tc_viewer_12000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_12000.2.0" />
+	
+	<property name="weaved_tc_common_12000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_12000.3.0" />
+	<property name="weaved_tc_viewer_win32_12000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_12000.3.0" />
+	<property name="weaved_tc_viewer_12000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_12000.3.0" />
+	
+	<property name="weaved_tc_common_12000.4.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_12000.4.0" />
+	<property name="weaved_tc_viewer_win32_12000.4.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_12000.4.0" />
+	<property name="weaved_tc_viewer_12000.4.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_12000.4.0" />
+	
+	<property name="weaved_tc_common_13000.0.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_13000.0.0" />
+	<property name="weaved_tc_viewer_win32_13000.0.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_13000.0.0" />
+	<property name="weaved_tc_viewer_13000.0.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_13000.0.0" />
+	
+	<property name="weaved_tc_common_13000.1.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_13000.1.0" />
+	<property name="weaved_tc_viewer_win32_13000.1.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_13000.1.0" />
+	<property name="weaved_tc_viewer_13000.1.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_13000.1.0" />
+	
+	<property name="weaved_tc_common_13000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_13000.2.0" />
+	<property name="weaved_tc_viewer_win32_13000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_13000.2.0" />
+	<property name="weaved_tc_viewer_13000.2.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_13000.2.0" />
+	
+	<property name="weaved_tc_common_13000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.common_13000.3.0" />
+	<property name="weaved_tc_viewer_win32_13000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer.win32_13000.3.0" />
+	<property name="weaved_tc_viewer_13000.3.0_dir" location="${weaved_dir}/com.teamcenter.rac.viewer_13000.3.0" />
+			
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+	
+	<path id="compile11.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.7.4">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc11/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc11">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile12.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile12.3.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12.3">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile12.4.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc12.4">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile13.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile13.1.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13.1">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile13.2.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13.2">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<path id="compile13.3.classpath">
+		<fileset dir="${xlib_jar_dir}/aspectj/1.8.14">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13/eclipse">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${xlib_jar_dir}/tc13.3">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile, preweaving11, preweaving12, preweaving12.3, preweaving12.4, preweaving13, preweaving13.1, preweaving13.2, preweaving13.3, weaving11, weaving12, weaving12.3, weaving12.4, weaving13, weaving13.1, weaving13.2, weaving13.3, postweaving11, postweaving12, postweaving12.3, postweaving12.4, postweaving13, postweaving13.1, postweaving13.2, postweaving13.3, package, package11, package12, package12.3, package12.4, package13, package13.1, package13.2, package13.3, packall, cleanuptc11temp, cleanuptc12temp, cleanuptc12.3temp, cleanuptc12.4temp, cleanuptc13temp, cleanuptc13.1temp, cleanuptc13.2temp, cleanuptc13.3temp" />
+
+    <target name="compile" description="Compile the project" depends="">
+		<mkdir dir="${classes11_dir}" />
+    	<mkdir dir="${classes12_dir}" />
+    	<mkdir dir="${classes12.3_dir}" />
+    	<mkdir dir="${classes12.4_dir}" />
+    	<mkdir dir="${classes13_dir}" />
+    	<mkdir dir="${classes13.1_dir}" />
+    	<mkdir dir="${classes13.2_dir}" />
+    	<mkdir dir="${classes13.3_dir}" />
+		  
+		<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes11_dir}" source="1.7" target ="1.7" verbose="true">
+			<classpath refid="compile11.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes12_dir}" verbose="true">
+			<classpath refid="compile12.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes12.3_dir}" verbose="true">
+			<classpath refid="compile12.3.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes12.4_dir}" verbose="true">
+			<classpath refid="compile12.4.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes13_dir}" verbose="true">
+			<classpath refid="compile13.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes13.1_dir}" verbose="true">
+			<classpath refid="compile13.1.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes13.2_dir}" verbose="true">
+			<classpath refid="compile13.2.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<javac debug="true" debuglevel="lines,vars,source" srcdir="${nlbuildroot}/src/com/nextlabs/racrmx" destdir="${classes13.3_dir}" verbose="true">
+			<classpath refid="compile13.3.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<copy todir="${classes11_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes12_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes12.3_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes12.4_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes13_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes13.1_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes13.2_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+    	<copy todir="${classes13.3_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/*.properties" />
+    	</copy>
+    	
+        <jar destfile="${build_dir}/${racrmx11_jar}" basedir="${classes11_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx12_jar}" basedir="${classes12_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx12.3_jar}" basedir="${classes12.3_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx12.4_jar}" basedir="${classes12.4_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx13_jar}" basedir="${classes13_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx13.1_jar}" basedir="${classes13.1_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx13.2_jar}" basedir="${classes13.2_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+    	
+    	<jar destfile="${build_dir}/${racrmx13.3_jar}" basedir="${classes13.3_dir}" >
+			<manifest>
+				<attribute name="Java-Version" value="${java.version}"/>
+				<attribute name="Implementation-Vendor" value="NextLabs, Inc."/>
+				<attribute name="Implementation-Title" value="${product_name}"/>
+				<attribute name="Implementation-Version" value="${version_str} (${build_number})"/>
+				<attribute name="Implementation-Time" value="${local.now}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="preweaving11" description="Pre weaving for tc11" depends="compile">
+		<mkdir dir="${tc_common_11000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_11000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_11000.2.0_dir}" />
+		
+		<mkdir dir="${tobeWeave1_dir}" />
+		<mkdir dir="${tobeWeave2_dir}" />
+		<mkdir dir="${tobeWeave3_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+		
+		<!-- com.teamcenter.rac.common_11000.2.0 -->
+		<unzip dest="${tc_common_11000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc11">
+	            <include name="**/${tc_common_11000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave1_dir}" overwrite="true">
+			<fileset dir="${tc_common_11000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_11000.2.0 -->
+		<unzip dest="${tc_viewer_win32_11000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc11">
+	            <include name="**/${tc_viewer_win32_11000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave2_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_11000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_11000.2.0 -->
+		<unzip dest="${tc_viewer_11000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc11">
+	            <include name="**/${tc_viewer_11000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave3_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_11000.2.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving12" description="Pre weaving for tc12" depends="compile">
+		<mkdir dir="${tc_common_12000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_12000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_12000.2.0_dir}" />
+		
+		<mkdir dir="${tobeWeave11_dir}" />
+		<mkdir dir="${tobeWeave12_dir}" />
+		<mkdir dir="${tobeWeave13_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_12000.2.0 -->
+		<unzip dest="${tc_common_12000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12">
+	            <include name="**/${tc_common_12000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave11_dir}" overwrite="true">
+			<fileset dir="${tc_common_12000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.2.0 -->
+		<unzip dest="${tc_viewer_win32_12000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12">
+	            <include name="**/${tc_viewer_win32_12000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave12_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_12000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.2.0 -->
+		<unzip dest="${tc_viewer_12000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12">
+	            <include name="**/${tc_viewer_12000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave13_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_12000.2.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving12.3" description="Pre weaving for tc12.3" depends="compile">
+		<mkdir dir="${tc_common_12000.3.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_12000.3.0_dir}" />
+		<mkdir dir="${tc_viewer_12000.3.0_dir}" />
+		
+		<mkdir dir="${tobeWeave31_dir}" />
+		<mkdir dir="${tobeWeave32_dir}" />
+		<mkdir dir="${tobeWeave33_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_12000.3.0 -->
+		<unzip dest="${tc_common_12000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.3">
+	            <include name="**/${tc_common_12000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave31_dir}" overwrite="true">
+			<fileset dir="${tc_common_12000.3.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.3.0 -->
+		<unzip dest="${tc_viewer_win32_12000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.3">
+	            <include name="**/${tc_viewer_win32_12000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave32_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_12000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.3.0 -->
+		<unzip dest="${tc_viewer_12000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.3">
+	            <include name="**/${tc_viewer_12000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave33_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_12000.3.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving12.4" description="Pre weaving for tc12.4" depends="compile">
+		<mkdir dir="${tc_common_12000.4.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_12000.4.0_dir}" />
+		<mkdir dir="${tc_viewer_12000.4.0_dir}" />
+		
+		<mkdir dir="${tobeWeave21_dir}" />
+		<mkdir dir="${tobeWeave22_dir}" />
+		<mkdir dir="${tobeWeave23_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_12000.4.0 -->
+		<unzip dest="${tc_common_12000.4.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.4">
+	            <include name="**/${tc_common_12000.4.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave21_dir}" overwrite="true">
+			<fileset dir="${tc_common_12000.4.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.4.0 -->
+		<unzip dest="${tc_viewer_win32_12000.4.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.4">
+	            <include name="**/${tc_viewer_win32_12000.4.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave22_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_12000.4.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.4.0 -->
+		<unzip dest="${tc_viewer_12000.4.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc12.4">
+	            <include name="**/${tc_viewer_12000.4.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave23_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_12000.4.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving13" description="Pre weaving for tc13" depends="compile">
+		<mkdir dir="${tc_common_13000.0.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_13000.0.0_dir}" />
+		<mkdir dir="${tc_viewer_13000.0.0_dir}" />
+		
+		<mkdir dir="${tobeWeave41_dir}" />
+		<mkdir dir="${tobeWeave42_dir}" />
+		<mkdir dir="${tobeWeave43_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_13000.0.0 -->
+		<unzip dest="${tc_common_13000.0.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13">
+	            <include name="**/${tc_common_13000.0.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave41_dir}" overwrite="true">
+			<fileset dir="${tc_common_13000.0.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.0.0 -->
+		<unzip dest="${tc_viewer_win32_13000.0.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13">
+	            <include name="**/${tc_viewer_win32_13000.0.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave42_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_13000.0.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.0.0 -->
+		<unzip dest="${tc_viewer_13000.0.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13">
+	            <include name="**/${tc_viewer_13000.0.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave43_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_13000.0.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving13.1" description="Pre weaving for tc13.1" depends="compile">
+		<mkdir dir="${tc_common_13000.1.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_13000.1.0_dir}" />
+		<mkdir dir="${tc_viewer_13000.1.0_dir}" />
+		
+		<mkdir dir="${tobeWeave51_dir}" />
+		<mkdir dir="${tobeWeave52_dir}" />
+		<mkdir dir="${tobeWeave53_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_13000.1.0 -->
+		<unzip dest="${tc_common_13000.1.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.1">
+	            <include name="**/${tc_common_13000.1.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave51_dir}" overwrite="true">
+			<fileset dir="${tc_common_13000.1.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.1.0 -->
+		<unzip dest="${tc_viewer_win32_13000.1.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.1">
+	            <include name="**/${tc_viewer_win32_13000.1.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave52_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_13000.1.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.1.0 -->
+		<unzip dest="${tc_viewer_13000.1.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.1">
+	            <include name="**/${tc_viewer_13000.1.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave53_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_13000.1.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving13.2" description="Pre weaving for tc13.2" depends="compile">
+		<mkdir dir="${tc_common_13000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_13000.2.0_dir}" />
+		<mkdir dir="${tc_viewer_13000.2.0_dir}" />
+		
+		<mkdir dir="${tobeWeave61_dir}" />
+		<mkdir dir="${tobeWeave62_dir}" />
+		<mkdir dir="${tobeWeave63_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_13000.2.0 -->
+		<unzip dest="${tc_common_13000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.2">
+	            <include name="**/${tc_common_13000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave61_dir}" overwrite="true">
+			<fileset dir="${tc_common_13000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.2.0 -->
+		<unzip dest="${tc_viewer_win32_13000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.2">
+	            <include name="**/${tc_viewer_win32_13000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave62_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_13000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.2.0 -->
+		<unzip dest="${tc_viewer_13000.2.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.2">
+	            <include name="**/${tc_viewer_13000.2.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave63_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_13000.2.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="preweaving13.3" description="Pre weaving for tc13.3" depends="compile">
+		<mkdir dir="${tc_common_13000.3.0_dir}" />
+		<mkdir dir="${tc_viewer_win32_13000.3.0_dir}" />
+		<mkdir dir="${tc_viewer_13000.3.0_dir}" />
+		
+		<mkdir dir="${tobeWeave71_dir}" />
+		<mkdir dir="${tobeWeave72_dir}" />
+		<mkdir dir="${tobeWeave73_dir}" />
+		
+		<mkdir dir="${weaved_dir}" />
+				
+		<!-- com.teamcenter.rac.common_13000.3.0 -->
+		<unzip dest="${tc_common_13000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.3">
+	            <include name="**/${tc_common_13000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave71_dir}" overwrite="true">
+			<fileset dir="${tc_common_13000.3.0_dir}/com/teamcenter/rac/common/tcviewer">
+				<include name="**/JTViewer*.class" />
+				<include name="**/TwoDViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.3.0 -->
+		<unzip dest="${tc_viewer_win32_13000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.3">
+	            <include name="**/${tc_viewer_win32_13000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave72_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_win32_13000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+				<include name="**/OleViewer*.class" />
+			</fileset>
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.3.0 -->
+		<unzip dest="${tc_viewer_13000.3.0_dir}">
+	        <fileset dir="${xlib_jar_dir}/tc13.3">
+	            <include name="**/${tc_viewer_13000.3.0_jar}" />
+	        </fileset>    
+	    </unzip>
+		<copy todir="${tobeWeave73_dir}" overwrite="true">
+			<fileset dir="${tc_viewer_13000.3.0_dir}/com/teamcenter/rac/viewer/view">
+				<include name="**/TCPanelViewer*.class" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="weaving11" description="Weaving for tc11" depends="preweaving11">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.7.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx11_jar}" outjar="${weaved_dir}/${racrmx11_jar}" classpathRef="compile11.classpath" source="1.7" target ="1.7" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_11000.2.0 -->
+		<iajc inpath="${tobeWeave1_dir}" destDir="${weaved_tc_common_11000.2.0_dir}" classpathRef="compile11.classpath" source="1.7" target ="1.7" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx11_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_11000.2.0 -->
+		<iajc inpath="${tobeWeave2_dir}" destDir="${weaved_tc_viewer_win32_11000.2.0_dir}" classpathRef="compile11.classpath" source="1.7" target ="1.7" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx11_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_11000.2.0 -->
+		<iajc inpath="${tobeWeave3_dir}" destDir="${weaved_tc_viewer_11000.2.0_dir}" classpathRef="compile11.classpath" source="1.7" target ="1.7" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx11_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving12" description="Weaving for tc12" depends="preweaving12">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx12_jar}" outjar="${weaved_dir}/${racrmx12_jar}" classpathRef="compile12.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_12000.2.0 -->
+		<iajc inpath="${tobeWeave11_dir}" destDir="${weaved_tc_common_12000.2.0_dir}" classpathRef="compile12.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.2.0 -->
+		<iajc inpath="${tobeWeave12_dir}" destDir="${weaved_tc_viewer_win32_12000.2.0_dir}" classpathRef="compile12.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_12000.2.0 -->
+		<iajc inpath="${tobeWeave13_dir}" destDir="${weaved_tc_viewer_12000.2.0_dir}" classpathRef="compile12.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving12.3" description="Weaving for tc12.3" depends="preweaving12.3">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx12.3_jar}" outjar="${weaved_dir}/${racrmx12.3_jar}" classpathRef="compile12.3.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_12000.3.0 -->
+		<iajc inpath="${tobeWeave31_dir}" destDir="${weaved_tc_common_12000.3.0_dir}" classpathRef="compile12.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.3_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.3.0 -->
+		<iajc inpath="${tobeWeave32_dir}" destDir="${weaved_tc_viewer_win32_12000.3.0_dir}" classpathRef="compile12.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.3_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_12000.3.0 -->
+		<iajc inpath="${tobeWeave33_dir}" destDir="${weaved_tc_viewer_12000.3.0_dir}" classpathRef="compile12.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.3_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving12.4" description="Weaving for tc12.4" depends="preweaving12.4">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx12.4_jar}" outjar="${weaved_dir}/${racrmx12.4_jar}" classpathRef="compile12.4.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_12000.4.0 -->
+		<iajc inpath="${tobeWeave21_dir}" destDir="${weaved_tc_common_12000.4.0_dir}" classpathRef="compile12.4.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.4_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.4.0 -->
+		<iajc inpath="${tobeWeave22_dir}" destDir="${weaved_tc_viewer_win32_12000.4.0_dir}" classpathRef="compile12.4.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.4_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_12000.4.0 -->
+		<iajc inpath="${tobeWeave23_dir}" destDir="${weaved_tc_viewer_12000.4.0_dir}" classpathRef="compile12.4.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx12.4_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving13" description="Weaving for tc13" depends="preweaving13">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx13_jar}" outjar="${weaved_dir}/${racrmx13_jar}" classpathRef="compile13.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_13000.0.0 -->
+		<iajc inpath="${tobeWeave41_dir}" destDir="${weaved_tc_common_13000.0.0_dir}" classpathRef="compile13.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.0.0 -->
+		<iajc inpath="${tobeWeave42_dir}" destDir="${weaved_tc_viewer_win32_13000.0.0_dir}" classpathRef="compile13.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_13000.0.0 -->
+		<iajc inpath="${tobeWeave43_dir}" destDir="${weaved_tc_viewer_13000.0.0_dir}" classpathRef="compile13.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving13.1" description="Weaving for tc13.1" depends="preweaving13.1">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx13.1_jar}" outjar="${weaved_dir}/${racrmx13.1_jar}" classpathRef="compile13.1.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_13000.1.0 -->
+		<iajc inpath="${tobeWeave51_dir}" destDir="${weaved_tc_common_13000.1.0_dir}" classpathRef="compile13.1.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.1_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.1.0 -->
+		<iajc inpath="${tobeWeave52_dir}" destDir="${weaved_tc_viewer_win32_13000.1.0_dir}" classpathRef="compile13.1.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.1_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_13000.1.0 -->
+		<iajc inpath="${tobeWeave53_dir}" destDir="${weaved_tc_viewer_13000.1.0_dir}" classpathRef="compile13.1.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.1_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving13.2" description="Weaving for tc13.2" depends="preweaving13.2">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx13.2_jar}" outjar="${weaved_dir}/${racrmx13.2_jar}" classpathRef="compile13.2.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_13000.2.0 -->
+		<iajc inpath="${tobeWeave61_dir}" destDir="${weaved_tc_common_13000.2.0_dir}" classpathRef="compile13.2.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.2_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.2.0 -->
+		<iajc inpath="${tobeWeave62_dir}" destDir="${weaved_tc_viewer_win32_13000.2.0_dir}" classpathRef="compile13.2.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.2_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_13000.2.0 -->
+		<iajc inpath="${tobeWeave63_dir}" destDir="${weaved_tc_viewer_13000.2.0_dir}" classpathRef="compile13.2.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.2_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="weaving13.3" description="Weaving for tc13.3" depends="preweaving13.3">
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+		   		<pathelement location="${aspectjtools_1.8.jar}" />
+		  	</classpath>
+		</taskdef>
+		
+		<!-- racrmx -->
+		<iajc injars="${build_dir}/${racrmx13.3_jar}" outjar="${weaved_dir}/${racrmx13.3_jar}" classpathRef="compile13.3.classpath" verbose="off">
+		</iajc>
+		
+		<!-- com.teamcenter.rac.common_13000.3.0 -->
+		<iajc inpath="${tobeWeave71_dir}" destDir="${weaved_tc_common_13000.3.0_dir}" classpathRef="compile13.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.3_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.3.0 -->
+		<iajc inpath="${tobeWeave72_dir}" destDir="${weaved_tc_viewer_win32_13000.3.0_dir}" classpathRef="compile13.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.3_jar}"/>
+			</aspectpath>
+		</iajc>
+		
+		<!-- com.teamcenter.rac.viewer_13000.3.0 -->
+		<iajc inpath="${tobeWeave73_dir}" destDir="${weaved_tc_viewer_13000.3.0_dir}" classpathRef="compile13.3.classpath" verbose="true">
+			<aspectpath>
+				<pathelement location="${build_dir}/${racrmx13.3_jar}"/>
+			</aspectpath>
+		</iajc>
+	</target>
+	
+	<target name="postweaving11" description="Post weaving for tc11" depends="weaving11">
+		<mkdir dir="${weaved_racrmx11_dir}" />
+	
+		<unzip dest="${weaved_racrmx11_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx11_jar}" />
+	        </fileset>
+	    </unzip>
+		
+		<!-- com.teamcenter.rac.common_11000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_11000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_11000.2.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_11000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_11000.2.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_11000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_11000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_11000.2.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_11000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_11000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>		
+		
+		<!-- com.teamcenter.rac.viewer_11000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_11000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_11000.2.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx11_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_11000.2.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_11000.2.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving12" description="Post weaving for tc12" depends="weaving12">
+		<mkdir dir="${weaved_racrmx12_dir}" />
+				
+		<unzip dest="${weaved_racrmx12_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx12_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_12000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_12000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_12000.2.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_12000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_12000.2.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_12000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_12000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_12000.2.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_12000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_12000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_12000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_12000.2.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx12_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_12000.2.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_12000.2.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving12.3" description="Post weaving for tc12.3" depends="weaving12.3">
+		<mkdir dir="${weaved_racrmx12.3_dir}" />
+				
+		<unzip dest="${weaved_racrmx12.3_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx12.3_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_12000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_12000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_12000.3.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_12000.3.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_12000.3.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_12000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_12000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_12000.3.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_12000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_12000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_12000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_12000.3.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx12.3_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_12000.3.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_12000.3.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving12.4" description="Post weaving for tc12.4" depends="weaving12.4">
+		<mkdir dir="${weaved_racrmx12.4_dir}" />
+				
+		<unzip dest="${weaved_racrmx12.4_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx12.4_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_12000.4.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_12000.4.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_12000.4.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_12000.4.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_12000.4.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_12000.4.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_12000.4.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_12000.4.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_12000.4.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_12000.4.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_12000.4.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_12000.4.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_12000.4.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx12.4_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_12000.4.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_12000.4.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving13" description="Post weaving for tc13" depends="weaving13">
+		<mkdir dir="${weaved_racrmx13_dir}" />
+				
+		<unzip dest="${weaved_racrmx13_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx13_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_13000.0.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_13000.0.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_13000.0.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_13000.0.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_13000.0.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_13000.0.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_13000.0.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_13000.0.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_13000.0.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_13000.0.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.0.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_13000.0.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_13000.0.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx13_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_13000.0.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_13000.0.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving13.1" description="Post weaving for tc13.1" depends="weaving13.1">
+		<mkdir dir="${weaved_racrmx13.1_dir}" />
+				
+		<unzip dest="${weaved_racrmx13.1_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx13.1_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_13000.1.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_13000.1.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_13000.1.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_13000.1.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_13000.1.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_13000.1.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_13000.1.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_13000.1.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_13000.1.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_13000.1.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.1.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_13000.1.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_13000.1.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx13.1_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_13000.1.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_13000.1.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving13.2" description="Post weaving for tc13.2" depends="weaving13.2">
+		<mkdir dir="${weaved_racrmx13.2_dir}" />
+				
+		<unzip dest="${weaved_racrmx13.2_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx13.2_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_13000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_13000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_13000.2.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_13000.2.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_13000.2.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_13000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_13000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_13000.2.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_13000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_13000.2.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.2.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_13000.2.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_13000.2.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx13.2_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_13000.2.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_13000.2.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="postweaving13.3" description="Post weaving for tc13.3" depends="weaving13.3">
+		<mkdir dir="${weaved_racrmx13.3_dir}" />
+				
+		<unzip dest="${weaved_racrmx13.3_dir}">
+	        <fileset dir="${weaved_dir}">
+	            <include name="**/${racrmx13.3_jar}" />
+	        </fileset>
+	    </unzip>
+				
+		<!-- com.teamcenter.rac.common_13000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_common_13000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_common_13000.3.0_dir}/com/nextlabs/racrmx/common/tcviewer">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/common/tcviewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_common_13000.3.0_dir}/com/teamcenter/rac/common/tcviewer">
+			<fileset file="${weaved_tc_common_13000.3.0_dir}/com/teamcenter/rac/common/tcviewer/*.class" />
+		</copy>
+				
+		<!-- com.teamcenter.rac.viewer.win32_13000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_win32_13000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_win32_13000.3.0_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_win32_13000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer">
+			<fileset file="${weaved_tc_viewer_win32_13000.3.0_dir}/com/teamcenter/rac/viewer/win32/activex/viewer/*.class" />
+		</copy>
+		
+		<!-- com.teamcenter.rac.viewer_13000.3.0 -->
+		<!-- racrmx -->
+		<copy todir="${tc_viewer_13000.3.0_dir}/com/nextlabs/racrmx">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/RACRMXInstance.class" />
+		</copy>
+		<copy todir="${tc_viewer_13000.3.0_dir}/com/nextlabs/racrmx/viewer/view">
+			<fileset file="${weaved_racrmx13.3_dir}/com/nextlabs/racrmx/viewer/view/*.class" />
+		</copy>
+		<!-- weaved Siemens binaries -->
+		<copy todir="${tc_viewer_13000.3.0_dir}/com/teamcenter/rac/viewer/view">
+			<fileset file="${weaved_tc_viewer_13000.3.0_dir}/com/teamcenter/rac/viewer/view/*.class" />
+		</copy>
+	</target>
+	
+	<target name="package" description="builds each plugin module">		
+		<mkdir dir="${package_dir}" />
+		<mkdir dir="${package_dir}/bin" />
+		<mkdir dir="${package_dir}/bin/tc11" />
+		<mkdir dir="${package_dir}/bin/tc12" />
+		<mkdir dir="${package_dir}/bin/tc12.3" />
+		<mkdir dir="${package_dir}/bin/tc12.4" />
+		<mkdir dir="${package_dir}/bin/tc11/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc12/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc12.3/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc12.4/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc13/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc13.1/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc13.2/nextlabs" />
+		<mkdir dir="${package_dir}/bin/tc13.3/nextlabs" />
+	</target>
+	
+	<target name="package11" description="builds each plugin module" depends="package, postweaving11">
+		<!-- com.teamcenter.rac.common_11000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc11/${tc_common_11000.2.0_jar}" basedir="${tc_common_11000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_11000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc11/${tc_viewer_win32_11000.2.0_jar}" basedir="${tc_viewer_win32_11000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_11000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc11/${tc_viewer_11000.2.0_jar}" basedir="${tc_viewer_11000.2.0_dir}" />
+	</target>
+	
+	<target name="package12" description="builds each plugin module" depends="package, postweaving12">
+		<!-- com.teamcenter.rac.common_12000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc12/${tc_common_12000.2.0_jar}" basedir="${tc_common_12000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc12/${tc_viewer_win32_12000.2.0_jar}" basedir="${tc_viewer_win32_12000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_12000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc12/${tc_viewer_12000.2.0_jar}" basedir="${tc_viewer_12000.2.0_dir}" />
+	</target>
+	
+	<target name="package12.3" description="builds each plugin module" depends="package, postweaving12.3">
+		<!-- com.teamcenter.rac.common_12000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc12.3/${tc_common_12000.3.0_jar}" basedir="${tc_common_12000.3.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc12.3/${tc_viewer_win32_12000.3.0_jar}" basedir="${tc_viewer_win32_12000.3.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_12000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc12.3/${tc_viewer_12000.3.0_jar}" basedir="${tc_viewer_12000.3.0_dir}" />
+	</target>
+	
+	<target name="package12.4" description="builds each plugin module" depends="package, postweaving12.4">
+		<!-- com.teamcenter.rac.common_12000.4.0 -->
+		<zip destfile="${package_dir}/bin/tc12.4/${tc_common_12000.4.0_jar}" basedir="${tc_common_12000.4.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_12000.4.0 -->
+		<zip destfile="${package_dir}/bin/tc12.4/${tc_viewer_win32_12000.4.0_jar}" basedir="${tc_viewer_win32_12000.4.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_12000.4.0 -->
+		<zip destfile="${package_dir}/bin/tc12.4/${tc_viewer_12000.4.0_jar}" basedir="${tc_viewer_12000.4.0_dir}" />
+	</target>
+	
+	<target name="package13" description="builds each plugin module" depends="package, postweaving13">
+		<!-- com.teamcenter.rac.common_13000.0.0 -->
+		<zip destfile="${package_dir}/bin/tc13/${tc_common_13000.0.0_jar}" basedir="${tc_common_13000.0.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.0.0 -->
+		<zip destfile="${package_dir}/bin/tc13/${tc_viewer_win32_13000.0.0_jar}" basedir="${tc_viewer_win32_13000.0.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_13000.0.0 -->
+		<zip destfile="${package_dir}/bin/tc13/${tc_viewer_13000.0.0_jar}" basedir="${tc_viewer_13000.0.0_dir}" />
+	</target>
+	
+	<target name="package13.1" description="builds each plugin module" depends="package, postweaving13.1">
+		<!-- com.teamcenter.rac.common_13000.1.0 -->
+		<zip destfile="${package_dir}/bin/tc13.1/${tc_common_13000.1.0_jar}" basedir="${tc_common_13000.1.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.1.0 -->
+		<zip destfile="${package_dir}/bin/tc13.1/${tc_viewer_win32_13000.1.0_jar}" basedir="${tc_viewer_win32_13000.1.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_13000.1.0 -->
+		<zip destfile="${package_dir}/bin/tc13.1/${tc_viewer_13000.1.0_jar}" basedir="${tc_viewer_13000.1.0_dir}" />
+	</target>
+	
+	<target name="package13.2" description="builds each plugin module" depends="package, postweaving13.2">
+		<!-- com.teamcenter.rac.common_13000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc13.2/${tc_common_13000.2.0_jar}" basedir="${tc_common_13000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc13.2/${tc_viewer_win32_13000.2.0_jar}" basedir="${tc_viewer_win32_13000.2.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_13000.2.0 -->
+		<zip destfile="${package_dir}/bin/tc13.2/${tc_viewer_13000.2.0_jar}" basedir="${tc_viewer_13000.2.0_dir}" />
+	</target>
+	
+	<target name="package13.3" description="builds each plugin module" depends="package, postweaving13.3">
+		<!-- com.teamcenter.rac.common_13000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc13.3/${tc_common_13000.3.0_jar}" basedir="${tc_common_13000.3.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer.win32_13000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc13.3/${tc_viewer_win32_13000.3.0_jar}" basedir="${tc_viewer_win32_13000.3.0_dir}" />
+		
+		<!-- com.teamcenter.rac.viewer_13000.3.0 -->
+		<zip destfile="${package_dir}/bin/tc13.3/${tc_viewer_13000.3.0_jar}" basedir="${tc_viewer_13000.3.0_dir}" />
+	</target>
+	
+	<target name="cleanuptc11temp" description="cleanup temp files" depends="package11">
+		<delete dir="${tc_common_11000.2.0_dir}" />
+		<delete dir="${tc_viewer_win32_11000.2.0_dir}" />
+		<delete dir="${tc_viewer_11000.2.0_dir}" />
+		
+		<delete dir="${tobeWeave1_dir}" />
+		<delete dir="${tobeWeave2_dir}" />
+		<delete dir="${tobeWeave3_dir}" />
+	</target>
+	
+	<target name="cleanuptc12temp" description="cleanup temp files" depends="package12">
+		<delete dir="${tc_common_12000.2.0_dir}" />
+		<delete dir="${tc_viewer_win32_12000.2.0_dir}" />
+		<delete dir="${tc_viewer_12000.2.0_dir}" />
+		
+		<delete dir="${tobeWeave11_dir}" />
+		<delete dir="${tobeWeave12_dir}" />
+		<delete dir="${tobeWeave13_dir}" />
+	</target>
+	
+	<target name="cleanuptc12.3temp" description="cleanup temp files" depends="package12.3">
+		<delete dir="${tc_common_12000.3.0_dir}" />
+		<delete dir="${tc_viewer_win32_12000.3.0_dir}" />
+		<delete dir="${tc_viewer_12000.3.0_dir}" />
+		
+		<delete dir="${tobeWeave31_dir}" />
+		<delete dir="${tobeWeave32_dir}" />
+		<delete dir="${tobeWeave33_dir}" />
+	</target>
+	
+	<target name="cleanuptc12.4temp" description="cleanup temp files" depends="package12.4">
+		<delete dir="${tc_common_12000.4.0_dir}" />
+		<delete dir="${tc_viewer_win32_12000.4.0_dir}" />
+		<delete dir="${tc_viewer_12000.4.0_dir}" />
+		
+		<delete dir="${tobeWeave21_dir}" />
+		<delete dir="${tobeWeave22_dir}" />
+		<delete dir="${tobeWeave23_dir}" />
+	</target>
+	
+	<target name="cleanuptc13temp" description="cleanup temp files" depends="package13">
+		<delete dir="${tc_common_13000.0.0_dir}" />
+		<delete dir="${tc_viewer_win32_13000.0.0_dir}" />
+		<delete dir="${tc_viewer_13000.0.0_dir}" />
+		
+		<delete dir="${tobeWeave41_dir}" />
+		<delete dir="${tobeWeave42_dir}" />
+		<delete dir="${tobeWeave43_dir}" />
+	</target>
+	
+	<target name="cleanuptc13.1temp" description="cleanup temp files" depends="package13.1">
+		<delete dir="${tc_common_13000.1.0_dir}" />
+		<delete dir="${tc_viewer_win32_13000.1.0_dir}" />
+		<delete dir="${tc_viewer_13000.1.0_dir}" />
+		
+		<delete dir="${tobeWeave51_dir}" />
+		<delete dir="${tobeWeave52_dir}" />
+		<delete dir="${tobeWeave53_dir}" />
+	</target>
+	
+	<target name="cleanuptc13.2temp" description="cleanup temp files" depends="package13.2">
+		<delete dir="${tc_common_13000.2.0_dir}" />
+		<delete dir="${tc_viewer_win32_13000.2.0_dir}" />
+		<delete dir="${tc_viewer_13000.2.0_dir}" />
+		
+		<delete dir="${tobeWeave61_dir}" />
+		<delete dir="${tobeWeave62_dir}" />
+		<delete dir="${tobeWeave63_dir}" />
+	</target>
+	
+	<target name="cleanuptc13.3temp" description="cleanup temp files" depends="package13.3">
+		<delete dir="${tc_common_13000.3.0_dir}" />
+		<delete dir="${tc_viewer_win32_13000.3.0_dir}" />
+		<delete dir="${tc_viewer_13000.3.0_dir}" />
+		
+		<delete dir="${tobeWeave71_dir}" />
+		<delete dir="${tobeWeave72_dir}" />
+		<delete dir="${tobeWeave73_dir}" />
+	</target>
+	
+	<target name="packall" description="packall" depends="package, package11, package12, package12.3, package12.4, package13, package13.1, package13.2, package13.3">
+		<copy todir="${package_dir}/bin/tc11/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.7.jar}" />
+			<fileset file="${aspectjweaver_1.7.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc12/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc12.3/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc12.4/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc13/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc13.1/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc13.2/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin/tc13.3/nextlabs" overwrite="true">
+			<fileset file="${aspectjrt_1.8.jar}" />
+			<fileset file="${aspectjweaver_1.8.jar}" />
+		</copy>
+		
+		<copy todir="${package_dir}/bin" overwrite="true">
+			<fileset file="${libeay32.dll}" />
+			<fileset file="${RACRMX.dll}" />
+			<fileset file="${viewwatermark64.dll}" />
+		</copy>
+		
+		<zip destfile="${build_dir}/${dist_zip_file_name}" basedir="${package_dir}" encoding="UTF-8" /> 
+	</target>
+</project>
+

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="EnableSldWorksRMX.reg" Guid="{0DB45487-01A4-4E78-99A6-2256B650B04C}">
+                <File Id="EnableSldWorksRMX.reg" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\EnableSldWorksRMX.reg" />
+            </Component>
+            <Component Id="libeay32.dll" Guid="{2BAC9625-EC98-4544-BE56-3475233E6275}">
+                <File Id="libeay32.dll" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\libeay32.dll" />
+            </Component>
+            <Component Id="log4cplus.properties" Guid="{E23FDF19-4E40-4EEB-912C-C7DF1909582F}">
+                <File Id="log4cplus.properties" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\log4cplus.properties" />
+            </Component>
+            <Component Id="SldWorksRMX.dll" Guid="{F42850DB-9D47-46D1-AB89-B15C232F46B2}">
+                <File Id="SldWorksRMX.dll" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\SldWorksRMX.dll" />
+            </Component>
+            <Directory Id="swim" Name="swim">
+                <Component Id="aspectjrt.jar" Guid="{D226192A-F390-4F13-A19D-9ECAAACD6393}">
+                    <File Id="aspectjrt.jar" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\swim\aspectjrt.jar" />
+                </Component>
+                <Component Id="aspectjweaver.jar" Guid="{5F6A971F-FA31-4702-B239-C062C013F63F}">
+                    <File Id="aspectjweaver.jar" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\swim\aspectjweaver.jar" />
+                </Component>
+                <Component Id="log4j_1.2.17.jar" Guid="{3D5804DF-A5A1-46CA-80B5-CCCC83B49BAE}">
+                    <File Id="log4j_1.2.17.jar" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\swim\log4j-1.2.17.jar" />
+                </Component>
+                <Component Id="log4j.properties" Guid="{E9E780D2-BB75-4FE8-85ED-5775C8BE9C50}">
+                    <File Id="log4j.properties" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\swim\log4j.properties" />
+                </Component>
+                <Component Id="swimrmx.jar" Guid="{57D6E532-2CEE-4390-8D0B-A44BBBBA14F1}">
+                    <File Id="swimrmx.jar" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\swim\swimrmx.jar" />
+                </Component>
+            </Directory>
+            <Directory Id="tools" Name="tools">
+                <Component Id="libeay32.dll_1" Guid="{B071260D-B12E-4BE5-9F05-1D797F5132A8}">
+                    <File Id="libeay32.dll_1" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\tools\libeay32.dll" />
+                </Component>
+                <Component Id="NxlHelper.exe" Guid="{F6CA276F-A75D-4EF0-9DDE-FB24B3BA574F}">
+                    <File Id="NxlHelper.exe" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\tools\NxlHelper.exe" />
+                </Component>
+                <Component Id="rmxutility.exe" Guid="{B17EF86D-84A5-4EB4-AAD1-AB9EB73F50B6}">
+                    <File Id="rmxutility.exe" KeyPath="yes" Source="$(var.SLDWORKSRMXROOT)\tools\rmxutility.exe" />
+                </Component>
+            </Directory>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AutoHarvestComponents">
+            <ComponentRef Id="EnableSldWorksRMX.reg" />
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="log4cplus.properties" />
+            <ComponentRef Id="SldWorksRMX.dll" />
+            <ComponentRef Id="aspectjrt.jar" />
+            <ComponentRef Id="aspectjweaver.jar" />
+            <ComponentRef Id="log4j_1.2.17.jar" />
+            <ComponentRef Id="log4j.properties" />
+            <ComponentRef Id="swimrmx.jar" />
+            <ComponentRef Id="libeay32.dll_1" />
+            <ComponentRef Id="NxlHelper.exe" />
+            <ComponentRef Id="rmxutility.exe" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

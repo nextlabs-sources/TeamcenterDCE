@@ -1,0 +1,8 @@
+{
+    "name": "NXLOverlay",
+    "desc": "Nextlabs Overlay Icon in Active Workspace for DCE",
+    "type": [
+        "java"
+    ],
+    "skipTest": true
+}

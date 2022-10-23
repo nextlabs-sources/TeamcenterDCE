@@ -1,0 +1,51 @@
+<config>
+	<jars>
+		<jar in="./../build/com.nextlabs.menuitem.jar" out="./../build/com.nextlabs.menuitem.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="${eclipse_plugins}/*.jar" />
+		<jar name="./../xlib/jar/com.teamcenter.rac.aifrcp_10000.1.0.jar" />
+		<jar name="./../xlib/jar/com.teamcenter.rac.ets_10000.1.0.jar" />
+		<jar name="./../xlib/jar/com.teamcenter.rac.kernel_10000.1.0.jar" />
+		<jar name="./../xlib/jar/com.teamcenter.rac.util_10000.1.0.jar" />
+		<jar name="./../xlib/jar/commons-configuration-1.8.jar" />
+		<jar name="./../xlib/jar/commons-lang-2.6.jar" />
+		<jar name="./../xlib/jar/TcSoaAdministrationLoose_10000.1.0.jar" />
+		<jar name="./../xlib/jar/TcSoaAdministrationRac_10000.1.0.jar" />
+		<jar name="./../xlib/jar/TcSoaAdministrationTypes_10000.1.0.jar" />
+		<jar name="./../xlib/jar/TcSoaClient_10000.1.0.jar" />
+		<jar name="./../xlib/jar/TcSoaCommon_10000.1.0.jar" />
+		<jar name="./../xlib/jar/openaz/*.jar" />
+		<jar name="./../xlib/jar/jaxb-ri/*.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.menuitem.handlers.DRMHandler">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.menuitem.handlers.NextLabsProtectCmdIsEnabled">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.menuitem.handlers.NextLabsUnprotectCmdIsEnabled">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+		<class template="class com.nextlabs.menuitem.Activator">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.menuitem.configuration.SimpleCrypto" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.menuitem.configuration.SimpleCrypto" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

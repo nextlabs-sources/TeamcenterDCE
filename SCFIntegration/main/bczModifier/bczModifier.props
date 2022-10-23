@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <JNISDK>$(NLEXTERNALDIR2)\j2sdk\jdk1.7.0_75</JNISDK>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(JNISDK)\include;$(JNISDK)\include\win32;$(ProjectDir)include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>$(JNISDK)\lib;$(ProjectDir)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>jvm.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="JNISDK">
+      <Value>$(JNISDK)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

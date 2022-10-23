@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NextLabsTemplateModifier>
+	<TcDataset typeName="ProASM">
+		<TcDatasetReference name="AsmFile" />
+		<TcDatasetReference name="JPEG" />
+	</TcDataset>
+	<TcDataset typeName="ProDrw">
+		<TcDatasetReference name="DrwFile" />
+		<TcDatasetReference name="JPEG" />
+	</TcDataset>
+	<TcDataset typeName="ProPrt">
+		<TcDatasetReference name="PrtFile" />
+		<TcDatasetReference name="JPEG" />
+	</TcDataset>
+</NextLabsTemplateModifier>

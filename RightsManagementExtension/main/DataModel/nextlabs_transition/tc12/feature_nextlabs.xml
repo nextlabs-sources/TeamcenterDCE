@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+    Document   : feature_nextlabs.xml
+    Description: This XML is used by TEM to install or upgrade the "nextlabs" solution.
+--><feature>
+    <name value="nextlabs"/>
+    <property name="feature_name" value="nextlabs"/>
+    <group value="package"/>
+    <guid value="7B4E3B8746720398110003A6DB1F1DE2"/>
+    <bundle value="${feature_name}Bundle.xml"/>
+    <description value="${feature_name}.description"/>
+    <include file="dataModelDependency.xml"/>
+    <relation>
+        <depends name="cmtmes" value="49A6EDA79E840AE24AC5CBC86718A4BC"/>
+        <depends name="translationservice" value="301F12B06B3EAAB18DC0C2B9444F3B20"/>
+    </relation>
+    <feature>
+        <!--  Feature: Data Model -->
+        <name value="Data Model"/>
+        <property name="feature_id" value="datamodel"/>
+        <property name="bmide_optional" value="false"/>
+        <property name="template_name" value="${feature_name}"/>
+        <property name="template_file" value="${template_name}_template.xml"/>
+        
+        <root value="true"/>
+        <bundle value="${template_name}Bundle.xml"/>
+        <description value="${template_name}.description"/>
+        <guid value="57189D019CB5FE13497A15A700F07B24"/>
+        <include file="coreDataModel2.xml"/>
+        <include file="generatePlmxmlSchema.xml"/>
+    </feature>
+    <dependencyReferences>
+        <reference name="foundation" value="8C061DD51E13E0CB9DC4687B1A3348BE"/>
+    </dependencyReferences>
+</feature>

@@ -1,0 +1,186 @@
+!*=======================================================================
+!
+!        Copyright (c) 1994, 1995, 1996 Siemens Product Lifecycle Management Software Inc.
+!                                 All rights reserved
+!
+!=========================================================================
+!File Description
+!
+!   This is a an example of adding an Internal User Function application
+!   to NX.  This example uses the following three files included
+!   in the NX/Open kit:
+!        ufx_sample_app.c
+!        ufx_add_sample_app_button.men
+!        ufx_sample_app.men
+!
+!   Please see the MenuScript chapter of the NX/Open Programmer's Guide
+!   for a detailed description of this example, the required MenuScript
+!   environment variables and directories, and the correct placement of
+!   the shared library and menu files.
+!
+!   These files are intended to provide a template that can be modified
+!   by renaming the files, and renaming the variables and routines 
+!   contained in this C file to allow you create your own application.
+!
+!   The sample callbacks also illustrate the arguments to the callbacks
+!   you will write.
+!
+!   Additional information on MenuScript can be found in:
+!     - the NX/Open MenuScript User Guide
+!     - the NX/Open API Reference Manual
+!     - the NX/Open API Programmer's Manual
+!     - the NX/Open MenuScript Quick Reference Card
+!     - the NX/Open MenuScript Menu File Reference Card
+!
+!   This menu file should be place in your UGII_SITE_DIR or UGII_USER_DIR
+!   application directory.
+!
+!
+!=========================================================================
+VERSION 120
+
+EDIT UG_GATEWAY_MAIN_MENUBAR
+
+MODIFY
+!
+!save actions
+!
+
+BUTTON UG_FILE_SAVE_PART
+ACTIONS/PRE NXL_NXRMX_save_modified_workpart
+
+BUTTON UG_FILE_SAVE_WORK_ONLY
+ACTIONS/PRE NXL_NXRMX_save_workpart
+
+BUTTON UG_FILE_SAVE_ALL
+ACTIONS/PRE NXL_NXRMX_save_modified
+
+BUTTON UG_FILE_SAVE_AND_CLOSE
+ACTIONS/PRE NXL_NXRMX_save_workpart
+
+BUTTON UG_FILE_SAVEALL_AND_CLOSE
+ACTIONS/PRE NXL_NXRMX_save_modified
+
+BUTTON UG_FILE_SAVE_AND_EXIT
+ACTIONS/PRE NXL_NXRMX_save_modified
+
+!
+!save as or exports
+!
+BUTTON UG_FILE_SAVE_AS
+ACTIONS/PRE NXL_NXRMX_saveas_assembly
+
+BUTTON UG_FILE_SAVE_BOOKMARK
+ACTIONS/PRE NXL_NXRMX_saveas_assembly
+
+BUTTON UI_FILE_SAVE_AS_NON_MASTER_PARTS
+ACTIONS/PRE NXL_NXRMX_saveas_assembly
+
+BUTTON UG_FILE_SAVEAS_AND_CLOSE
+ACTIONS/PRE NXL_NXRMX_saveas_assembly
+
+BUTTON UG_FILE_EXPORT_PART
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_PARASOLID
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_UDF
+ACTIONS/PRE NXL_NXRMX_export_workpart
+
+BUTTON UG_FILE_EXPORT_PDF
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_CGM
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_RAPID_PROTOTYPE
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_POLYGON
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_WEB_EXPRESS
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_DIRECT_MODEL
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_VRML
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_PNG
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_JPEG
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_GIF
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_TIFF
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_BMP
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_IMAGE
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_IGES
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_STEP
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_DXF
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_UGTO2D
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_WAVEFRONT_OBJ
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_SUBDIVISION_GEOMETRY
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+BUTTON UG_FILE_EXPORT_HEAL
+ACTIONS/PRE NXL_NXRMX_export_workpart
+
+BUTTON UG_FILE_EXPORT_DRAWINGS
+ACTIONS/PRE NXL_NXRMX_export_assembly
+
+!Print
+BUTTON UG_FILE_PRINT
+ACTIONS/PRE NXL_NXRMX_print_assembly
+
+BUTTON UG_FILE_PLOT
+ACTIONS/PRE NXL_NXRMX_print_assembly
+
+!
+!block unsupported actions
+!
+BUTTON UG_FILE_EXPORT_CATIA
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_CATIAV5
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_POLYGON
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_ACIS
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_3MF
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_IFC
+ACTIONS/PRE NXL_NXRMX_blocker
+
+BUTTON UG_FILE_EXPORT_EXTENDED_REALITY
+ACTIONS/PRE NXL_NXRMX_blocker
+
+
+END_OF_MODIFY

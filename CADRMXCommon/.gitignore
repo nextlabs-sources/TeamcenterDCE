@@ -1,0 +1,4 @@
+# ignore exceptions
+xlibs_download/
+build.config*
+build.properties

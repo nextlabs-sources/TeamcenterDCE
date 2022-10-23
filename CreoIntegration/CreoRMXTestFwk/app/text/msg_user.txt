@@ -1,0 +1,122 @@
+XTest_Save
+XTest Save
+#
+#
+XTest_SaveAs
+XTest SaveAs
+#
+#
+XTest_SaveAsAsm
+XTest SaveAsAsm
+#
+#
+XTest_ValidateNXL
+XTest ValidateNXL
+#
+#
+%CIRMXTestPassed
+Test passed: %0s.
+#
+#
+XTest_Backup
+XTest Backup
+#
+#
+XTest_BackupAsm
+XTest BackupAsm
+#
+#
+XTest_OpenLog
+XTest OpenLog
+#
+#
+XTest_PurgeOutput
+XTest PurgeOutput
+#
+#
+XTest_Export_CreoView
+XTest ExportCreoView
+#
+#
+ed|edz|pvs|pvz
+ed|edz|pvs|pvz
+#
+#
+XTest_ExportPart_2D
+XTest ExportPart2D
+#
+#
+dxf|stp|dwg|asc|pdf
+dxf|stp|dwg|asc|pdf
+#
+#
+XTest_ExportAsm_2D
+XTest ExportAsm2D
+#
+#
+dxf|stp|dwg|pdf|png|tiff|jpg|eps|tifsnap|pngsnap|pic
+dxf|stp|dwg|pdf|png|tiff(.tif)|jpg|eps|tiff snapshot(.tif)|png snapshot(.png)|pic
+#
+#
+XTest_ExportPart_Image
+XTest ExportPartImage
+#
+#
+tif|jpg|eps|tifsnap|pic|png|pngsnap
+tif|jpg|eps|tiff snapshot|pic|png|png snapshot
+#
+#
+XTest_ExportPart_3D
+XTest ExportPart3D
+#
+#
+igs|vda|neu|patranntr|cosmosntr|stl|iv|obj|slp|unv|gbf|asc|facet|shrinkwrap|sat|x_t|pdfu3d|u3d|zip|amf
+igs|vda|neu|patran(ntr)|cosmos(ntr)|stl|iv|obj|slp|unv|gbf|asc|facet|shrinkwrap|sat|x_t|pdfu3d|u3d|zip|amf
+#
+#
+XTest_ExportAsm_3D
+XTest ExportAsm3D
+#
+#
+igs|vda|neu|stp|stl|iv|obj|slp|www|unv|wrl|gbf|asc|facet|shrinkwrap|sat|x_t|pdfu3d|u3d|zip|amf
+igs|vda|neu|stp|stl|iv|obj|slp|www|unv|wrl|gbf|asc|facet|shrinkwrap|sat|x_t|pdfu3d|u3d|zip|amf
+#
+#
+XTest_ExportDrw
+XTest ExportDrw
+#
+#
+igs|dxf|stp|cgm|dwg|pdf|she|tsh|tif|pic|zip|pngsnap
+igs|dxf|stp|cgm|dwg|pdf|she|tsh|tif|pic|zip|png snapshot
+#
+#
+XTest_SelRPMDir
+XTest SelectRPMOutput
+#
+#
+XTest_SelNonRPMDir
+XTest SelectNonRPMOutput
+#
+#
+XTest_EndCase
+XTest EndCase
+#
+#
+XTest_ViewInfo
+XTest View FileInfo
+#
+#
+XTest_ViewModelInfo
+XTest View ModelInfo
+#
+#
+XTest_IpemSave
+XTest IpemSave
+#
+#
+XTest_IpemSaveAs
+XTest IpemSaveAs
+#
+#
+XTest_IpemSaveAll
+XTest IpemSaveAll

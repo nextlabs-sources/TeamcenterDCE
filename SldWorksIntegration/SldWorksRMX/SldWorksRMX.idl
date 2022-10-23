@@ -1,0 +1,79 @@
+// SldWorksRMX.idl : IDL source for SldWorksRMX
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (SldWorksRMX.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(1FDDAFDF-1620-458E-8893-1B15E1254DD1),
+	dual,
+	nonextensible,
+	helpstring("ISldWorksRMX Interface"),
+	pointer_default(unique)
+]
+interface ISldWorksRMX : IDispatch {
+	[id(7), helpstring("method OnRMXProtect")] HRESULT OnRMXProtect();
+	[id(8), helpstring("method OnRMXProtectEnable")] HRESULT OnRMXProtectEnable([out, retval] long* status);
+	[id(9), helpstring("method OnRMXViewInfo")] HRESULT OnRMXViewInfo();
+	[id(10), helpstring("method OnRMXViewInfoEnable")] HRESULT OnRMXViewInfoEnable([out, retval] long* status);
+	[id(11), helpstring("method OnRMXProtectWithRefs")] HRESULT OnRMXProtectWithRefs();
+	[id(12), helpstring("method OnRMXProtectWithRefsEnable")] HRESULT OnRMXProtectWithRefsEnable([out, retval] long* status);
+	[id(13), helpstring("method OnRMXAbout")] HRESULT OnRMXAbout();
+};
+[
+	object,
+	uuid(C1040BD8-7FDD-4C13-B3D9-8C2A10E44F98),
+	dual,
+	nonextensible,
+	helpstring("ISwDocument Interface"),
+	pointer_default(unique)
+]
+interface ISwDocument : IDispatch {
+};
+[
+	object,
+	uuid(5086E02F-0D39-4A48-8D93-36B89853E697),
+	dual,
+	nonextensible,
+	helpstring("IDocView Interface"),
+	pointer_default(unique)
+]
+interface IDocView : IDispatch {
+};
+[
+	uuid(FB5E55C3-E5AB-4BE6-BCEB-A50BD9B8B555),
+	version(1.0),
+	helpstring("SldWorksRMX 1.0 Type Library")
+]
+library SldWorksRMXLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(02FFD837-BC19-4752-A4E7-720958040E1E),
+		helpstring("SldWorksRMX Class")
+	]
+	coclass SldWorksRMX
+	{
+		[default] interface ISldWorksRMX;
+	};
+	[
+		uuid(37C23E37-01C3-415B-8943-C92E68EE2361),
+		helpstring("SwDocument Class")
+	]
+	coclass SwDocument
+	{
+		[default] interface ISwDocument;
+	};
+	[
+		uuid(8CA696D7-C72B-44D2-9437-B39C3CF00214),
+		helpstring("DocView Class")
+	]
+	coclass DocView
+	{
+		[default] interface IDocView;
+	};
+};

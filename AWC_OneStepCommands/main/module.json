@@ -1,0 +1,8 @@
+{
+    "name": "CmdDRM",
+    "desc": "NextLabs DRM for Teamcenter AWC",
+    "type": [
+        "native"
+    ],
+    "skipTest": true
+}

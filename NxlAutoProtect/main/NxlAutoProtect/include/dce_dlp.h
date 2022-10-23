@@ -1,0 +1,7 @@
+#ifndef NXL_DCE_DLP_H_INCLUDED
+#define NXL_DCE_DLP_H_INCLUDED
+
+#define FILE_NON_CLASS ' '
+#define FILE_NEED_PROTECT 'X'
+
+#endif

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
+    <LibraryPath>$(ProjectDir)lib;$(JNISDK)\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)include_internal;$(JNISDK)\include;$(JNISDK)\include\win32;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>NXLUTILS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Ws2_32.lib;jvm.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>jvm.dll</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

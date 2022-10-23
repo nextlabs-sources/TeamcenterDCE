@@ -1,0 +1,96 @@
+<!-- build_compile.xml
+
+Description:
+	This ANT script publishes installers and build artifacts to build.
+	
+	To use this script, you must update properties is <project root>/scripts/build.properties	
+-->
+<project name="build_compile" default="all" basedir=".">
+
+	<!-- Propery files -->
+	<property file="${basedir}/build.properties" />
+	<property environment="env" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="build_dir" location="${nlbuildroot}/build" />
+	<property name="classes_dir" value="${build_dir}/classes" />
+<!--	<property name="package_dir" value="${build_dir}/${package_name}" />-->
+	<property name="dist_zip_file_name" value="${package_name}-${version_str}-${build_number}-${build_date_long}.zip" />
+		
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+	
+	<path id="compile.classpath">
+		<fileset dir="${xlib_dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${eclipse_plugins}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Global tasks -->
+	<tstamp>
+		<format property="local.now" pattern="EEE, d MMM yyyy HH:mm:ss Z" />
+	</tstamp>
+
+	<echo message="version_str = ${version_str}" />
+	<echo message="time = ${local.now}" />
+
+	<!-- Targets -->
+	<target name="all" description="Default for all" depends="compile, package" />
+
+    <target name="compile" description="Compile the project">
+	
+		<mkdir dir="${classes_dir}" />
+		  
+		<javac srcdir="${nlbuildroot}/src" destdir="${classes_dir}" verbose="true">
+			<classpath refid="compile.classpath"/>
+			<include name="**/*.java" />
+		</javac>
+    	
+    	<copy todir="${classes_dir}" overwrite="true">
+    		<fileset file="${nlbuildroot}/plugin.xml" />
+    	</copy>
+    	
+        <jar destfile="${build_dir}/com.nextlabs.bbextension_${version_str}.jar" basedir="${classes_dir}" >
+			<manifest>
+				<attribute name="Manifest-Version" value="${manifest-version}" />
+				<attribute name="Bundle-ManifestVersion" value="${bundle-manifestversion}" />
+				<attribute name="Bundle-Name" value="${bundle-name}" />
+				<attribute name="Bundle-SymbolicName" value="${bundle-symbolicname}" />
+				<attribute name="Bundle-Version" value="${bundle-version}" />
+				<attribute name="Bundle-Vendor" value="${bundle-vendor}" />
+				<attribute name="Require-Bundle" value="${require-bundle}" />
+				<attribute name="Bundle-RequiredExecutionEnvironment" value="${bundle-requiredexecutionenvironment}" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="package" description="Package the plugin jar into zip file">
+
+		<zip destfile="${build_dir}/${dist_zip_file_name}" encoding="UTF-8"> 
+			<fileset dir="${build_dir}"> 
+				<include name="*.jar" />
+			</fileset>				
+		</zip>
+	
+	</target>
+	
+</project>
+

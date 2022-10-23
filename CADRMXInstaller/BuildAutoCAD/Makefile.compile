@@ -1,0 +1,89 @@
+# Makefile to compile code and build installers.
+
+
+#
+# Check for errors
+#
+
+ifeq ($(NLPROJECTROOT),)
+  $(error NLPROJECTROOT undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR),)
+  $(error NLEXTERNALDIR undefined.)
+endif
+
+ifeq ($(NLEXTERNALDIR2),)
+  $(error NLEXTERNALDIR2 undefined.)
+endif
+
+ifeq ($(BUILDTYPE),)
+  $(error  BUILDTYPE undefined.)
+endif
+
+#
+# Variables
+#
+REG_MSBuildToolsPath=$(shell reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\14.0" /v MSBuildToolsPath)
+MSBUILD_DIR=$(subst \,/,$(wordlist 4,$(words $(REG_MSBuildToolsPath)), $(REG_MSBuildToolsPath)))
+MSBUILD_EXE="$(MSBUILD_DIR)msbuild.exe"
+
+MSBUILD_FLAGS=/t:build /v:q /fl /flp:Verbosity=minimal /p:VER_MAJOR=$(VERSION_MAJOR) /p:VER_MINOR=$(VERSION_MINOR) /p:VER_MAINT=$(VERSION_MAINTENANCE) /p:VER_PATCH=$(VERSION_PATCH) /p:VER_BUILD=$(BUILD_NUMBER) /p:CONFIG_TYPE=$(CONFIG_TYPE)
+BUILD_LOGFILE=msbuild.log
+
+
+
+$(info --------------------------------------------------------------------------)
+$(info NLPROJECTROOT=$(NLPROJECTROOT))
+$(info NLEXTERNALDIR=$(NLEXTERNALDIR))
+$(info NLEXTERNALDIR2=$(NLEXTERNALDIR2))
+$(info REG_MSBuildToolsPath=$(REG_MSBuildToolsPath))
+$(info MSBUILD_DIR=$(MSBUILD_DIR))
+$(info MSBUILD_EXE=$(MSBUILD_EXE))
+$(info MSBUILD_FLAGS=$(MSBUILD_FLAGS))
+$(info VCINSTALLDIR=$(VCINSTALLDIR))
+$(info ---------------------------------------------------------------------------)
+
+#define a multiple line variable as a function
+define compile_solution = 
+	@echo "================================================================================"
+	$(MSBUILD_EXE) /p:Configuration=$(2) /p:platform=$(3) /p:TC_VER=$(TC_VER) $(MSBUILD_FLAGS) $(1) ;	\
+	COMPILE_STATUS=$$? ;									\
+	if [ -f $(BUILD_LOGFILE) ] ; then						\
+		echo "[[DUMP BEGIN - $(BUILD_LOGFILE)]]" ;			\
+		cat $(BUILD_LOGFILE) ;								\
+		echo "[[DUMP END - $(BUILD_LOGFILE)]]" ;			\
+		rm -rf $(BUILD_LOGFILE);							\
+	else													\
+		echo "WARNING: Cannot find $(BUILD_LOGFILE)" ;		\
+	fi
+endef
+
+#
+# Targets
+#
+
+.PHONY: all
+all:compile
+
+.PHONY: compile
+compile:clean compile_acad_rmx_installer move_to_tmp_output
+	@echo "================================================================================"
+
+.PHONY: compile_cad_rmx_installer
+compile_acad_rmx_installer:
+	@echo "Compiling Microsoft Installer"
+	$(call compile_solution,$(NLPROJECTROOT)/ACADRMXInstaller/ACADRMXInstaller.sln,$(BUILDTYPE),x64);	\
+	exit $$COMPILE_STATUS
+
+.PHONY: move_to_tmp_output
+move_to_tmp_output:
+	@echo "Creating tmp_output folder"
+	mkdir -p $(NLPROJECTROOT)/tmp_output
+	cp -pf "$(NLPROJECTROOT)/ACADRMXInstaller/ACADRMXInstaller/bin/x64/$(BUILDTYPE)/en-us/NextLabs Rights Management For AutoCAD.msi" $(NLPROJECTROOT)/tmp_output
+	ls -lR $(NLPROJECTROOT)/tmp_output
+
+.PHONY: clean
+clean:
+	-rm -rf Release Debug
+

@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# DESCRIPTION
+#	Invoke PCV build
+#
+# USAGE:
+#	Steps to invoke this script.
+#		export NLEXTERNALDIR=<path>
+#		export BUILD_NUMBER=<#>
+#		source setEnv
+#		./buildPcv
+#
+# HUDSON BUILD:
+#	cd $WORKSPACE
+#	export NLEXTERNALDIR=c:/hudson/jobs/external_latest/workspace
+#	export NLPROFSERVDIR=c:/depot/ProfessionServices/buildCommon
+#	source setEnv
+#	./buildPcv
+#
+# Compile
+#
+
+LOG_FILE=buildPcv.log
+
+source ../CADRMXCommon/setRPMSDKEnv
+
+(
+set -x
+# Extract Workspace and Hudson info (only if running on Hudson)
+if [ -f ${WORKSPACE}/../config.xml ]; then
+	${WORKSPACE}/scripts/getGitWorkspaceInfo.pl ${WORKSPACE}/../config.xml
+fi
+
+# Prepare environment
+./configure || exit $?
+source build.config
+
+OSVERSION=`uname`
+
+# Prepare dependencies
+$ANT -f Build/build_xlib.xml || exit $?
+
+# Compile code and build installers
+make -f Build/Makefile.compile || exit $?
+
+# Publish installers and artifacts
+make -f Build/Makefile.publish all
+) 2>&1 | tee $LOG_FILE
+
+exit ${PIPESTATUS[0]}

@@ -1,0 +1,75 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+	
+	<fail message="nlexternaldir2 is not set" unless="nlexternaldir2" />
+	<fail message="nlexternaldir2 is empty">
+		<condition>
+			<equals arg1="${nlexternaldir2}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir2}" type="dir" property="local.nlexternaldir2_exists" />
+	<fail message="nlexternaldir2 directory does not exist - ${nlexternaldir2}" unless="local.nlexternaldir2_exists" />
+	
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_external_jar" />
+
+	<target name="prepare_external_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-api-2.17.1.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-core-2.17.1.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+	</target>
+</project>

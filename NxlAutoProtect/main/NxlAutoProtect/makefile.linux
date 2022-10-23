@@ -1,0 +1,42 @@
+UTILS_DIR=../NxlUtils
+TCAPI=$(NLEXTERNALDIR)/siemens/teamcenter$(TC_VER)
+
+SRCS := $(wildcard src/*.c)
+$(info $(PROJECTNAME).SRCS=$(SRCS))
+
+OBJS := ${SRCS:.c=.o}
+$(info $(PROJECTNAME).OBJS=$(OBJS))
+
+INCLUDE_DIRS :=include $(UTILS_DIR)/include $(TCAPI)/include $(JNISDK)/include $(JNISDK)/include/linux
+$(info $(PROJECTNAME).INCLUDE_DIRS=$(INCLUDE_DIRS))
+
+LIBRARY_DIRS :=$(JNISDK)/jre/lib/amd64/server $(TCAPI)/linux-x64/libs $(UTILS_DIR)
+$(info $(PROJECTNAME).LIBRARY_DIRS=$(LIBRARY_DIRS))
+
+LIBRARIES :=jvm NxlUtils dispatcher base_utils tc epm tccore pom sa ae res 
+$(info $(PROJECTNAME).LIBRARIES=$(LIBRARIES))
+
+PREPROCESSORS=__linux__ PROJECT_NAME=\"$(PROJECTNAME)\" TARGETFILENAME=\"$(OUTPUTFILE)\" POSIX
+PREPROCESSORS += IPLIB=libNxlAutoProtect NXLAUTOPROTECT_EXPORT
+PREPROCESSORS += FILE_VER=\"$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_MAINTENANCE).$(VERSION_PATCH)-$(BUILD_NUMBER)\"
+PREPROCESSORS += ENV_PRODUCT_ROOT=\"RMX_ROOT\"
+PREPROCESSORS += TC_LIB_VER=\"$(TC_VER)\"
+
+CPPFLAGS :=$(GCC_FLAGS)
+CPPFLAGS += $(foreach pp,$(PREPROCESSORS),-D $(pp))
+CPPFLAGS += $(foreach incdir,$(INCLUDE_DIRS),-I$(incdir))
+
+LDFLAGS :=-shared -o $(OUTPUTFILE) -Wl,--wrap=memcpy
+LDFLAGS += $(foreach libdir,$(LIBRARY_DIRS),-L$(libdir))
+LDFLAGS += $(foreach lib,$(LIBRARIES),-l$(lib))
+
+.PHONY: all clean distclean
+
+all:
+	gcc $(CPPFLAGS) $(SRCS) -S
+	mv *.s ../tmp -f
+	gcc $(CPPFLAGS) $(SRCS) $(LDFLAGS)
+
+clean:
+
+distclean: clean

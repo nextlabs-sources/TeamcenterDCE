@@ -1,0 +1,37 @@
+VERSION_NUMBER:49693
+RELEASE_DATE:NOV  29th 2013
+
+NOV  29th 2013
+Added parseMaterial method to UtilService class
+Nov 20 2013
+Timezone changes for PWC Canada
+
+NOV  15 2013
+default_isAfterTimeStamp_result is set true service not working as expected. Fixed this issue in this release.
+
+NOV 14 2013
+Changed the is aftertime method to respond to date and string inputs
+
+OCT 11 2013
+Added new function(isAfterCurrentTimeStamp) in UTIL Service
+
+June 28th 2013
+--Made changes for License Log Obligation
+
+June 20th 2013
+- Bug fixes in QueryBuilder and UtilService.join
+- ArrayList Ievalvalue changes to Arraylist of String 
+
+June 14th 2013
+-Password encryption --Common_AC 
+-Control table update and lookup
+	Select rows with ‘S’ in LockedBy and don’t read the data.
+	Before reading the data, update LockedBy to ‘N’. 
+
+-Multi-value handling on dictionary data
+	For each attribute name, we will also have a separator configuration (optional).
+	If a separator configuration exists and if the value is multi-string (coming as array) – then handle the data processing appropriately.
+
+
+May 31 2013
+-Base Version release

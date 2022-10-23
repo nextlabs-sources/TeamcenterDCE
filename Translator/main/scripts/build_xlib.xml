@@ -1,0 +1,167 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+	
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+	
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" location="${xlib_dir}/jar" />
+	<property name="rmjavasdkdir" location="${xlib_jar_dir}/rmjavasdk" />
+	
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+	
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+	
+	<fail message="nlexternaldir2 is not set" unless="nlexternaldir2" />
+	<fail message="nlexternaldir2 is empty">
+		<condition>
+			<equals arg1="${nlexternaldir2}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir2}" type="dir" property="local.nlexternaldir2_exists" />
+	<fail message="nlexternaldir2 directory does not exist - ${nlexternaldir2}" unless="local.nlexternaldir2_exists" />
+	
+	<fail message="rm_java_sdk_zip_file is not set" unless="rm_java_sdk_zip_file" />
+	<fail message="rm_java_sdk_zip_file is empty">
+		<condition>
+			<equals arg1="${rm_java_sdk_zip_file}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${rm_java_sdk_zip_file}" type="file" property="local.sdk_zip_file_exists" />
+	<fail message="rm_java_sdk_zip_file directory does not exist - ${rm_java_sdk_zip_file}" unless="local.sdk_zip_file_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_external_jar, prepare_sdk_jar" />
+
+	<target name="prepare_external_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<mkdir dir="${xlib_jar_dir}/junit" />
+		<mkdir dir="${xlib_jar_dir}/log4j" />
+		<mkdir dir="${xlib_jar_dir}/obfuscate" />
+		<mkdir dir="${xlib_jar_dir}/slf4j" />
+		<mkdir dir="${xlib_jar_dir}/jaxb-ri" />
+		<copy file="${nlexternaldir2}/hamcrest-1.3/hamcrest-core-1.3.jar" todir="${xlib_jar_dir}/junit" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/junit/4.12/junit-4.12.jar" todir="${xlib_jar_dir}/junit" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-1.2.17/log4j-1.2.17.jar" todir="${xlib_jar_dir}/log4j" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-api-2.17.1.jar" todir="${xlib_jar_dir}/log4j" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/log4j/apache-log4j-2.17.1/log4j-core-2.17.1.jar" todir="${xlib_jar_dir}/log4j" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/slf4j/slf4j-1.7.21/slf4j-api-1.7.21.jar" todir="${xlib_jar_dir}/slf4j" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/slf4j/slf4j-1.7.21/slf4j-log4j12-1.7.21.jar" todir="${xlib_jar_dir}/slf4j" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jakarta.activation.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jakarta.xml.bind-api.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jaxb-core.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jaxb-impl.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jaxb-jxc.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/jaxb/jaxb-3.0.0/jaxb-xjc.jar" todir="${xlib_jar_dir}/jaxb-ri" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/allatori/6.5/lib/allatori.jar" todir="${xlib_jar_dir}/obfuscate" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/allatori/6.5/lib/allatori-annotations.jar" todir="${xlib_jar_dir}/obfuscate" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+	
+	<target name="prepare_sdk_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<mkdir dir="${rmjavasdkdir}" />
+		
+		<!--RM Java SDK-->
+		<unzip src="${rm_java_sdk_zip_file}" dest="${rmjavasdkdir}" overwrite="yes">
+			<patternset>
+				<include name="**/lib/bcpkix-jdk15on-1.69.jar" />
+				<include name="**/lib/bcprov-jdk15on-1.69.jar" />
+				<include name="**/lib/bcutil-jdk15on-1.69.jar" />
+				<include name="**/lib/checker-qual-3.12.0.jar" />
+				<include name="**/lib/common-framework.jar" />
+				<include name="**/lib/commons-cli-1.2.jar" />
+				<include name="**/lib/commons-codec-1.11.jar" />
+				<include name="**/lib/commons-lang3-3.5.jar" />
+				<include name="**/lib/commons-logging-1.2.jar" />
+				<include name="**/lib/crypt.jar" />
+				<include name="**/lib/error_prone_annotations-2.7.1.jar" />
+				<include name="**/lib/failureaccess-1.0.1.jar" />
+				<include name="**/lib/gson-2.3.1.jar" />
+				<include name="**/lib/guava-31.0.1-jre.jar" />
+				<include name="**/lib/httpclient-4.5.13.jar" />
+				<include name="**/lib/httpcore-4.4.13.jar" />
+				<include name="**/lib/httpmime-4.5.13.jar" />
+				<include name="**/lib/j2objc-annotations-1.3.jar" />
+				<include name="**/lib/javax.servlet-api-3.1.0.jar" />
+				<include name="**/lib/jsr305-3.0.2.jar" />
+				<include name="**/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" />
+				<include name="**/lib/log4j-api-2.17.0.jar" />
+				<include name="**/lib/log4j-core-2.17.0.jar" />
+				<include name="**/lib/rmjavasdk-ng.jar" />
+				<include name="**/lib/shared.jar" />
+			</patternset>
+		</unzip>
+		
+		<move file="${rmjavasdkdir}/lib/bcpkix-jdk15on-1.69.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/bcprov-jdk15on-1.69.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/bcutil-jdk15on-1.69.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/checker-qual-3.12.0.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/common-framework.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/commons-cli-1.2.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/commons-codec-1.11.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/commons-lang3-3.5.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/commons-logging-1.2.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/crypt.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/error_prone_annotations-2.7.1.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/failureaccess-1.0.1.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/gson-2.3.1.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/guava-31.0.1-jre.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/httpclient-4.5.13.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/httpcore-4.4.13.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/httpmime-4.5.13.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/j2objc-annotations-1.3.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/javax.servlet-api-3.1.0.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/jsr305-3.0.2.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/log4j-api-2.17.0.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/log4j-core-2.17.0.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/rmjavasdk-ng.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		<move file="${rmjavasdkdir}/lib/shared.jar" todir="${rmjavasdkdir}" preservelastmodified="true" overwrite="false" />
+		
+		<delete dir="${rmjavasdkdir}/lib" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+	</target>
+</project>

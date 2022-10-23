@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="ProductName">NextLabs Rights Management eXtension For AutoCAD</String>
+  <String Id="ProductNameShort">Rights Management eXtension For AutoCAD</String>
+  <String Id="ProductNameSkyDRM">SkyDRM Rights Management eXtension For AutoCAD</String>
+
+  <!-- Customize String value -->
+  <String Id="VerifyReadyDlgInstallTitle">{\WixUI_Font_Title}Ready to install Rights Management eXtension For AutoCAD</String>
+  <!-- End of Customize String value -->
+  <String Id="CompanyFolderName">Nextlabs</String>
+  <String Id="ProductFolderName">AutoCADRMX</String>
+
+  <String Id="Language">1033</String>
+
+  <String Id="Company">NextLabs, Inc.</String>
+
+  <String Id="Description">Rights Management eXtension for AutoCAD</String>
+  <String Id="Keywords">nextlabs, rmx, edrm, acad</String>
+  <String Id="Comments">Allow user work with persistent NextLabs rights-protection file in AutoCAD and during save, save as operations</String>
+
+  <String Id="DowngradeErrorMessage">A newer version of RMX For AutoCAD is already installed.</String>
+
+  <String Id="ACADInstallDirDlgDescription">Please enter location where AutoCAD is installed and click Next.</String>
+  <String Id="ACADInstallDirDlgTitle">{\WixUI_Font_Title}AutoCAD Installation Folder</String>
+
+  <String Id="ACADInstallDirDlgFolderLabel">Location Where AutoCAD is installed
+Example: C:\Program Files\AutoDesk\AutoCAD 2022
+  </String>
+  <String Id="ACADInstallDirDlgChange">Browse</String>
+
+  <String Id="ACADIntegrationDirDlgDescription">Please enter location where AutoCAD Integration is installed and click Next.</String>
+  <String Id="ACADIntegrationDirDlgTitle">{\WixUI_Font_Title}AutoCAD Integration Installation Folder</String>
+  <String Id="ACADIntegrationDirDlgFolderLabel">
+    Teamcenter AutoCAD Integration installation folder
+    This information only require for managed mode. Example: C:\Ipem
+  </String>
+  <String Id="ACADIntegrationDirDlgChange">Browse</String>
+
+</WixLocalization>

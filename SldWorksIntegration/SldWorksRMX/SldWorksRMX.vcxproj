@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBuild|Win32">
+      <Configuration>ReleaseBuild</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBuild|x64">
+      <Configuration>ReleaseBuild</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4A32C051-F68F-4374-A0C5-F638B353665F}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <UseOfAtl>Dynamic</UseOfAtl>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="versionInfo_env.props" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\CADCommonShared.props" />
+    <Import Project="..\sldworks_tlb.props" />
+    <Import Project="..\skydrm_sdk.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>Release\</OutDir>
+    <IntDir>Release\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files (x86)\NextLabs\SkyDRM SDK\include;..\lib_ext\dist;..\lib_ext\security_overlay\include;$(NLEXTERNALDIR2)\log4cplus-1.2.1\include\;$(IncludePath)</IncludePath>
+    <ReferencePath>C:\Program Files\NextLabs\SkyDRM\bin;$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CustomBuildStep>
+      <Message>Registering the Addin with SolidWorks</Message>
+      <Command>regsvr32 /s /c "$(TargetPath)"
+echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
+</Command>
+      <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>mfcs90ud.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>comsvcs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mfcs90ud.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST "$(TargetDir)$(TargetName).bmp" (GOTO END)
+XCOPY "$(ProjectDir)$(ProjectName).bmp" "$(TargetDir)"  /F
+:END
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+    <CustomBuildStep>
+      <Message>Registering the Addin with SolidWorks</Message>
+      <Command>regsvr32 /s /c "$(TargetPath)"
+echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
+</Command>
+      <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>mfcs90ud.lib msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>comsvcs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mfcs90ud.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST "$(TargetDir)$(TargetName).bmp" (GOTO END)
+XCOPY "$(ProjectDir)$(ProjectName).bmp" "$(TargetDir)"  /F
+:END
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildStep>
+      <Message>Registering the Addin with SolidWorks</Message>
+      <Command>regsvr32 /s /c "$(TargetPath)"
+echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
+</Command>
+      <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>mfcs90u.lib msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>comsvcs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>mfcs90u.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CustomBuildStep>
+      <Message>Registering the Addin with SolidWorks</Message>
+      <Command>regsvr32 /s /c "$(TargetPath)"
+echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
+</Command>
+      <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;_PRJNAME="$(ProjectName)";LOG4CPLUS_ENABLE;LOG4CPLUS_DISABLE_DLL_RUNTIME_WARNING;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions> msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture)md.lib;Iphlpapi.lib;Version.lib;log4cplusSU_vc14.lib;comsvcs.lib;uafxcwd.lib;msvcrtd.lib;libeay32.lib;SDWRmcLib.lib;bcrypt.lib;Crypt32.lib;winhttp.lib;Wtsapi32.lib;Mpr.lib;Secur32.lib;comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>uafxcwd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>$(SKYDRM_SDK_ROOT)\bin\boost\$(PlatformTarget)\$(Configuration);$(SKYDRM_SDK_ROOT)\bin\SDWL\$(Platform)_$(Configuration);$(NLEXTERNALDIR2)\log4cplus-1.2.1\msvc14\$(Platform)\bin.Debug_Unicode;$(NLEXTERNALDIR2)\mch\3.1.12\lib\vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST "$(TargetDir)$(TargetName).bmp" (GOTO END)
+XCOPY "$(ProjectDir)$(ProjectName).bmp" "$(TargetDir)"  /F
+:END
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
+    <CustomBuildStep>
+      <Message>Registering the Addin with SolidWorks</Message>
+      <Command>regsvr32 /s /c "$(TargetPath)"
+echo regsvr32 exec. time &gt; "$(OutDir)regsvr32.trg"
+</Command>
+      <Outputs>$(OutDir)regsvr32.trg;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;_PRJNAME="$(ProjectName)";LOG4CPLUS_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS;$(NLEXTERNALDIR2)\mch\3.1.12\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions> msvcrtd.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture)mt.lib;Iphlpapi.lib;Version.lib;log4cplusSU_vc14.lib;comsvcs.lib;uafxcwd.lib;msvcrtd.lib;libeay32.lib;SDWRmcLib.lib;bcrypt.lib;Crypt32.lib;winhttp.lib;Wtsapi32.lib;Mpr.lib;Secur32.lib;comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>uafxcwd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>$(SKYDRM_SDK_ROOT)\bin\boost\$(PlatformTarget)\$(Configuration);$(SKYDRM_SDK_ROOT)\bin\SDWL\$(Platform)_$(Configuration);$(NLEXTERNALDIR2)\log4cplus-1.2.1\msvc14\$(Platform)\bin.Release_Unicode;$(NLEXTERNALDIR2)\mch\3.1.12\lib\vs2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST "$(TargetDir)$(TargetName).bmp" (GOTO END)
+XCOPY "$(ProjectDir)$(ProjectName).bmp" "$(TargetDir)"  /F
+:END
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildStep>
+      <Message>
+      </Message>
+      <Command>
+      </Command>
+      <Outputs>
+      </Outputs>
+    </CustomBuildStep>
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)SldWorksRMX.tlb</TypeLibraryName>
+      <HeaderFileName>SldWorksRMX_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>SldWorksRMX_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>SldWorksRMX_p.c</ProxyFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;LOG4CPLUS_ENABLE;_CRT_SECURE_NO_WARNINGS;NDEBUG;LOG4CPLUS_DISABLE_DLL_RUNTIME_WARNING;_PRJNAME="$(ProjectName)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>stdafx.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(NLEXTERNALDIR2)\log4cplus-1.2.1\include;$(NLEXTERNALDIR2)\mch\3.1.12\inc;$(SKYDRM_SDK_ROOT)\include;$(NLEXTERNALDIR2)\xerces\xerces-c-3.2.2\src;$(NLEXTERNALDIR3)\JSONforModernC++\3.7.3\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions> msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture)mt.lib;Iphlpapi.lib;Version.lib;log4cplusSU_vc14.lib;comsvcs.lib;uafxcw.lib;msvcrt.lib;libeay32.lib;SDWRmcLib.lib;bcrypt.lib;Crypt32.lib;winhttp.lib;Wtsapi32.lib;Mpr.lib;Secur32.lib;comdlg32.lib;xerces-c_3_2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>uafxcw.lib;msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ModuleDefinitionFile>.\SldWorksRMX.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>$(SKYDRM_SDK_ROOT)\bin\boost\$(PlatformTarget)\$(Configuration);$(SKYDRM_SDK_ROOT)\bin\SDWL\$(Platform)_$(Configuration);$(NLEXTERNALDIR2)\log4cplus-1.2.1\msvc14\$(Platform)\bin.Release_Unicode;$(NLEXTERNALDIR2)\mch\3.1.12\lib\vs2015;$(NLEXTERNALDIR2)\xerces\xerces-c-3.2.2\msvc14\x64\Release</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /s /y $(SolutionDir)common\log4cplus.properties $(outdir)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\CADRMXCommon\PathEx.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RMXTagHlp.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RMXUtils.cpp" />
+    <ClCompile Include="..\..\CADRMXCommon\RMXViewOverlay.cpp" />
+    <ClCompile Include="CommonUtils.cpp" />
+    <ClCompile Include="DocView.cpp" />
+    <ClCompile Include="RegistryHelper.cpp" />
+    <ClCompile Include="SwFileTypes.cpp" />
+    <ClCompile Include="FileUtils.cpp" />
+    <ClCompile Include="SwimUtils.cpp" />
+    <ClCompile Include="SwimXMLParser.cpp" />
+    <ClCompile Include="SwResult.cpp" />
+    <ClCompile Include="SwRMXClientSocket.cpp" />
+    <ClCompile Include="SwRMXDialog.cpp" />
+    <ClCompile Include="SwRMXMgr.cpp" />
+    <ClCompile Include="SldWorksRMX.cpp" />
+    <ClCompile Include="SldWorksRMX_i.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="SldWorksRMX_module.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="SwDocument.cpp" />
+    <ClCompile Include="SwHooks.cpp" />
+    <ClCompile Include="SwRMXServerSocket.cpp" />
+    <ClCompile Include="SwRMXSwimInterface.cpp" />
+    <ClCompile Include="SwUserAuthorization.cpp" />
+    <ClCompile Include="SwUtils.cpp" />
+    <ClCompile Include="SwViewOverlay.cpp" />
+    <ClCompile Include="SwWndHooks.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\common\EnableSldWorksRMX.reg" />
+    <None Include="..\common\log4cplus.properties" />
+    <None Include="DocView.rgs" />
+    <None Include="SldWorksRMX.def" />
+    <None Include="SldWorksRMX.rgs" />
+    <None Include="SwDocument.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="SldWorksRMX.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\CADRMXCommon\CADRMXTypeDef.h" />
+    <ClInclude Include="..\..\CADRMXCommon\PathEx.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXTagHlp.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXUtils.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RMXViewOverlay.h" />
+    <ClInclude Include="..\..\CADRMXCommon\RPMCommonDialogWrapper.hpp" />
+    <ClInclude Include="..\common\SwRMXLogger.h" />
+    <ClInclude Include="CommonUtils.h" />
+    <ClInclude Include="DocView.h" />
+    <ClInclude Include="FileUtils.h" />
+    <ClInclude Include="RegistryHelper.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SwimUtils.h" />
+    <ClInclude Include="SwResult.h" />
+    <ClInclude Include="SwimXMLParser.h" />
+    <ClInclude Include="SwRMXClientSocket.h" />
+    <ClInclude Include="SwRMXDialog.h" />
+    <ClInclude Include="SwRMXMgr.h" />
+    <ClInclude Include="SldWorksRMX.h" />
+    <ClInclude Include="SldWorksRMX_i.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SwDocument.h" />
+    <ClInclude Include="SwFileTypes.h" />
+    <ClInclude Include="SwHooks.h" />
+    <ClInclude Include="SwRMXServerSocket.h" />
+    <ClInclude Include="SwRMXSwimInterface.h" />
+    <ClInclude Include="SwUserAuthorization.h" />
+    <ClInclude Include="SwUtils.h" />
+    <ClInclude Include="SwViewOverlay.h" />
+    <ClInclude Include="SwWndHooks.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SldWorksRMX.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\icons\toolbar_32.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="SldWorksRMX.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

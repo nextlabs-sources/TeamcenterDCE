@@ -1,0 +1,47 @@
+<config>
+	<jars>
+		<jar in="./../build/batchprocess_configs.jar" out="./../build/batchprocess_configs.obf.jar" />
+	</jars>
+	
+	<classpath>
+		<jar name="./../xlib/jar/rmjavasdk/commons-codec-1.10.jar" />
+		<jar name="./../xlib/jar/common/commons-io-2.4.jar" />
+		<jar name="./../xlib/jar/common/commons-lang-2.6.jar" />
+		<jar name="./../xlib/jar/tc/fccclient.jar" />
+		<jar name="./../xlib/jar/tc/fscclient.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/KeyManagementService.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/log4j-api-2.8.2.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/log4j-core-2.8.2.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/RMEncryptionUtil.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/RMJavaSdk_xmlbeans.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/RMJavaSdk.jar" />
+		<jar name="./../xlib/jar/rmjavasdk/slf4j-api-1.7.13.jar" />
+		
+		<jar name="./../xlib/jar/tc/TcSoaAdministrationLoose_10000.1.0.jar" />
+		<jar name="./../xlib/jar/tc/TcSoaCommon_10000.1.0.jar" />
+		<jar name="./../xlib/jar/tc/TcSoaClient_10000.1.0.jar" />
+		<jar name="./../xlib/jar/tc/TcSoaCoreStrong_10000.1.0.jar" />
+		<jar name="./../xlib/jar/tc/TcSoaCoreLoose_10000.1.0.jar" />
+		<jar name="./../xlib/jar/tc/TcSoaStrongModel_10000.1.0.jar" />
+	</classpath>
+	
+	<keep-names>
+		<class template="class com.nextlabs.drm.rmx.batchprocess.configuration.NXLPropertiesFile">
+			<method template="protected+ *(**)" parameters="keep" />
+		</class>
+	</keep-names>
+	
+	<!-- Configuration properties, all properties are optional -->
+	
+	<!-- String encryption -->
+	<property name="string-encryption" value="maximum" apply2class="class com.nextlabs.drm.rmx.batchprocess.configuration.SimpleCrypto" />
+	<property name="string-encryption-type" value="fast" apply2class="class com.nextlabs.drm.rmx.batchprocess.configuration.SimpleCrypto" />
+	
+	<!-- Control flow obfuscation -->
+	<property name="control-flow-obfuscation" value="enable" />
+	
+	<!-- Renaming -->
+	<property name="methods-naming" value="compact" />
+	<property name="fields-naming" value="compact" />
+	
+</config>

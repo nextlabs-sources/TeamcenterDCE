@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <MADCHOOK_API>$(NLEXTERNALDIR2)\mch\3.1.12\</MADCHOOK_API>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(MADCHOOK_API)inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MADCHOOK_API)lib\free;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>madCHook$(PlatformArchitecture).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="MADCHOOK_API">
+      <Value>$(MADCHOOK_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

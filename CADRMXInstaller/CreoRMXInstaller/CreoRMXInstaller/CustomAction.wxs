@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <!--This is to set custom action data for deferred custom action ActionInstall can pickup related variable.-->
+    <CustomAction Id="SetDirInstall" Property="ActionInstall" Value="CREO_DIR=[CREO_DIR];INSTALLFOLDER=[INSTALLFOLDER];IPEM=[IPEM]" />
+    
+    <CustomAction Id='ActionInstall' 
+                  BinaryKey='BINInstall'
+                  DllEntry='InstallCreoRMX'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINInstall' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionRepair' 
+                  BinaryKey='BINRepair' 
+                  DllEntry='RepairCreoRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINRepair' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='ActionUninstall' 
+                  BinaryKey='BINUninstall' 
+                  DllEntry='UninstallCreoRMX' 
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINUninstall' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateCreoDir' 
+                  BinaryKey='BINValidateCreoDir' 
+                  DllEntry='ValidateCreoDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINValidateCreoDir' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='FindCreoDir' 
+                  BinaryKey='BINFindCreoDir' 
+                  DllEntry='FindCreoDir' 
+                  Execute='immediate' 
+                  Return='check' />
+
+    <Binary Id='BINFindCreoDir' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='ValidateIpemDir'
+          BinaryKey='BINValidateIpemDir'
+          DllEntry='ValidateIpemDir'
+          Execute='immediate'
+          Return='check' />
+
+    <Binary Id='BINValidateIpemDir' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <CustomAction Id='FindIpemDir'
+              BinaryKey='BINFindIpemDir'
+              DllEntry='FindIpemDir'
+              Execute='immediate'
+              Return='check' />
+
+    <Binary Id='BINFindIpemDir' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <!-- Edit creotk.dat file after installation. Change $CREO_RMX_ROOT to full path to CreoRMX folder -->
+    <CustomAction Id="SetDirEditCreoTkDat" Property="EditCreoTkDat" Value="CREO_DIR=[CREO_DIR];INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomAction Id='EditCreoTkDat'
+                  BinaryKey='BINEditCreoTkDat'
+                  DllEntry='EditCreoTkDat'
+                  Execute='deferred' 
+                  Impersonate='no' 
+                  Return='check' />
+
+    <Binary Id='BINEditCreoTkDat' SourceFile='..\CreoRMXCA\bin\$(var.Configuration)\CreoRMXCA.CA.dll' />
+
+    <!--Enable verbose logging and define custom action to save and view installation log-->
+    <!--Full command to save and open: "cmd /c copy [MsiLogFileLocation] C:\temp\log.txt &#38;&#38; notepad.exe [MsiLogFileLocation]"-->
+    <!--Only open for now-->
+    <Property Id="MsiLogging" Value="v!" />
+    <CustomAction Id="SaveAndViewLog" Execute="immediate"
+                  ExeCommand="notepad.exe [MsiLogFileLocation]"
+                  Directory="TARGETDIR"
+                  Return="asyncNoWait" />
+  </Fragment>
+</Wix>

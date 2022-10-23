@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="ProductComponents">
+
+      <ComponentRef Id="RegistryValue"/>
+
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="../../xlib/catia_rmx/CatiaIntegration">
+        <Component Id="RegistryValue" Guid="{C5726F70-BE46-427B-9970-4888675A825F}">
+          <RegistryValue Id="StoreInstallDir" Root="HKLM" Key="SOFTWARE\NextLabs\CatiaRMX" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string"/>
+          <RegistryValue Id="StoreCatiaDir" Root="HKLM" Key="SOFTWARE\NextLabs\CatiaRMX" Name="CatiaDir" Value="[CATIA_DIR]" Type="string" />
+          <RegistryValue Id="StoreCatiaIntegrationDir" Root="HKLM" Key="SOFTWARE\NextLabs\CatiaRMX" Name="CatiaIntegrationDir" Value="[CATIA_INTEGRATION_DIR]" Type="string" />
+        </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

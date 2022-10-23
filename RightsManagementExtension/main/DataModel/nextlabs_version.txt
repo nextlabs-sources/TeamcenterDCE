@@ -1,0 +1,11 @@
+nextlabs template has dependency on:
+- foundation
+- translationservice
+
+nextlabs_transition template has dependency on:
+- foundation
+- translationservice
+- cmtmes [Work Instructions, removes nextlabs configurations from cmtmes' datasets]
+
+
+For customer prior to DCE 3.5, nextlabs_transition must be deployed before continue the installation which will deploy nextlabs template.

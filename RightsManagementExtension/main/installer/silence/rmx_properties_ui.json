@@ -1,0 +1,149 @@
+{
+  /*
+    The installation destination folder. Rights Management eXtension will be installed in a subfolder named "TcDRM" under the destination folder.
+    Specify the folder using UNIX style path separators. Characters (\/"*:?<>|) are not allowed in a file name.
+    RMX Installer will create this directory automatically if it does not exist. If you want to manually create it, please ensure you use the same OS user which installed Teamcenter.
+    Example:
+    Windows: C:/Program Files/Nextlabs
+    Linux: /usr/Nextlabs
+  */
+  "install_dir": "",
+
+  /*
+    The temp folder is used to store temporary configuration file.
+    Specify the folder using UNIX style path separators. Characters (\/"*:?<>|) are not allowed in a file name.
+    RMX Installer will create this directory automatically if it does not exist. If you want to manually create it, please ensure you use the same OS user which installed Teamcenter.
+    Example:
+    Windows: C:/Program Files/Nextlabs/tmp
+    Linux: /usr/Nextlabs/tmp
+  */
+  "temp_dir": "",
+
+  /*  To specify this is a silence mode installation, value must be "yes" */
+  "silence_install": "yes",
+
+  /* The type of action to be performed: install or remove. */
+  "installation_mode": "install",
+
+  /* Teamcenter ROOT directory. Specify the folder using UNIX style path separators.
+     Example:
+     Windows: C:/Program Files/Siemens/Teamcenter10
+     Linux: /usr/Siemens/Teamcenter10
+  */
+  "tc_root": "",
+
+  /* Teamcenter Data directory. Specify the folder using UNIX style path separators.
+     tc_data can be empty when installing on 4-tier client machine
+     Example:
+     Windows: C:/Program Files/Siemens/tcdata
+     Linux: /usr/Siemens/tcdata
+  */
+  "tc_data": "",
+
+  /* Teamcenter Dispatcher ROOT directory. Specify the folder using UNIX style path separators.
+     disp_root can be empty if dispacther is not installed on the running machine
+     Example:
+     Windows: C:/SPLM/DispRoot
+     Linux: /usr/SPLM/DispRoot
+  */
+  "disp_root": "",
+
+  /* Creo Parametric Installation Directory
+     Example: C:/Program Files/PTC/Creo 3.0/M170/Parametric
+  */
+  "creo_dir": "",
+
+  /* Teamcenter Integration for Creo (IPEM) Directory. Can be leave empty in unmanaged mode
+      Example: C:/App/IpemDir
+  */
+  "ipem_dir": "",
+
+  /* SolidWorks Installation Directory
+     Example: C:/Program Files/SolidWorks 2019
+  */
+  "solidworks_dir": "",
+
+  /* Teamcenter Integration for SolidWork (SWIM) Directory. Can be leave empty in unmanaged mode
+      Example: C:/App/SwimDir
+  */
+  "swim_dir": "",
+
+  /* AutoCAD (2022) Installation Directory.
+      Example: C:/Program Files/Autodesk/AutoCAD 2022
+  */
+  "autocad_dir": "",
+
+  "catia_dir": "",
+
+  /* Siemens Briefcase Browser Root Directory. Can be leave empty if BB is not installed
+  */
+  "bb_dir": "",
+
+  /* Password of Teamcenter Root Administrator infodba */
+  "infodba_psd": "infodba",
+
+  /* NextLabs SkyDRM router URL, Project tenant name, app id, app key*/
+  "skydrm_router_url": "",
+  "skydrm_app_id": "",
+  "skydrm_app_key": "",
+
+  /* Solution of RMX to deploy: Protection in Teamcenter volume, Protection on Download
+	 This value is case-sensetive.
+  */
+  "solution_type": "Protection in Teamcenter volume",
+
+  /* Teamcenter user and password
+     This information can be empty and configure later in %RMX_ROOT%/BatchProtect/connection.properties
+  */
+  "tc_user": "",
+  "tc_user_psd": "",
+
+  /* Control Center Configuration */
+  "cc_host": "",
+  "cc_port": "443",
+  "cc_oauth2_https": true,          /* Is Control Center REST OAUTH2 service serve with HTTPS? */
+  "cc_apiuser": "",
+  "cc_apisecret": "",
+  "cc_ignore_https_cert": true,
+
+  /* Policy evaluation port number */
+  "jpc_eva_port": "58080",
+
+  /* Policy Controller IP address/hostname */
+  "jpc_remote_ip": "",
+
+  /* Policy Controller serve with HTTPS? */
+  "jpc_https": false,
+
+  /* Teamcenter TCSOA hostname */
+  "tcsoa_hostname": "http://teamcenterServerHostname:8080/tc",
+
+  /* RMD version that TcRMX certify with. Please do not change */
+  "certify_rmd": "1190",
+
+  /* RMX feature list info. Value: OFF or ON.
+	 Change the value to ON, if you want to install a specific feature.
+   */
+  "nxl_template": "ON",
+  "foundation_customization": "ON",
+  "batch_protection": "ON",
+  "workflow_initial_protection": "ON",
+  "active_workspace_support": "ON",
+  "scf_integration": "ON",
+  "nxl_ipem_template": "ON",
+  "nxl_swim_template": "ON",
+  "dispatcher_module": "ON",
+  "dispatcher_client_extension": "ON",
+  "translator_rights_checker": "ON",
+  "user_initial_protection": "ON",
+  "rac_rmx": "ON",
+  "proxy_runner": "ON",
+  "partialdownload": "ON",
+  "bb_integration": "ON",
+  "nx_integration": "ON",
+  "creo_integration": "ON",
+  "solidworks_integration": "ON",
+  "autocad_integration": "ON",
+  "catia_integration": "ON",
+  "rights_management_desktop": "ON"
+}

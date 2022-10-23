@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  
+  <String Id="ProductName">NextLabs Rights Management eXtension For NX</String>
+
+  <String Id="CompanyFolderName">NextLabs</String>
+  <String Id="ProductFolderName">NXRMX</String>
+
+  <String Id="Language">1033</String>
+
+  <String Id="Company">NextLabs, Inc.</String>
+
+  <String Id="Description">NextLabs Rights Management eXtension for Siemens NX</String>
+  <String Id="Keywords">nextlabs, rmx, edrm, nx</String>
+  <String Id="Comments">Allow user work with persistent NextLabs rights-protection file in NX and during export, save as operations </String>
+
+  <String Id="DowngradeErrorMessage">A newer version of RMX For NX is already installed.</String>
+  
+</WixLocalization>
